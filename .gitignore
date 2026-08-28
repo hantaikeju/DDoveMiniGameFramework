@@ -1,0 +1,18 @@
+# Unity
+DDoveMiniGameClient/Library/
+DDoveMiniGameClient/Temp/
+DDoveMiniGameClient/Logs/
+DDoveMiniGameClient/UserSettings/
+DDoveMiniGameClient/obj/
+DDoveMiniGameClient/*.csproj
+DDoveMiniGameClient/*.sln
+DDoveMiniGameClient/*.suo
+DDoveMiniGameClient/*.user
+DDoveMiniGameClient/*.pidb
+DDoveMiniGameClient/*.unityproj
+DDoveMiniGameClient/*.booproj
+
+# Local
+.vs/
+.idea/
+*.log

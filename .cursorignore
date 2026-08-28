@@ -1,0 +1,11 @@
+DDoveMiniGameClient/Library/**
+DDoveMiniGameClient/Temp/**
+DDoveMiniGameClient/Logs/**
+DDoveMiniGameClient/UserSettings/**
+DDoveMiniGameClient/obj/**
+DDoveMiniGameClient/*.csproj
+DDoveMiniGameClient/*.sln
+DDoveMiniGameClient/*.suo
+wiki/_tools/**
+wiki/_spec/**
+wiki/.obsidian/**
