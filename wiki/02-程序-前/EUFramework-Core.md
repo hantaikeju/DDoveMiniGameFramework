@@ -4,7 +4,7 @@ title: EUFramework Core
 description: Architecture 组合根 + Mechanism（Event / CommandQuery / Fsm）。无 Singleton。
 tags: [程序-前, core]
 status: draft
-generated: { by: process:agent, at: 2026-08-31T02:00:00Z }
+generated: { by: human:cjh, at: 2026-08-31T02:00:00Z }
 sources:
   - id: core-asmdef
     resource: ../../DDoveMiniGameClient/Assets/EUFramework/Core/EUFramework.Core.asmdef
@@ -85,4 +85,6 @@ Mechanism 内部仍是三套，规则不变：
 ## 边界
 
 进 Core：纯 C# 规则。  
-不进 Core：Kit、平台 SDK、业务 Model/System、效果库、`Singleton<T>`。业务集合用 Model 内 `Dictionary`，不进 IOC。
+不进 Core：Kit、平台 SDK、业务 Model/System、效果库、`Singleton<T>`、UniTask。业务集合用 Model 内 `Dictionary`，不进 IOC。
+
+客户端异步约定见 [异步用 UniTask](/02-程序-前/UniTask异步.md)。Core 本身保持同步。

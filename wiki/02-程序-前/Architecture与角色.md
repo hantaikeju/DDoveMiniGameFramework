@@ -4,7 +4,7 @@ title: Architecture 与角色
 description: GameArchitecture 注册 Model/System/Utility；Command 写、Query 读、Controller 发令。
 tags: [程序-前, core, architecture]
 status: draft
-generated: { by: process:agent, at: 2026-08-28T11:40:00Z }
+generated: { by: human:cjh, at: 2026-08-28T11:40:00Z }
 sources:
   - id: arch
     resource: ../../DDoveMiniGameClient/Assets/EUFramework/Core/Architecture/Architecture.cs

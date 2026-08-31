@@ -4,7 +4,7 @@ title: Core Fsm
 description: 分步流程用的状态机。Architecture 不依赖它。玩法状态优先用 Model 字段。
 tags: [程序-前, core, fsm]
 status: draft
-generated: { by: process:agent, at: 2026-08-28T12:32:00Z }
+generated: { by: human:cjh, at: 2026-08-28T12:32:00Z }
 sources:
   - id: fsm
     resource: ../../DDoveMiniGameClient/Assets/EUFramework/Core/Mechanism/Fsm/StateMachine.cs

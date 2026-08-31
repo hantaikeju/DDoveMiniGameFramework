@@ -20,8 +20,9 @@ sources:
 
 | 路径 | 角色 |
 |------|------|
-| `/index.md` | 根目录清单（可含 `okf_version`，版本从当前 `SPEC.md` 读取） |
-| `/*/index.md` | 分类渐进展开，**无** frontmatter |
+| `/index.md` | 只挂分类目录 + 保留名（可含 `okf_version`）。**不列概念** |
+| `职种目录/index.md` | 挂**子目录** + 个人清单 `index_<短号>.md`。无 frontmatter |
+| `职种目录/index_<短号>.md` | 该人整理的概念清单。`type: Index` |
 | `/log.md` | 变更史索引，最新日期在上（SPEC 保留名） |
 | `/_log/log_YYYY-MM-DD.md` | 当日明细；非概念 |
 | 其它 `*.md` | **概念**：必须有 YAML frontmatter，且含非空 `type` |
@@ -40,7 +41,7 @@ Concept ID = 相对 `wiki/` 的路径，去掉 `.md`。例如 `/00-索引/OKF约
 | `Skill` | 领域 Agent 流程（正文在 wiki；跨编辑器入口在 `.agents/skills/`） |
 | `Stub` | 跳转 stub；正文不是权威，跟 `sources` / 文内链接 |
 | `Table` | 超大配表 stub |
-| `Index` | 分类 README 入口（人读）；机器优先读同目录 `index.md` |
+| `Index` | 个人清单 `index_<短号>.md`（人读）。职种入口仍是同目录 `index.md` |
 
 未知 `type` 当普通概念，不拒绝。
 
@@ -74,7 +75,7 @@ Concept ID = 相对 `wiki/` 的路径，去掉 `.md`。例如 `/00-索引/OKF约
 ## 检索（消费者必须）
 
 1. **拆词**：症状 / 类名 / 协议 / 表名，中英一起。
-2. **先看** `/index.md` 或分类 `index.md`，再打开概念。
+2. **先看** `/index.md` 认职种目录，再打开该目录 `index.md` → `index_<短号>.md` 点进概念；也可 Grep frontmatter。
 3. **Grep** 限定 `wiki/`，优先 frontmatter：
 
 ```bash
@@ -94,17 +95,29 @@ rg -n "^type: Playbook" wiki/00-索引
 4. 代码核对（若有）
 5. 下一步
 
+## 生成人（写篇前问一次）
+
+业务概念、整理旧篇、改 `index_<短号>.md` 时，`generated.by` 必须是 **`human:<短号>`**，不能只写 `process:agent`。否则个人清单对不上，后面生成会挂错人。
+
+**本会话还没有生成人：先问，问到再写。同一会话只问一次，后面沿用。** 不要猜短号。用户说「还是 cjh」就继续用。
+
+短号必须能在 [整理人](/00-索引/整理人.md) 对上。表里没有：先问职种，补一行，并在对应职种 `index.md` 挂上 `index_<短号>.md`（没有就建空清单）。
+
+`verified.by: human:<短号>` 仍是人确认过，不要自动写。`process:` 只留给 `mgf-okf-init` / `mgf-okf-upgrade` 改合规字段。
+
 ## 新增 / 改写概念
+
+写之前先满足上一节「生成人」。模板里的 `cjh` 换成问到的短号。
 
 ```yaml
 ---
 type: Playbook
 title: 短标题
 description: 一句摘要
-tags: [策划]
-status: stable
-generated: { by: process:mgf-okf-init, at: 2026-08-28T00:00:00Z }
-# verified: { by: human:名字, at: 2026-08-28T00:00:00Z }
+tags: [程序-前]
+status: draft
+generated: { by: human:cjh, at: 2026-08-31T00:00:00Z }
+# verified: { by: human:cjh, at: 2026-08-31T00:00:00Z }
 sources:
   - id: src
     resource: ../DDoveMiniGameClient/Assets/某脚本.cs
@@ -112,9 +125,25 @@ sources:
 ---
 ```
 
-人确认后写 `verified.by: human:<id>`。不要用 `index.md` / `log.md` 当概念文件名。
+不要用 `index.md` / `log.md` 当概念文件名。
+
+加一篇：新增该 `.md`（`generated.by: human:<短号>`），并在**该短号**的 `index_<短号>.md` 补一条。不要改根 `/index.md`。职种 `index.md` 只在新人第一次出现时加一行。当日 `_log` 照常写。`00-索引` 仍可把约定篇直接列在该目录 `index.md`（改的人少）。
 
 替换仓库根 `SPEC.md` 后，主动调用 skill `mgf-okf-upgrade` 做检查与升级。不要在日常问答里改合规字段。
+
+## index 怎么维护（多人）
+
+业务目录（`01`–`04`）三人关联：根 → 职种 `index.md` → `index_<短号>.md` → 篇。SPEC 保留名仍是 `index.md`；个人清单是普通概念，文件名用短号，**不要** `index_1`。
+
+| 文件 | 关联什么 | 何时改 |
+|------|----------|--------|
+| 根 `/index.md` | 五个职种目录 + `log.md` | 几乎不改 |
+| `02-程序-前/index.md` | 子目录 + `index_cjh` 等 | 新人加入、或新建主题子目录 |
+| `02-程序-前/index_cjh.md` | cjh 的篇 | **只有 cjh** 加/改名/删自己的篇时改 |
+
+同一职种两个人各改各的 `index_<短号>.md`，不会撞。篇文件仍按主题命名（`EUFramework-Core.md`），`generated.by: human:cjh`。短号花名册：[整理人](/00-索引/整理人.md)。
+
+不要日常「重生成各层 index」。目录挤了再按**主题**拆子目录，不要按人拆目录。
 
 ## 变更史（按日分册）
 

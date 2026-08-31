@@ -4,7 +4,7 @@ title: IOC 容器
 description: EU Core 按注册泛型类型存一份实例；找不到抛错。不是构造注入框架。
 tags: [程序-前, core, ioc]
 status: draft
-generated: { by: process:agent, at: 2026-08-28T11:13:00Z }
+generated: { by: human:cjh, at: 2026-08-28T11:13:00Z }
 sources:
   - id: ioc-src
     resource: ../../DDoveMiniGameClient/Assets/EUFramework/Core/Architecture/IOCContainer.cs

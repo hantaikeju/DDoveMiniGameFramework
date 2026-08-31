@@ -36,7 +36,7 @@ Wiki 无命中或过期时，再查代码，并标明「Wiki 未收录 / 以代�
 ## 检索步骤（必须执行工具调用）
 
 1. **拆词**：2–6 个中英文关键词（症状、类名、协议、表名）。
-2. **渐进展开**：先读 `wiki/index.md` 或分类 `index.md`。
+2. **渐进展开**：先读 `wiki/index.md` 认职种目录，再打开该目录 `index.md` → `index_<短号>.md` 点进概念；也可 Grep frontmatter。
 3. **Grep**（优先 frontmatter，路径用仓库相对 `wiki`）：
 
 ```bash
@@ -67,6 +67,22 @@ rg -n "关键词" wiki/00-索引
 - `DDoveMiniGameClient/Library/`、`Temp/`、`Logs/`、`UserSettings/`
 - `wiki/_tools/`、`wiki/_spec/`、`wiki/_log/`、`wiki/.obsidian/`
 - 仓库根 `SPEC.md`：规范原文，不当概念检索；升级走 `mgf-okf-upgrade`
+
+## 写 wiki（先要生成人）
+
+本会话要**新建或改写** `01`–`04`（及带归属的约定篇）时：
+
+1. 还没有生成人短号 → **先问一句**「这篇算谁的生成人（短号）？」停住，不要先写文件。
+2. 同一会话只问一次，后续篇复用；用户改口再换。
+3. 短号对 [整理人](wiki/00-索引/整理人.md)；表里没有先补一行。
+4. `generated.by: human:<短号>`。禁止猜、禁止用 `process:agent` 顶替。
+5. 新篇挂到该人的 `index_<短号>.md`，不要写到别人的清单。
+
+只检索、不改 wiki 时不必问。
+
+## 写 index
+
+业务目录（`01`–`04`）：加/改名/删一篇只改**该生成人**的 `index_<短号>.md`。职种 `index.md` 只在新人加入时加一行 `index_<短号>`。不要用 `index_1`。不要改根 `wiki/index.md`。`00-索引` 的约定篇仍可直接列在该目录 `index.md`。
 
 ## 写变更史
 
