@@ -3,8 +3,9 @@ type: Reference
 title: EUFramework Core
 description: Architecture 组合根 + Mechanism（Event / CommandQuery / Fsm）。无 Singleton。
 tags: [程序-前, core]
-status: draft
+status: stable
 generated: { by: human:cjh, at: 2026-08-31T02:00:00Z }
+verified: { by: human:cjh, at: 2026-08-31T03:36:00Z }
 sources:
   - id: core-asmdef
     resource: ../../DDoveMiniGameClient/Assets/EUFramework/Core/EUFramework.Core.asmdef
@@ -76,7 +77,7 @@ Mechanism 内部仍是三套，规则不变：
 | Architecture / 角色 | [Architecture与角色](/02-程序-前/Architecture与角色.md) |
 | 事件 | [TypeEvent](/02-程序-前/TypeEvent.md) |
 | 命令 / 查询 | [CommandQuery](/02-程序-前/CommandQuery.md) |
-| 状态机 | [Core工具](/02-程序-前/Core工具.md) |
+| 状态机 | [CoreFsm](/02-程序-前/CoreFsm.md) |
 
 程序集：`EUFramework.Core`，`references` 空，`noEngineReferences: true`。
 

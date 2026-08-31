@@ -4,9 +4,11 @@ okf_version: "0.2"
 
 # MiniGame Framework Wiki
 
-OKF bundle。规范原文：[../SPEC.md](../SPEC.md)。检索约定见 [00-索引](00-索引/)。
+OKF bundle。检索 / 写入约定：[OKF约定](00-索引/OKF约定.md)。
 
-根清单**只挂目录**，不列概念。加文档时改对应目录的 `index.md`，不要改本文件。
+根清单**只挂目录**，不列概念。**不要改本文件**（除非新职种目录或 bump `okf_version`）。
+
+加篇：`/ddove-wiki-create`，你只需给生成人短号，其余这边补。改状态：`/ddove-wiki-change-state`。细则见 OKF约定。
 
 # 分类
 
@@ -18,4 +20,6 @@ OKF bundle。规范原文：[../SPEC.md](../SPEC.md)。检索约定见 [00-索�
 
 # 保留
 
-* [变更史](log.md) - 按日索引；明细在 `_log/log_YYYY-MM-DD.md`
+* [变更史](log.md) - 按日索引；明细在 `_log/log_YYYY-MM-DD_<短号>.md`
+* [SPEC.md](../SPEC.md) - OKF 规范原文（在仓库根，不入库）。整文件替换后走 `ddove-okf-upgrade`
+* [AGENTS.md](../AGENTS.md) - Agent 入口（在仓库根，不是概念）

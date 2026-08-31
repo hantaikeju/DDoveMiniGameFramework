@@ -3,8 +3,9 @@ type: Reference
 title: Command 与 Query
 description: 一次写 / 一次读的契约。业务写子类；执行仍走 Architecture，不是独立总线。
 tags: [程序-前, core, command, query]
-status: draft
+status: stable
 generated: { by: human:cjh, at: 2026-08-31T01:48:00Z }
+verified: { by: human:cjh, at: 2026-08-31T03:36:00Z }
 sources:
   - id: cmd
     resource: ../../DDoveMiniGameClient/Assets/EUFramework/Core/Mechanism/CommandQuery/Command.cs

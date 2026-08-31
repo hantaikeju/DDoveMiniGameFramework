@@ -3,8 +3,9 @@ type: Reference
 title: Architecture 与角色
 description: GameArchitecture 注册 Model/System/Utility；Command 写、Query 读、Controller 发令。
 tags: [程序-前, core, architecture]
-status: draft
+status: stable
 generated: { by: human:cjh, at: 2026-08-28T11:40:00Z }
+verified: { by: human:cjh, at: 2026-08-31T03:36:00Z }
 sources:
   - id: arch
     resource: ../../DDoveMiniGameClient/Assets/EUFramework/Core/Architecture/Architecture.cs

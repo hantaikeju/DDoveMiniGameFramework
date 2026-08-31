@@ -1,16 +1,18 @@
 ---
-name: mgf-okf-upgrade
+name: ddove-okf-upgrade
 description: >-
   Check and upgrade the wiki/ OKF bundle against the current repo-root SPEC.md.
   Use only when the user replaced SPEC.md, asks to audit OKF compliance, migrate
   frontmatter, regenerate index.md, or bump okf_version. Do not run during
-  ordinary Q&A or coding.
+  ordinary Q&A or coding. Replaces retired name mgf-okf-upgrade.
 disable-model-invocation: true
 ---
 
 # Wiki 检查与升级（跟 SPEC.md 走）
 
 权威规范 = 仓库根 `SPEC.md`（用户整文件替换）。知识包 = `wiki/`。本库剖面 = `wiki/00-索引/OKF约定.md`。
+
+本库 skill 一律 `ddove-` 开头。旧名 `mgf-okf-upgrade` 已废。
 
 **先报告、再改。** 未得到用户确认前，只输出清单，不改文件。
 
@@ -38,7 +40,7 @@ disable-model-invocation: true
 | `wiki/index.md` | 仅允许 `okf_version`；只挂分类目录 + 保留名，**不列概念** |
 | `wiki/**/index.md`（非根） | **无** frontmatter；业务目录只挂子目录 + `index_<短号>.md` |
 | `wiki/**/index_*.md` | 个人清单：可解析 YAML + `type: Index` |
-| `wiki/**/log.md` | 最新日期在上；本库根 `log.md` 只作日期索引，明细在 `_log/log_YYYY-MM-DD.md` |
+| `wiki/**/log.md` | 最新日期在上；本库根 `log.md` 只作日期索引，明细在 `_log/log_YYYY-MM-DD_<短号>.md` |
 | 其它 `*.md` | 可解析 YAML + 非空 `type` |
 
 记录：缺 frontmatter、缺 `type`、分类 index 误带 frontmatter、把 `index.md`/`log.md` 当概念、约定文中复述已废弃字段（如旧 `timestamp`、正文 `# Citations`）。
@@ -69,8 +71,8 @@ wiki okf_version: <当前>
 3. 更新 `OKF约定.md` 里与新 SPEC 冲突的句子；`resource` / `sources` 继续指向 `../../SPEC.md`。
 4. 将 `wiki/index.md` 的 `okf_version` 改为 SPEC 当前版本。
 5. 根 `index.md` 只改 `okf_version`（及新增职种目录）。不要把业务篇摊进职种 `index.md`（篇目在 `index_<短号>.md`）。
-6. 在 `wiki/_log/log_YYYY-MM-DD.md` **顶部**追加当天条目（无则新建）；根 `wiki/log.md` 若还没有该日 `##` 节则加在最上面。写：SPEC x → y，改了哪些文件。
-7. 本次升级动到的约定页：`generated.by` 可用 `process:mgf-okf-upgrade`。**不要**把业务篇的 `human:<短号>` 改成 process。扩写领域文档不在本 skill。
+6. 在 `wiki/_log/log_YYYY-MM-DD_<短号>.md` **顶部**追加当天条目（无则新建）；根 `wiki/log.md` 若还没有该日 `##` 节则加在最上面。写：SPEC x → y，改了哪些文件。
+7. 本次升级动到的约定页：`generated.by` 可用 `process:ddove-okf-upgrade`。**不要**把业务篇的 `human:<短号>` 改成 process。历史页上的 `process:mgf-okf-init` 不要改。扩写领域文档不在本 skill。
 
 不要：把 `SPEC.md` 拷进 `wiki/`；不要改 `DDoveMiniGameClient/`；不要在这次任务里扩写领域文档。
 

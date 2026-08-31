@@ -3,8 +3,9 @@ type: Playbook
 title: 异步用 UniTask
 description: 客户端异步统一 UniTask。Core 零引用；不要新开 Task / 协程当业务异步。
 tags: [程序-前, unitask, 异步]
-status: draft
+status: stable
 generated: { by: human:cjh, at: 2026-08-31T03:09:00Z }
+verified: { by: human:cjh, at: 2026-08-31T03:36:00Z }
 sources:
   - id: unitask-pkg
     resource: ../../DDoveMiniGameClient/Packages/com.cysharp.unitask@2.5.11/package.json

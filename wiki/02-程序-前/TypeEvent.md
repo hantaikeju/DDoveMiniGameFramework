@@ -3,8 +3,9 @@ type: Reference
 title: TypeEvent
 description: 独立事件机制。Architecture 组合一份；业务也可自建总线。两条总线互不相通。
 tags: [程序-前, core, event]
-status: draft
+status: stable
 generated: { by: human:cjh, at: 2026-08-28T13:10:00Z }
+verified: { by: human:cjh, at: 2026-08-31T03:36:00Z }
 sources:
   - id: ev
     resource: ../../DDoveMiniGameClient/Assets/EUFramework/Core/Mechanism/Event/EventSystem.cs
