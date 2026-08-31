@@ -65,8 +65,12 @@ rg -n "关键词" wiki/00-索引
 ## 禁区（默认不要全文 rg）
 
 - `DDoveMiniGameClient/Library/`、`Temp/`、`Logs/`、`UserSettings/`
-- `wiki/_tools/`、`wiki/_spec/`、`wiki/.obsidian/`
+- `wiki/_tools/`、`wiki/_spec/`、`wiki/_log/`、`wiki/.obsidian/`
 - 仓库根 `SPEC.md`：规范原文，不当概念检索；升级走 `mgf-okf-upgrade`
+
+## 写变更史
+
+改 wiki 或落地约定时：条目写进当天 `wiki/_log/log_YYYY-MM-DD.md`（插在该日文件顶部）。根 `wiki/log.md` 只加/保持当日 `##` 索引，不要把明细堆回去。新的一天先建日文件，再在 `log.md` 最上面加一节。
 
 ## 答案模板
 

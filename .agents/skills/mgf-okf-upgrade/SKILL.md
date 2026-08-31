@@ -29,7 +29,7 @@ disable-model-invocation: true
 
 ### 2. 扫描 bundle（跳过非概念）
 
-跳过：`wiki/_tools/`、`wiki/_spec/`、`wiki/.obsidian/`、仓库根 `SPEC.md`、`DDoveMiniGameClient/`。
+跳过：`wiki/_tools/`、`wiki/_spec/`、`wiki/_log/`、`wiki/.obsidian/`、仓库根 `SPEC.md`、`DDoveMiniGameClient/`。
 
 对 `wiki/` 下每个 `.md`：
 
@@ -37,7 +37,7 @@ disable-model-invocation: true
 |------|------|
 | `wiki/index.md` | 仅允许 `okf_version` frontmatter；正文为分组清单 |
 | `wiki/**/index.md`（非根） | **无** frontmatter；条目带描述 |
-| `wiki/**/log.md` | 最新日期在上 |
+| `wiki/**/log.md` | 最新日期在上；本库根 `log.md` 只作日期索引，明细在 `_log/log_YYYY-MM-DD.md` |
 | 其它 `*.md` | 可解析 YAML + 非空 `type` |
 
 记录：缺 frontmatter、缺 `type`、分类 index 误带 frontmatter、把 `index.md`/`log.md` 当概念、约定文中复述已废弃字段（如旧 `timestamp`、正文 `# Citations`）。
@@ -59,7 +59,7 @@ wiki okf_version: <当前>
 - ...
 ```
 
-问用户：只修合规，还是连 `okf_version` + 重生成 `index.md` + 写 `log.md` 一起做。
+问用户：只修合规，还是连 `okf_version` + 重生成 `index.md` + 写当日 `_log` 一起做。
 
 ### 4. 确认后才改
 
@@ -68,7 +68,7 @@ wiki okf_version: <当前>
 3. 更新 `OKF约定.md` 里与新 SPEC 冲突的句子；`resource` / `sources` 继续指向 `../../SPEC.md`。
 4. 将 `wiki/index.md` 的 `okf_version` 改为 SPEC 当前版本。
 5. 按各概念 `title` / `description` / `type` 重生成各层 `index.md` 清单。
-6. 在 `wiki/log.md` **顶部**追加当天条目：SPEC x → y，改了哪些文件。
+6. 在 `wiki/_log/log_YYYY-MM-DD.md` **顶部**追加当天条目（无则新建）；根 `wiki/log.md` 若还没有该日 `##` 节则加在最上面。写：SPEC x → y，改了哪些文件。
 7. `generated.by` 用 `process:mgf-okf-upgrade`，时间为现在的 UTC。
 
 不要：把 `SPEC.md` 拷进 `wiki/`；不要改 `DDoveMiniGameClient/`；不要在这次任务里扩写领域文档。

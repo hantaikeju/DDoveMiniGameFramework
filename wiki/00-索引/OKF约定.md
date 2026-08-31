@@ -22,9 +22,10 @@ sources:
 |------|------|
 | `/index.md` | 根目录清单（可含 `okf_version`，版本从当前 `SPEC.md` 读取） |
 | `/*/index.md` | 分类渐进展开，**无** frontmatter |
-| `/log.md` | 变更史，最新在上 |
+| `/log.md` | 变更史索引，最新日期在上（SPEC 保留名） |
+| `/_log/log_YYYY-MM-DD.md` | 当日明细；非概念 |
 | 其它 `*.md` | **概念**：必须有 YAML frontmatter，且含非空 `type` |
-| `_tools/` `_spec/` `.obsidian/` | 非概念，默认不检索 |
+| `_tools/` `_spec/` `_log/` `.obsidian/` | 非概念，默认不检索 |
 | 仓库根 `SPEC.md` | 规范原文，不是概念，不进 bundle 扫描 |
 
 Concept ID = 相对 `wiki/` 的路径，去掉 `.md`。例如 `/00-索引/OKF约定`。
@@ -83,7 +84,7 @@ rg -n "^type: Playbook" wiki/00-索引
 
 4. **读正文**：`type: Stub` 或 `wiki_stub: true` → 跟 `sources[].resource` 与文内权威链接，不要把 stub 当全文。
 5. **链接**：优先 bundle 根路径 `/00-索引/OKF约定.md`。
-6. **禁区**：`DDoveMiniGameClient/Library`、`PackageCache`、`_tools/`、`_spec/`、仓库根 `SPEC.md`（规范，不当概念检索）。
+6. **禁区**：`DDoveMiniGameClient/Library`、`PackageCache`、`_tools/`、`_spec/`、`_log/`、仓库根 `SPEC.md`（规范，不当概念检索）。
 
 ## 答案怎么写
 
@@ -114,5 +115,16 @@ sources:
 人确认后写 `verified.by: human:<id>`。不要用 `index.md` / `log.md` 当概念文件名。
 
 替换仓库根 `SPEC.md` 后，主动调用 skill `mgf-okf-upgrade` 做检查与升级。不要在日常问答里改合规字段。
+
+## 变更史（按日分册）
+
+SPEC §9 保留名仍是根 `wiki/log.md`（ISO 日期、最新在上）。本库不把全部条目堆进该文件，以免越来越难翻。
+
+| 文件 | 写什么 |
+|------|--------|
+| `wiki/log.md` | 只作日期索引：`## YYYY-MM-DD` + 链到当日分册 |
+| `wiki/_log/log_YYYY-MM-DD.md` | 当日条目（`**Update**` / `**Add**` 等），**当天新条目插在该日文件顶部** |
+
+新的一天：先建 `wiki/_log/log_YYYY-MM-DD.md`，再在根 `log.md` **最上面**加一节。`_log/` 与 `_tools/` 一样不当概念、不检索。
 
 [^okf-spec]: Open Knowledge Format（仓库根 SPEC.md）
