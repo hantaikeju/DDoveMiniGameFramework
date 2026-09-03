@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace EUFramework.Core
+namespace DDoveFramework.Core
 {
     public class CustomUnRegister : IUnRegister
     {

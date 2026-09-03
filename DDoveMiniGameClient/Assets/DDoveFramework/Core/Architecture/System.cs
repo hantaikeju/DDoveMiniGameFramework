@@ -1,4 +1,4 @@
-namespace EUFramework.Core
+namespace DDoveFramework.Core
 {
     public abstract class AbstractSystem : ISystem
     {

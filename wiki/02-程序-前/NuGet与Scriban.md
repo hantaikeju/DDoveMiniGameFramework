@@ -17,15 +17,15 @@ sources:
     resource: ../../DDoveMiniGameClient/Packages/com.github-glitchenzo.nugetforunity@acc1c7bc9e/package.json
     title: NuGetForUnity 4.5.0 package.json
   - id: core
-    resource: /02-程序-前/EUFramework-Core.md
-    title: EUFramework Core
+    resource: /02-程序-前/DDoveFramework-Core.md
+    title: DDoveFramework Core
 ---
 
 # NuGet 与 Scriban
 
 Concept ID：`/02-程序-前/NuGet与Scriban`。清单：[index_cjh](/02-程序-前/index_cjh.md)。
 
-编辑器代码生成用 **Scriban**。装包走 **NuGetForUnity** → nuget 源 → `Assets/Packages/` + `Assets/packages.config`。不要写进 [EUFramework Core](/02-程序-前/EUFramework-Core.md)。
+编辑器代码生成用 **Scriban**。装包走 **NuGetForUnity** → nuget 源 → `Assets/Packages/` + `Assets/packages.config`。不要写进 [DDoveFramework Core](/02-程序-前/DDoveFramework-Core.md)。
 
 当前已装：Scriban **7.2.7**（`manuallyInstalled`）及依赖。
 

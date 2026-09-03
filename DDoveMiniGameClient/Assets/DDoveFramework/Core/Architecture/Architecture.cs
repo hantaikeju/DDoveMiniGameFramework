@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace EUFramework.Core
+namespace DDoveFramework.Core
 {
     public abstract class Architecture<T> : IArchitecture where T : Architecture<T>, new()
     {
@@ -121,14 +121,29 @@ namespace EUFramework.Core
             return mContainer.Get<TSystem>();
         }
 
+        public bool TryGetSystem<TSystem>(out TSystem system) where TSystem : class, ISystem
+        {
+            return mContainer.TryGet(out system);
+        }
+
         public TModel GetModel<TModel>() where TModel : class, IModel
         {
             return mContainer.Get<TModel>();
         }
 
+        public bool TryGetModel<TModel>(out TModel model) where TModel : class, IModel
+        {
+            return mContainer.TryGet(out model);
+        }
+
         public TUtility GetUtility<TUtility>() where TUtility : class, IUtility
         {
             return mContainer.Get<TUtility>();
+        }
+
+        public bool TryGetUtility<TUtility>(out TUtility utility) where TUtility : class, IUtility
+        {
+            return mContainer.TryGet(out utility);
         }
 
         public void SendCommand<TCommand>() where TCommand : ICommand, new()

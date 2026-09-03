@@ -1,4 +1,4 @@
-namespace EUFramework.Core
+namespace DDoveFramework.Core
 {
     public interface ICommand : IBelongToArchitecture, ICanSetArchitecture, ICanGetSystem, ICanGetModel, ICanGetUtility,
         ICanSendEvent, ICanSendCommand, ICanSendQuery

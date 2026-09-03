@@ -8,10 +8,10 @@ generated: { by: human:cjh, at: 2026-08-28T11:40:00Z }
 verified: { by: human:cjh, at: 2026-08-31T03:36:00Z }
 sources:
   - id: arch
-    resource: ../../DDoveMiniGameClient/Assets/EUFramework/Core/Architecture/Architecture.cs
+    resource: ../../DDoveMiniGameClient/Assets/DDoveFramework/Core/Architecture/Architecture.cs
     title: Architecture.cs
   - id: roles
-    resource: ../../DDoveMiniGameClient/Assets/EUFramework/Core/Architecture/CoreInterface.cs
+    resource: ../../DDoveMiniGameClient/Assets/DDoveFramework/Core/Architecture/CoreInterface.cs
     title: CoreInterface.cs
 ---
 
@@ -40,7 +40,7 @@ Command / Query 的契约在 [CommandQuery](/02-程序-前/CommandQuery.md)。�
 2. 已启动后再 Register，立即 Init
 3. `Architecture<T>.Reset()`：先 System 再 Model 调 `Deinit`，清空 IOC 与事件，丢掉单例
 
-`OnInit` 里把 `GetModel` 结果存字段，不要每帧 Get。`OnDeinit` 默认可空，有订阅再卸。
+`OnInit` 里把 `GetModel` 结果存字段，不要每帧 Get。`OnDeinit` 默认可空，有订阅再卸。必须有用 `Get*`（未注册抛）；可选读取用 `TryGetModel` / `TryGetSystem` / `TryGetUtility`，失败再 [DDoveDebug](/02-程序-前/DDoveDebug.md) `LogError`。
 
 ## 业务怎么挂
 

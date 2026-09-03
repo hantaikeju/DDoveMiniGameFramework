@@ -14,7 +14,9 @@ Concept ID：`/02-程序-前/index_cjh`。本目录里 cjh 整理的篇。别人
 
 # 概念
 
-* [EUFramework Core](EUFramework-Core.md) - Architecture 组合根 + Mechanism（Event / CommandQuery / Fsm）。无 Singleton。 `Reference`
+* [DDoveFramework Core](DDoveFramework-Core.md) - Architecture 组合根 + Mechanism（Event / CommandQuery / Fsm）+ DDoveDebug。无 Singleton。 `Reference`
+* [DDoveDebug](DDoveDebug.md) - Core 统一日志。纯字符串，或 title + `[Title] (key, value)`。Log 受 DEBUG 条件编译。 `Reference`
+* [DDoveRes](DDoveRes.md) - YooAsset 运行时门面。建包、初始化、LoadAssetAsync。失败打 DDoveDebug，不进 IOC。 `Reference`
 * [异步用 UniTask](UniTask异步.md) - 客户端异步统一 UniTask。Core 零引用。 `Playbook`
 * [NuGet 与 Scriban](NuGet与Scriban.md) - nuget 源装 Scriban。UnityTls / 梯子代理。与 manifest（UPM）无关。 `Playbook`
 * [UPM 落地](UPM落地.md) - GitHub URL 装完后拷一份到 `Packages/`，无科学上网不再 download err。 `Playbook`

@@ -8,7 +8,7 @@ generated: { by: human:cjh, at: 2026-08-28T13:10:00Z }
 verified: { by: human:cjh, at: 2026-08-31T03:36:00Z }
 sources:
   - id: ev
-    resource: ../../DDoveMiniGameClient/Assets/EUFramework/Core/Mechanism/Event/EventSystem.cs
+    resource: ../../DDoveMiniGameClient/Assets/DDoveFramework/Core/Mechanism/Event/EventSystem.cs
     title: EventSystem.cs
 ---
 

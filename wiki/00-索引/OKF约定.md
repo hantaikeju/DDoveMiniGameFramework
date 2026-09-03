@@ -163,7 +163,7 @@ sources:
 | `02-程序-前/index.md` | 子目录 + `index_cjh` 等 | 新人加入、或新建主题子目录 |
 | `02-程序-前/index_cjh.md` | cjh 的篇 | **只有 cjh** 加/改名/删自己的篇时改 |
 
-同一职种两个人各改各的 `index_<短号>.md`，不会撞。篇文件仍按主题命名（`EUFramework-Core.md`），`generated.by: human:cjh`。短号花名册：[整理人](/00-索引/整理人.md)。
+同一职种两个人各改各的 `index_<短号>.md`，不会撞。篇文件仍按主题命名（`DDoveFramework-Core.md`），`generated.by: human:cjh`。短号花名册：[整理人](/00-索引/整理人.md)。
 
 不要日常「重生成各层 index」。目录挤了再按**主题**拆子目录，不要按人拆目录。
 

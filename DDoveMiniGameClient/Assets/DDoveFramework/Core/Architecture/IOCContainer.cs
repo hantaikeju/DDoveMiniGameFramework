@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace EUFramework.Core
+namespace DDoveFramework.Core
 {
     /// <summary>
     /// 按注册时的泛型类型存一份实例。不是构造注入容器。

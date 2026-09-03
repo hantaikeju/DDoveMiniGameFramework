@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace EUFramework.Core
+namespace DDoveFramework.Core
 {
     public interface IUnRegister
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace EUFramework.Core
+namespace DDoveFramework.Core
 {
     #region Rule
 
@@ -24,6 +24,11 @@ namespace EUFramework.Core
         {
             return self.GetArchitecture().GetModel<T>();
         }
+
+        public static bool TryGetModel<T>(this ICanGetModel self, out T model) where T : class, IModel
+        {
+            return self.GetArchitecture().TryGetModel(out model);
+        }
     }
 
     public interface ICanGetSystem : IBelongToArchitecture
@@ -36,6 +41,11 @@ namespace EUFramework.Core
         {
             return self.GetArchitecture().GetSystem<T>();
         }
+
+        public static bool TryGetSystem<T>(this ICanGetSystem self, out T system) where T : class, ISystem
+        {
+            return self.GetArchitecture().TryGetSystem(out system);
+        }
     }
 
     public interface ICanGetUtility : IBelongToArchitecture
@@ -47,6 +57,11 @@ namespace EUFramework.Core
         public static T GetUtility<T>(this ICanGetUtility self) where T : class, IUtility
         {
             return self.GetArchitecture().GetUtility<T>();
+        }
+
+        public static bool TryGetUtility<T>(this ICanGetUtility self, out T utility) where T : class, IUtility
+        {
+            return self.GetArchitecture().TryGetUtility(out utility);
         }
     }
 
@@ -158,8 +173,11 @@ namespace EUFramework.Core
     public interface IArchitecture
     {
         T GetModel<T>() where T : class, IModel;
+        bool TryGetModel<T>(out T model) where T : class, IModel;
         T GetSystem<T>() where T : class, ISystem;
+        bool TryGetSystem<T>(out T system) where T : class, ISystem;
         T GetUtility<T>() where T : class, IUtility;
+        bool TryGetUtility<T>(out T utility) where T : class, IUtility;
         IUnRegister RegisterEvent<T>(Action<T> onEvent);
         void UnRegisterEvent<T>(Action<T> onEvent);
         void SendEvent<T>() where T : new();

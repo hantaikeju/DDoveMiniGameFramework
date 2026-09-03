@@ -11,11 +11,11 @@ sources:
     resource: ../../DDoveMiniGameClient/Packages/com.cysharp.unitask@2.5.11/package.json
     title: UniTask 2.5.11 package.json
   - id: core-asmdef
-    resource: ../../DDoveMiniGameClient/Assets/EUFramework/Core/EUFramework.Core.asmdef
-    title: EUFramework.Core.asmdef
+    resource: ../../DDoveMiniGameClient/Assets/DDoveFramework/Core/DDoveFramework.Core.asmdef
+    title: DDoveFramework.Core.asmdef
   - id: core
-    resource: /02-程序-前/EUFramework-Core.md
-    title: EUFramework Core
+    resource: /02-程序-前/DDoveFramework-Core.md
+    title: DDoveFramework Core
 ---
 
 # 异步用 UniTask
@@ -54,7 +54,7 @@ public async UniTask<GameObject> OpenAsync(CancellationToken ct)
 - `async void`（对不上 Unity 签名时才用；能写 `UniTaskVoid` 就写）
 - `Task.Run` / 线程池跑游戏逻辑或碰 Unity API
 - 同一条调用链里混用 `Task` 和 `UniTask`（只在边界转一次）
-- 为了 `await` 去改 [EUFramework.Core](/02-程序-前/EUFramework-Core.md) 的程序集
+- 为了 `await` 去改 [DDoveFramework.Core](/02-程序-前/DDoveFramework-Core.md) 的程序集
 
 第三方或平台 SDK 只给 `Task`：在**接入层** `.AsUniTask()`（或等价）再往上抛。业务不要直接 `await Task`。
 
@@ -62,9 +62,9 @@ Tween / 粒子不要包成 `ITween`。库自带 UniTask 扩展（如 DOTween）�
 
 ## 和 Core
 
-`EUFramework.Core`：`references` 空，`noEngineReferences: true`，**不引用** UniTask。
+`DDoveFramework.Core`：`references` 空，`noEngineReferences: false`（只为 [DDoveDebug](/02-程序-前/DDoveDebug.md)），**不引用** UniTask。
 
-Command / Query / Event / Fsm 保持同步。谁异步谁在自己的 asmdef 里引用 `UniTask`：EURes、启动、面板 `OpenAsync`、业务 System。
+Command / Query / Event / Fsm 保持同步。谁异步谁在自己的 asmdef 里引用 `UniTask`：DDoveRes、启动、面板 `OpenAsync`、业务 System。
 
 ## 包
 

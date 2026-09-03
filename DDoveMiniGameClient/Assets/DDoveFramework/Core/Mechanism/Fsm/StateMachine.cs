@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace EUFramework.Core
+namespace DDoveFramework.Core
 {
     public class StateMachine
     {
@@ -43,7 +43,8 @@ namespace EUFramework.Core
 
             if (mCurNode == null)
             {
-                throw new Exception($"Not found entry node: {entryNode}");
+                DDoveDebug.LogError("Fsm", ("entryNode", entryNode));
+                return;
             }
 
             mCurNode.OnEnter();
@@ -91,6 +92,7 @@ namespace EUFramework.Core
             var node = TryGetNode(nodeName);
             if (node == null)
             {
+                DDoveDebug.LogError("Fsm", ("nodeName", nodeName));
                 return;
             }
 

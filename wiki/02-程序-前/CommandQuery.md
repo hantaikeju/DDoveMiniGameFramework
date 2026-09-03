@@ -8,10 +8,10 @@ generated: { by: human:cjh, at: 2026-08-31T01:48:00Z }
 verified: { by: human:cjh, at: 2026-08-31T03:36:00Z }
 sources:
   - id: cmd
-    resource: ../../DDoveMiniGameClient/Assets/EUFramework/Core/Mechanism/CommandQuery/Command.cs
+    resource: ../../DDoveMiniGameClient/Assets/DDoveFramework/Core/Mechanism/CommandQuery/Command.cs
     title: Command.cs
   - id: query
-    resource: ../../DDoveMiniGameClient/Assets/EUFramework/Core/Mechanism/CommandQuery/Query.cs
+    resource: ../../DDoveMiniGameClient/Assets/DDoveFramework/Core/Mechanism/CommandQuery/Query.cs
     title: Query.cs
 ---
 

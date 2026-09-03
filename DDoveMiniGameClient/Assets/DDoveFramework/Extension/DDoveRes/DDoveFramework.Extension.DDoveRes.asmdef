@@ -1,7 +1,11 @@
 {
-    "name": "EUFramework.Core",
-    "rootNamespace": "EUFramework.Core",
-    "references": [],
+    "name": "DDoveFramework.Extension.DDoveRes",
+    "rootNamespace": "DDoveFramework.Extension.DDoveRes",
+    "references": [
+        "DDoveFramework.Core",
+        "UniTask",
+        "YooAsset"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
@@ -10,5 +14,5 @@
     "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],
-    "noEngineReferences": true
+    "noEngineReferences": false
 }

@@ -1,15 +1,15 @@
 ---
 type: Reference
-title: EUFramework Core
-description: Architecture 组合根 + Mechanism（Event / CommandQuery / Fsm）。无 Singleton。
+title: DDoveFramework Core
+description: Architecture 组合根 + Mechanism（Event / CommandQuery / Fsm）+ DDoveDebug。无 Singleton。
 tags: [程序-前, core]
 status: stable
 generated: { by: human:cjh, at: 2026-08-31T02:00:00Z }
 verified: { by: human:cjh, at: 2026-08-31T03:36:00Z }
 sources:
   - id: core-asmdef
-    resource: ../../DDoveMiniGameClient/Assets/EUFramework/Core/EUFramework.Core.asmdef
-    title: EUFramework.Core.asmdef
+    resource: ../../DDoveMiniGameClient/Assets/DDoveFramework/Core/DDoveFramework.Core.asmdef
+    title: DDoveFramework.Core.asmdef
   - id: ioc
     resource: /02-程序-前/IOC容器.md
     title: IOC 容器
@@ -22,14 +22,18 @@ sources:
   - id: cq
     resource: /02-程序-前/CommandQuery.md
     title: Command 与 Query
+  - id: eudebug
+    resource: /02-程序-前/DDoveDebug.md
+    title: DDoveDebug
 ---
 
-# EUFramework Core
+# DDoveFramework Core
 
-Concept ID：`/02-程序-前/EUFramework-Core`。目录：`DDoveMiniGameClient/Assets/EUFramework/Core/`。
+Concept ID：`/02-程序-前/DDoveFramework-Core`。目录：`DDoveMiniGameClient/Assets/DDoveFramework/Core/`。
 
 ```
-EUFramework/Core/
+DDoveFramework/Core/
+  DDoveDebug.cs                 统一日志；直接 UnityEngine.Debug
   Architecture/              组合根：IOC、角色；持有 Event；执行 CommandQuery
   Mechanism/                 给业务/Kit 用的机制封装（不是 GoF 清单）
     Event/
@@ -65,6 +69,7 @@ Mechanism 内部仍是三套，规则不变：
 | 情况 | 放哪 |
 |---|---|
 | 谁能 Get / Init / 角色 | `Architecture/` |
+| 统一日志 | `DDoveDebug.cs`（全程序集依赖） |
 | 新的可复用机制（第二处真实要用） | `Mechanism/Xxx/`，按职责命名 |
 | Res / UI / 广告 / 存档 | `Extension/` |
 | 备忘录、对象池、Tween、Singleton | 不进 Core |
@@ -78,14 +83,15 @@ Mechanism 内部仍是三套，规则不变：
 | 事件 | [TypeEvent](/02-程序-前/TypeEvent.md) |
 | 命令 / 查询 | [CommandQuery](/02-程序-前/CommandQuery.md) |
 | 状态机 | [CoreFsm](/02-程序-前/CoreFsm.md) |
+| 日志 | [DDoveDebug](/02-程序-前/DDoveDebug.md) |
 
-程序集：`EUFramework.Core`，`references` 空，`noEngineReferences: true`。
+程序集：`DDoveFramework.Core`，`references` 空，`noEngineReferences: false`（只为 `UnityEngine.Debug`）。仍不引用 UniTask / Yoo / Kit。
 
 `.meta` **不要手写**。挪已有资源时带着 Unity 生成的 `.meta` 一起挪。
 
 ## 边界
 
-进 Core：纯 C# 规则。  
+进 Core：规则与机制。例外：[DDoveDebug](/02-程序-前/DDoveDebug.md) 直接调 `UnityEngine.Debug`，不为换引擎做绑定。  
 不进 Core：Kit、平台 SDK、业务 Model/System、效果库、`Singleton<T>`、UniTask。业务集合用 Model 内 `Dictionary`，不进 IOC。
 
 客户端异步约定见 [异步用 UniTask](/02-程序-前/UniTask异步.md)。Core 本身保持同步。

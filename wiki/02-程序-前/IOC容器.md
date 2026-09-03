@@ -8,15 +8,15 @@ generated: { by: human:cjh, at: 2026-08-28T11:13:00Z }
 verified: { by: human:cjh, at: 2026-08-31T03:36:00Z }
 sources:
   - id: ioc-src
-    resource: ../../DDoveMiniGameClient/Assets/EUFramework/Core/Architecture/IOCContainer.cs
+    resource: ../../DDoveMiniGameClient/Assets/DDoveFramework/Core/Architecture/IOCContainer.cs
     title: IOCContainer.cs
 ---
 
 # IOC 容器
 
-Concept ID：`/02-程序-前/IOC容器`。权威实现：[IOCContainer.cs](../../DDoveMiniGameClient/Assets/EUFramework/Core/Architecture/IOCContainer.cs)。结论与代码冲突以代码为准。
+Concept ID：`/02-程序-前/IOC容器`。权威实现：[IOCContainer.cs](../../DDoveMiniGameClient/Assets/DDoveFramework/Core/Architecture/IOCContainer.cs)。结论与代码冲突以代码为准。
 
-`EUFramework.Core` 的实例仓库。Architecture / GetModel / GetSystem 只会调它。业务不要直接 new 一份当全局服务定位器。
+`DDoveFramework.Core` 的实例仓库。Architecture / GetModel / GetSystem 只会调它。业务不要直接 new 一份当全局服务定位器。
 
 ## 做什么
 
@@ -51,11 +51,11 @@ container.Get<Foo>();          // 抛：没按 Foo 注册
 
 ## 程序集
 
-路径：`DDoveMiniGameClient/Assets/EUFramework/Core/Architecture/`。
+路径：`DDoveMiniGameClient/Assets/DDoveFramework/Core/Architecture/`。
 
-- `asmdef`：`EUFramework.Core`，`rootNamespace: EUFramework.Core`
+- `asmdef`：`DDoveFramework.Core`，`rootNamespace: DDoveFramework.Core`
 - `references` 空
-- `noEngineReferences: true`（纯 C#，不引用 UnityEngine）
+- `noEngineReferences: false`（[DDoveDebug](/02-程序-前/DDoveDebug.md) 用 `UnityEngine.Debug`；`references` 仍空）
 
 ## 验收
 
@@ -66,4 +66,4 @@ container.Get<Foo>();          // 抛：没按 Foo 注册
 5. `Clear()` 后 `Get<A>()` 抛
 6. `TryGet` 未注册为 `false`，不抛
 
-Architecture 已落地，见 [Architecture与角色](/02-程序-前/Architecture与角色.md)。业务通过 `RegisterModel` / `GetModel` 用这份容器，不要自己 `new IOCContainer()`。
+Architecture 已落地，见 [Architecture与角色](/02-程序-前/Architecture与角色.md)。业务通过 `RegisterModel` / `GetModel` 用这份容器，不要自己 `new IOCContainer()`。不想打断用 `TryGet` + [DDoveDebug](/02-程序-前/DDoveDebug.md) `LogError`，不要把 `Get` 改成返回 null。
