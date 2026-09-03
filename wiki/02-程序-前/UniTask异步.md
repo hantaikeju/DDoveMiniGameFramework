@@ -71,9 +71,9 @@ Command / Query / Event / Fsm 保持同步。谁异步谁在自己的 asmdef 里
 | 项 | 约定 |
 |----|------|
 | 目录 | `Packages/com.cysharp.unitask@2.5.11/`（带 semver） |
-| 进 Git | 整夹提交；别人 clone 就能编 |
-| manifest | 不要留 Git URL。`file:` 可有可无 |
+| 进 Git | 整夹提交；别人 clone 不必再拉 GitHub |
+| 落地 | Package Manager 装完后拷到 `Packages/`，见 [UPM 落地](/02-程序-前/UPM落地.md) |
 | 升级 | 整夹替换，改文件夹名上的版本号 |
-| 不要 | 再往 `Assets/` 拷一份；和 Git URL 两套源并存 |
+| 不要 | 再往 `Assets/` 拷一份 |
 
-官方 Git URL 只给本机第一次取包，取完嵌进 `Packages/` 后从 manifest 去掉。
+manifest 的远程条目留给不存本地夹的人自动拉，不要改成 `file:`、不要删。
