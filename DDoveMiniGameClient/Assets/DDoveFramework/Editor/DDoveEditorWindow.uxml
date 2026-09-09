@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement name="Root" class="ddove-root">
+        <uie:Toolbar name="Toolbar" class="ddove-toolbar">
+            <ui:Button name="Toggle" class="ddove-toggle" tooltip="收起 / 展开总览" />
+            <ui:Label text="DDove" class="ddove-toolbar-title" />
+        </uie:Toolbar>
+        <ui:VisualElement name="Body" class="ddove-body">
+            <ui:VisualElement name="Nav" class="ddove-nav" />
+            <ui:ScrollView name="Content" mode="Vertical" class="ddove-content" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

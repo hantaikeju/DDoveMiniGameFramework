@@ -72,6 +72,8 @@ Mechanism 内部仍是三套，规则不变：
 | 统一日志 | `DDoveDebug.cs`（全程序集依赖） |
 | 新的可复用机制（第二处真实要用） | `Mechanism/Xxx/`，按职责命名 |
 | Res / UI / 广告 / 存档 | `Extension/` |
+| Editor 总门面 | `DDoveFramework/Editor/`，UIToolkit；面板用 `[DDoveEditorPanel]` 挂，见 [DDove Editor](/02-程序-前/DDoveEditor.md) |
+| 该 Kit 的 Editor 面板 | `Extension/Xxx/Editor/`，挂到总门面；SO Inspector 仍在这里 |
 | 备忘录、对象池、Tween、Singleton | 不进 Core |
 
 ## 已落地

@@ -1,0 +1,19 @@
+{
+    "name": "DDoveFramework.Extension.DDoveBoot",
+    "rootNamespace": "DDoveFramework.Extension.DDoveBoot",
+    "references": [
+        "DDoveFramework.Core",
+        "DDoveFramework.Extension.DDoveRes",
+        "UniTask",
+        "YooAsset"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

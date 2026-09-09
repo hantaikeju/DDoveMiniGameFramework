@@ -47,9 +47,21 @@ Concept ID = 相对 `wiki/` 的路径，去掉 `.md`。例如 `/00-索引/OKF约
 
 未知 `type` 当普通概念，不拒绝。
 
+## 两层 wiki
+
+同一 bundle，两套主题，不要混写进一篇。
+
+| 层 | 路径 | 写什么 | `tags` |
+|----|------|--------|--------|
+| **工程** | `01`–`04` | 本游戏 / 框架：运行时、协议、配表、美术 | 职种：`策划` / `程序-前` / `程序-后` / `美术` |
+| **AI 用法** | `00-索引/Agent/` | 仓库 `ddove-*`、grill / 需求稿流程、个人 Cursor skill（如 show-me） | `索引` + `agent` |
+| **约定 / 合规** | `00-索引` 根（不含 `Agent/`） | OKF、检索、升级、整理人 | `索引` + `okf` |
+
+问答：工程收窄 `wiki/02-程序-前` 等；skill / grill / Agent 收窄 `wiki/00-索引/Agent`。约定只读本页。地图：[Agent 总览](Agent/Agent总览.md)。
+
 ## 分类：按职种，四个业务目录
 
-`00-索引` 只给 Agent 用。业务文档只进下面四个目录，谁主写就放谁那里。
+`00-索引` 只给约定 / AI 用法。**工程文档**只进下面四个目录，谁主写就放谁那里。
 
 | 目录 | 放什么 |
 |------|--------|
@@ -57,8 +69,6 @@ Concept ID = 相对 `wiki/` 的路径，去掉 `.md`。例如 `/00-索引/OKF约
 | `02-程序-前` | 客户端：运行时、UI、SDK、出包 |
 | `03-程序-后` | 服务端：协议、校验、存档 |
 | `04-美术` | 命名、尺寸、导入、图集 |
-
-`tags` 与目录一致：`策划` / `程序-前` / `程序-后` / `美术`。
 
 前后都要写的，各放一篇在自己目录，互相链过去，不要在一边复制另一边的正文。
 
@@ -93,7 +103,10 @@ Concept ID = 相对 `wiki/` 的路径，去掉 `.md`。例如 `/00-索引/OKF约
 ```bash
 rg -n -g "*.md" -g "!_log/**" -g "!_tools/**" -g "!_spec/**" "^type: |^title: |^tags: |^status: |关键词" wiki
 rg -n -g "!_log/**" "关键词" wiki/02-程序-前
+rg -n -g "!_log/**" "关键词" wiki/00-索引/Agent
 ```
+
+工程收窄 `01`–`04`；AI 用法收窄 `wiki/00-索引/Agent`。
 
 3. **读正文**：`type: Stub` 或 `wiki_stub: true` → 跟 `sources[].resource` 与文内权威链接，不要把 stub 当全文。
 4. **链接**：优先 bundle 根路径 `/00-索引/OKF约定.md`。约定只读本页；`检索指南` / `来源说明` 是摘抄，问答不必先开。
@@ -143,7 +156,7 @@ sources:
 
 不要用 `index.md` / `log.md` 当概念文件名。文件名贴近 `title`，不要「文件叫 Core工具、title 叫 Core Fsm」。
 
-**生产走主动 skill，不要在问答里顺手建篇。** 本库 skill 一律 `ddove-`。新建：`/ddove-wiki-create`。改起草/正式/废弃：`/ddove-wiki-change-state`。问答检索用 `ddove-wiki`。
+**生产走主动 skill，不要在问答里顺手建篇。** 本库 skill 一律 `ddove-`。不知道用哪个：`/ddove-help`。只检索：`ddove-wiki`。问答 / 排障 / 改代码：`ddove-work`。需求拷问：`/ddove-grill`。新建：`/ddove-wiki-create`。改起草/正式/废弃：`/ddove-wiki-change-state`。写/改 Agent：`ddove-writing-for-agents`。需求稿生命周期见 [需求稿工作流](Agent/需求稿工作流.md)。工程篇进 `01`–`04`；AI 用法进 `00-索引/Agent/`。
 
 加一篇（`ddove-wiki-create` 已按此做）：先对该目录 grep `title` / 文件名，避免重复篇。再新增该 `.md`（`generated.by: human:<短号>`），并在**该短号**的 `index_<短号>.md` 补一条。不要改根 `/index.md`。职种 `index.md` 只在新人第一次出现时加一行。当日 `_log` 照常写。`00-索引` 仍可把约定篇直接列在该目录 `index.md`（改的人少）。
 

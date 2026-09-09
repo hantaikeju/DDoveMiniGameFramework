@@ -27,3 +27,5 @@ disable-model-invocation: true
 6. **检查**：`py -3 scripts/check_wiki.py`（或 `python scripts/check_wiki.py`）。
 
 不要改根 `wiki/index.md`。不要重生成各层 index。新建篇用 `ddove-wiki-create`。
+
+完成：`status` 已写、当日 `_log` 已记、`check_wiki.py` 通过。

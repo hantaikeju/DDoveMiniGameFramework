@@ -18,6 +18,6 @@ Concept ID：`/02-程序-前/CoreFsm`。目录：`Core/Mechanism/Fsm/`。
 
 `IStateNode`：`OnCreate` / `OnEnter` / `OnUpdate` / `OnExit`。黑板是 `string → object`。节点键为类型全名。`Run` / `ChangeState` 找不到节点则 [DDoveDebug](/02-程序-前/DDoveDebug.md) `LogError` 并 return，不抛。`AddNode(null)`、空节点名仍抛。
 
-给 DDoveRes 补丁这类分步流程用。玩法状态用 Model 字段或枚举，不必上这台机器。
+可给「小批预下要重试 / 进度」的短链用。小游戏**不**用它做整包启动下载，见 [DDoveRes 按需加载](/02-程序-前/DDoveRes按需加载.md)。玩法状态用 Model 字段或枚举，不必上这台机器。
 
 Core **不提供** `Singleton<T>`。全局入口只有 `Architecture<T>.Interface`。Kit 用静态门面，不继承单例基类。
