@@ -53,6 +53,7 @@ DDoveMiniGameClient/Packages/com.xxx@版本或hash/
 |---|---|
 | UniTask | `Packages/com.cysharp.unitask@2.5.11/` |
 | NuGetForUnity | `Packages/com.github-glitchenzo.nugetforunity@acc1c7bc9e/` |
+| PrimeTween | `Packages/com.kyrylokuzyk.primetween@1.4.11/`，见 [PrimeTween](/02-程序-前/PrimeTween.md) |
 
 用法见 [异步用 UniTask](/02-程序-前/UniTask异步.md)。NuGetForUnity 只是工具；Scriban 仍走 nuget，见 [NuGet 与 Scriban](/02-程序-前/NuGet与Scriban.md)。
 

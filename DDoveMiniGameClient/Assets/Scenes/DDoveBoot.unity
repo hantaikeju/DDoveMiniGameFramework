@@ -151,7 +151,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8e3a2b14c5d6789e0f1a2b3c4d5e6f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _resInitInfo: {fileID: 11400000, guid: 9a4d2b3c5e6f708192a3b4c5d6e7f809, type: 2}
   _launchSceneLocation: Launch
 --- !u!4 &1281760861
 Transform:

@@ -35,7 +35,7 @@ DDoveDebug.LogError("IOC", ("type", typeof(PlayerModel).FullName));
 
 ```
 package not created
-[DDoveRes] (location, UI/Home) (package, DefaultPackage)
+[DDoveRes] (location, WndHome) (package, DefaultPackage)
 [IOC] (type, DDoveFramework.Core.PlayerModel)
 ```
 

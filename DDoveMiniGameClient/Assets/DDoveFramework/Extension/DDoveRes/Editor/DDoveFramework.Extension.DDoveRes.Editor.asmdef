@@ -4,6 +4,7 @@
     "references": [
         "DDoveFramework.Extension.DDoveRes",
         "DDoveFramework.Editor",
+        "YooAsset",
         "YooAsset.Editor"
     ],
     "includePlatforms": [

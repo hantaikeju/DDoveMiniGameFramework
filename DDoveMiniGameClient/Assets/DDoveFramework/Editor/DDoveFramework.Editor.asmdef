@@ -1,7 +1,9 @@
 {
     "name": "DDoveFramework.Editor",
     "rootNamespace": "DDoveFramework.Editor",
-    "references": [],
+    "references": [
+        "DDoveFramework.Core"
+    ],
     "includePlatforms": [
         "Editor"
     ],

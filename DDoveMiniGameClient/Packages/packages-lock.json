@@ -12,6 +12,12 @@
       "source": "embedded",
       "dependencies": {}
     },
+    "com.kyrylokuzyk.primetween": {
+      "version": "file:com.kyrylokuzyk.primetween@1.4.11",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.tuyoogame.yooasset": {
       "version": "file:com.tuyoogame.yooasset@3.0.5",
       "depth": 0,

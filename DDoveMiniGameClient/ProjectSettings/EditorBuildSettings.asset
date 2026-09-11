@@ -7,5 +7,5 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/DDoveBoot.unity
-    guid: b7c6d5e4f3a29180706050403020100
+    guid: b7c6d5e4f3a291807060504030201000
   m_configObjects: {}

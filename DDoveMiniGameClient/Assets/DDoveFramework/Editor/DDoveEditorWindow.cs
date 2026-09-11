@@ -26,7 +26,7 @@ namespace DDoveFramework.Editor
         {
             var window = GetWindow<DDoveEditorWindow>();
             window.titleContent = new GUIContent("DDove");
-            window.minSize = new Vector2(880f, 520f);
+            window.minSize = new Vector2(1120f, 720f);
         }
 
         private void CreateGUI()
@@ -55,7 +55,7 @@ namespace DDoveFramework.Editor
 
             _toggle = root.Q<Button>("Toggle");
             _nav = root.Q<VisualElement>("Nav");
-            _content = root.Q<ScrollView>("Content");
+            _content = root.Q<VisualElement>("Content");
 
             SetupToggle();
             ApplyNavCollapsed(false);
@@ -68,6 +68,16 @@ namespace DDoveFramework.Editor
             }
 
             Select(FindInitialIndex());
+        }
+
+        private void OnFocus()
+        {
+            if (_content == null || _selectedIndex < 0)
+            {
+                return;
+            }
+
+            Select(_selectedIndex);
         }
 
         private void SetupToggle()
@@ -162,8 +172,21 @@ namespace DDoveFramework.Editor
             _content.Add(head);
 
             var host = new VisualElement();
+            host.AddToClassList("ddove-page-host");
             _content.Add(host);
-            DDoveEditorRegistry.Create(entry).Build(host);
+
+            var panel = DDoveEditorRegistry.Create(entry);
+            if (entry.Id == "hotbox")
+            {
+                panel.Build(host);
+                return;
+            }
+
+            var scroll = new ScrollView(ScrollViewMode.Vertical);
+            scroll.horizontalScrollerVisibility = ScrollerVisibility.Hidden;
+            scroll.style.flexGrow = 1;
+            host.Add(scroll);
+            panel.Build(scroll);
         }
 
         private void ShowEmpty()

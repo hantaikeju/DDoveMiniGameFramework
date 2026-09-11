@@ -34,7 +34,7 @@ Concept ID：`/02-程序-前/DDoveBoot`。权威实现：[DDoveBootLogic.cs](../
 | 场景 | 路径 | Build Settings | Yoo 收集器 |
 |------|------|----------------|------------|
 | 起步 `DDoveBoot` | `Assets/Scenes/DDoveBoot.unity` | **必须，index 0** | **不要进** |
-| 真实入口（默认 location `Launch`） | Yoo 收集目录 | **不要进** | **必须进** |
+| 真实入口（默认 location `Launch`） | `Assets/GameRes/Scenes/Launch.unity` | **不要进** | **必须进**（`DefaultPackage` / Scene / tag `launch`） |
 
 `DDoveBoot` 可以、也应该直接挂在 `Assets/Scenes/`。引擎只能先打开 Build Settings 里的起步场景；包初始化完再 `LoadSceneAsync`。不要把 Boot 打进 Yoo Builtin，也不要放 `Resources/`。
 
@@ -48,7 +48,7 @@ DDoveResKit.InitializeAsync()
   → OnExtensionsReadyAsync（默认 LoadScene Launch，业务可覆写）
 ```
 
-Inspector：`_launchSceneLocation`（框架工程占位；正式游戏应由业务面板进 Launch）。包名 / PlayMode 不在 Boot 上填，见 [DDoveRes](/02-程序-前/DDoveRes.md)。
+启动场景、包名、PlayMode **不在** Boot Inspector 上填。Boot 读 [DDoveResInitInfo](/02-程序-前/DDoveRes配置与使用.md)：`LaunchSceneLocation` 空则回退 `Launch`。见 [DDoveRes](/02-程序-前/DDoveRes.md)。
 
 资源 Init 失败则 return。场景加载失败 [DDoveDebug](/02-程序-前/DDoveDebug.md) `LogError`，`title` 固定 `DDoveBoot`。取消走 `CancellationToken`。
 
@@ -60,4 +60,4 @@ Inspector：`_launchSceneLocation`（框架工程占位；正式游戏应由业�
 
 ## 还没有
 
-Host / Web 要版本与清单、进度 UI、业务 Architecture。不接整包下载 Fsm；按需约定见 [DDoveRes 按需加载](/02-程序-前/DDoveRes按需加载.md)。
+Host / Web 要版本与清单、进度 UI。业务 Architecture 已由 `GameLaunch` 碰 `Interface`，见 [Architecture 自动注册](/02-程序-前/Architecture自动注册.md)。不接整包下载 Fsm；按需约定见 [DDoveRes 按需加载](/02-程序-前/DDoveRes按需加载.md)。

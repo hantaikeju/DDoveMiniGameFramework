@@ -19,7 +19,7 @@ sources:
 
 Concept ID：`/02-程序-前/Architecture与角色`。权威实现见 `sources`。与代码冲突以代码为准。
 
-业务写一个 `GameArchitecture : Architecture<GameArchitecture>`，在 `Init()` 里 Register。实例存在 [IOC 容器](/02-程序-前/IOC容器.md) 里。业务不要 `new IOCContainer()`。
+业务根类仍是 `GameArchitecture : Architecture<GameArchitecture>`。怎么进根见 [Architecture 自动注册](/02-程序-前/Architecture自动注册.md)：挂特性，Editor 生成 `Init()`。不要手写 `GameArchitecture`。实例存在 [IOC 容器](/02-程序-前/IOC容器.md) 里。业务不要 `new IOCContainer()`。
 
 ## 角色
 
@@ -44,16 +44,12 @@ Command / Query 的契约在 [CommandQuery](/02-程序-前/CommandQuery.md)。�
 
 ## 业务怎么挂
 
+怎么进根见 [Architecture 自动注册](/02-程序-前/Architecture自动注册.md)：挂 `[DDoveBindModel]` / `[DDoveBindSystem]` / `[DDoveBindUtility]`，不要手写 `GameArchitecture`。生成的 `Init()` 仍是：
+
 ```csharp
-public class GameArchitecture : Architecture<GameArchitecture>
-{
-    protected override void Init()
-    {
-        RegisterUtility(new GameSaveUtility());
-        RegisterModel(new PlayerModel());
-        RegisterSystem(new PlayerSystem());
-    }
-}
+RegisterUtility(new GameSaveUtility());
+RegisterModel(new PlayerModel());
+RegisterSystem(new PlayerSystem());
 ```
 
 面板实现 `IController`，`GetArchitecture()` 返回 `GameArchitecture.Interface`。

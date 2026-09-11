@@ -24,7 +24,7 @@ Concept ID：`/02-程序-前/UniTask异步`。清单：[index_cjh](/02-程序-�
 
 包：`DDoveMiniGameClient/Packages/com.cysharp.unitask@2.5.11`（嵌入 UPM，**2.5.11**）。
 
-客户端（EU Kit、启动、业务热更）异步统一 `Cysharp.Threading.Tasks.UniTask`。不要再开一套 `Task` / `IEnumerator` 业务接口。
+客户端（Kit、启动、业务）异步统一 `Cysharp.Threading.Tasks.UniTask`。不要再开一套 `Task` / `IEnumerator` 业务接口。
 
 ## 用什么
 

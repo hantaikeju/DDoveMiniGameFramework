@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7c8d9e0f1a2435465768798a9b0c1d2, type: 3}
+  m_Name: DDoveUIInitInfo
+  m_EditorClassIdentifier: 
+  _referenceResolution: {x: 1080, y: 1920}
+  _matchWidthOrHeight: 0.5
+  _referencePixelsPerUnit: 100
+  _panelCacheCapacity: 5
+  _uiCameraDepth: 100
+  _createSceneRoot: Assets/GameResExcluded/CreateUIScenes
+  _prefabRoot: Assets/GameRes/UI
+  _bindScriptsPath: Assets/Game/Generate/UI
+  _logicScriptsPath: Assets/Game/UI
+  _exportRootName: UIRoot
+  _excludedBottomName: Excluded_Bottom
+  _excludedTopName: Excluded_Top
+  _namespaceName: Game.UI

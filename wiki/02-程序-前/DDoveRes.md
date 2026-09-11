@@ -32,13 +32,13 @@ Concept ID：`/02-程序-前/DDoveRes`。权威实现：[DDoveResKit.cs](../../D
 
 ## 调用
 
-包名从 Yoo `BundleCollectorSetting` 读（优先 `DefaultPackage`，否则第一个 Package）。收集器没有 Package 时用 `DefaultPackage`，直接调 Yoo 初始化。PlayMode：编辑器 `EditorSimulate`，真机 `Offline`（Host / Web 以后再接）。不要在场景或自建 SO 上手填包名 / PlayMode。总窗 Res 页只展示收集器里的包，见 [DDove Editor](/02-程序-前/DDoveEditor.md)。
+无参 `InitializeAsync()` 读 [DDoveResInitInfo](../../DDoveMiniGameClient/Assets/DDoveFramework/Extension/DDoveRes/Resources/DDoveResInitInfo.asset)（`Resources.Load`）：默认包名 + PlayMode。总窗 Res 页改这份 SO：默认包互斥（勾另一个则当前取消），加载模式用 `EPlayMode`。SO 缺失或包名为空时回退：编辑器从 Yoo 收集器取包名（优先 `DefaultPackage`，否则第一个）；真机 `DefaultPackage`。PlayMode 回退：编辑器 `EditorSimulate`，真机 `Offline`。Host / Web 尚未实现。不要在 Boot 场景上填包名 / PlayMode，见 [DDove Editor](/02-程序-前/DDoveEditor.md)。
 
 `InitializeAsync()` 内部 `Initialize` + 解析包名 / PlayMode + `CreateInitializeOptions` + `InitializePackageAsync`。成功且尚未设默认包时设默认。之后 `LoadAssetAsync` 可省略 `packageName`。
 
 ```csharp
 await DDoveResKit.InitializeAsync();
-var handle = await DDoveResKit.LoadAssetAsync<GameObject>("UI/Home");
+var handle = await DDoveResKit.LoadAssetAsync<GameObject>("WndHome");
 if (handle == null)
 {
     return;
@@ -47,7 +47,7 @@ if (handle == null)
 
 | 方法 | 行为 |
 |------|------|
-| `InitializeAsync()` | 从 Yoo 收集器取包名；没有则 `DefaultPackage`。组 options 失败返回 `false` |
+| `InitializeAsync()` | 读 Init Info SO 的包名 / PlayMode；没有则收集器 / `DefaultPackage`。组 options 失败返回 `false` |
 | `InitializeAsync(name, playMode)` | 显式指定。空包名抛 |
 | `Initialize()` | `YooAssets` 未初始化才 `Initialize` |
 | `CreatePackage(name)` | 空名抛 `ArgumentException`。已有则返回已有 |

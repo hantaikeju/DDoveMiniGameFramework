@@ -11,3 +11,7 @@ Unity 小游戏框架工作区。知识库与 Agent 约定在本仓库根，与�
 | `DDoveMiniGameClient/` | Unity 工程。默认不检索 `Library/` |
 
 日常干活用 `ddove-work`（先检索）。只查篇用 `ddove-wiki`。写 wiki 用 `/ddove-wiki-create` / `/ddove-wiki-change-state`。替换 `SPEC.md` 后调用 `ddove-okf-upgrade`。
+
+## 第三方
+
+`DDoveMiniGameClient/Packages/com.kyrylokuzyk.primetween@1.4.11/` 嵌入 [PrimeTween](https://github.com/KyryloKuzyk/PrimeTween)（版权 Kyrylo Kuzyk），只为离线构建。本仓库不卖、不主张其所有权。条款见包内 `license.md`。用法见 [wiki/02-程序-前/PrimeTween.md](wiki/02-程序-前/PrimeTween.md)。

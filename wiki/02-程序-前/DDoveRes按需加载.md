@@ -58,12 +58,18 @@ DDoveBoot：Init（+ 以后：版本、清单）→ LoadScene(Launch)
 | Tag | `CreateDownloader(tag)` 分批预下 |
 | location | 日常 `LoadAssetAsync(名字)` |
 
+资源根：`Assets/GameRes/`（进收集器）与 `Assets/GameResExcluded/`（不进，设计稿 / 临时候选）。不要扫整个 `GameRes/`，按子目录收。不要用 Unity 保留名 `Resources/` 当这棵树。
+
 ```
 DefaultPackage
-  Group Common     CollectPath: UI/Prefabs/Common、Atlases/Common     tag: common
-  Group Login      CollectPath: UI/Prefabs/Login、Atlases/Login      tag: login
-  Group Hall       CollectPath: UI/Prefabs/Hall、Atlases/Hall        tag: hall
+  Group Scene      CollectPath: Assets/GameRes/Scenes                   tag: launch
+  Group Start      CollectPath: Assets/GameRes/UI/Start                 tag: start
+  Group Common     CollectPath: Assets/GameRes/UI/…、Assets/GameRes/Atlases/…   tag: common
+  Group Login      CollectPath: Assets/GameRes/UI/…、Assets/GameRes/Atlases/…   tag: login
+  Group Hall       CollectPath: Assets/GameRes/UI/…、Assets/GameRes/Atlases/…   tag: hall
 ```
+
+框架工程已落根：`GameRes/Scenes`、`GameRes/UI`、`GameRes/Atlases`、`GameRes/Config`、`GameResExcluded`。`Scene` 组已收 `Launch.unity`。UI 第一刀已加 `Start` 组（`GameRes/UI/Start`，AddressByFileName）。Common / Login / Hall 有了再加收集器。
 
 不要一条收集器扫整个 `UI/`。EUUI 仍可只有一个 Prefabs 根；**阶段靠子目录 + 收集器 tag**。  
 图集体积大，必须按阶段分图集，不能一张总图集。
@@ -72,7 +78,7 @@ DefaultPackage
 
 ## 用资源名 Load；关卡用配表
 
-Tag 按**阶段**（`common` / `login` / `hall`），不要只打种类（`player` / `monster`）。种类可作目录名。
+Tag 按**阶段**（`launch` / `start` / `common` / `login` / `hall`），不要只打种类（`player` / `monster`）。种类可作目录名。
 
 角色、怪物共用多，本关用谁写在**业务配表**（资源名 / location），不要追求 tag 覆盖每一关：
 
@@ -101,6 +107,8 @@ Yoo `ClearCacheAsync`：热更后 `ClearUnusedBundleFiles` 清旧版本。没有
 H5 **没有** Yoo tag。加载页等的是 `PreloadEnterAssets`：**写死最小集 + 打包生成的 bytes 名单**，用 `abdata` 展开 AB 体积加总。第一次启动卡住进度条；以后后台预下。不是按 tag 统计，也不是整包。
 
 Yoo 对等：加载页绑 `CreateDownloader("login","common")`（或 Launch 依赖）的 `TotalDownloadBytes`。名单角色 = tag 或配表名字。
+
+分块流式、`sceneabdata`、进场景暂停 DelayLoad 是 TL2 大世界做法，本库默认不做。提取见 [TL2 场景流式对照](/02-程序-前/TL2场景流式对照.md)。
 
 ## 还没有（代码）
 

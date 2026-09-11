@@ -1,0 +1,21 @@
+{
+    "name": "DDoveFramework.Extension.DDoveUI",
+    "rootNamespace": "DDoveFramework.Extension.DDoveUI",
+    "references": [
+        "DDoveFramework.Core",
+        "DDoveFramework.Extension.DDoveRes",
+        "UniTask",
+        "YooAsset",
+        "UnityEngine.UI",
+        "Unity.TextMeshPro"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

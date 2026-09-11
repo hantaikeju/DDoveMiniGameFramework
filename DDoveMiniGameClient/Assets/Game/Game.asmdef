@@ -1,0 +1,21 @@
+{
+    "name": "Game",
+    "rootNamespace": "Game",
+    "references": [
+        "DDoveFramework.Core",
+        "DDoveFramework.Extension.DDoveUI",
+        "UniTask",
+        "UnityEngine.UI",
+        "Unity.TextMeshPro",
+        "PrimeTween.Runtime"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

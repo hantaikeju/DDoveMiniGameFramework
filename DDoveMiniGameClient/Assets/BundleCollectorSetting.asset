@@ -15,4 +15,39 @@ MonoBehaviour:
   ShowPackageView: 1
   ShowEditorAlias: 0
   UniqueBundleName: 1
-  Packages: []
+  Packages:
+  - PackageName: DefaultPackage
+    PackageDesc: DDove default remote package
+    EnableAddressable: 1
+    SupportExtensionless: 1
+    LocationToLower: 0
+    IncludeAssetGUID: 0
+    AutoCollectShaders: 1
+    IgnoreRuleName: NormalIgnoreRule
+    Groups:
+    - GroupName: Scene
+      GroupDesc: Launch and later game scenes
+      AssetTags: launch
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/GameRes/Scenes
+        CollectorGUID: 8f5b2d9c3e0a5146b7c8d9e0f1a2b3c4
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackSeparately
+        FilterRuleName: CollectScene
+        AssetTags: 
+        UserData: 
+    - GroupName: Start
+      GroupDesc: Start stage UI prefabs
+      AssetTags: start
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/GameRes/UI/Start
+        CollectorGUID: e3f4a5b6c71829304b5c6d7e8f901234
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackSeparately
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 

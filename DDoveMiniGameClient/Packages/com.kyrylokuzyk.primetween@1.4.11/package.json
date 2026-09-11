@@ -1,0 +1,43 @@
+{
+  "name": "com.kyrylokuzyk.primetween",
+  "displayName": "PrimeTween",
+  "version": "1.4.11",
+  "unity": "2018.4",
+  "author": {
+    "name": "Kyrylo Kuzyk"
+  },
+  "samples": [
+    {
+      "displayName": "Examples",
+      "path": "Samples~/Examples"
+    }
+  ],
+  "hideInEditor": false,
+  "description": "PrimeTween is a high-performance, allocation-free animation library for Unity.\n\nAnimate anything with just one line of code, tweak all animation properties directly from the Inspector, and create complex animation sequences. No runtime memory allocations, ever.\n\nEnjoying PrimeTween? Consider leaving an honest review on Asset Store.",
+  "keywords": [
+    "Tween",
+    "Easing",
+    "Delay",
+    "Sequence",
+    "Shake",
+    "Screen Shake",
+    "Camera Shake",
+    "Game Feel",
+    "Feel",
+    "Interpolation",
+    "Performance",
+    "Zero-allocation",
+    "Ease",
+    "Tweening",
+    "Animate"
+  ],
+  "documentationUrl": "https://github.com/KyryloKuzyk/PrimeTween",
+  "changelogUrl": "https://github.com/KyryloKuzyk/PrimeTween/blob/main/changelog.md",
+  "_upm": {
+    "changelog": "## [1.4.11] - 2026-07-18\\n### Added\\n- Added `SetCancellationToken(CancellationToken)` to `Tween`, `Sequence`.\\n- UniTask integration.\\n- Added main thread check to all PrimeTween APIs.\\n### Fixed\\n- Fixed: compilation error when the project contains a plugin DLL that duplicates a framework type (e.g., a custom System.CodeDom.dll). PrimeTween's asmdefs now enable \"Override References\" to avoid the conflict. https://github.com/KyryloKuzyk/PrimeTween/issues/251\\n- Fixed: Unity 6000.7 shows a warning that the DEVELOPMENT_BUILD define is deprecated.\\n- Fixed: Unity 6000.7 shows a warning that `AppDomain.CurrentDomain.GetAssemblies()` is deprecated."
+  },
+  "repository": {
+    "url": "https://github.com/KyryloKuzyk/PrimeTween.git",
+    "type": "git"
+  }
+}

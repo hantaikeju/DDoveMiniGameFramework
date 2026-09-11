@@ -34,7 +34,7 @@ Concept ID：`/02-程序-前/DDoveFramework-Core`。目录：`DDoveMiniGameClien
 ```
 DDoveFramework/Core/
   DDoveDebug.cs                 统一日志；直接 UnityEngine.Debug
-  Architecture/              组合根：IOC、角色；持有 Event；执行 CommandQuery
+  Architecture/              组合根：IOC、角色、Bind 特性；持有 Event；执行 CommandQuery
   Mechanism/                 给业务/Kit 用的机制封装（不是 GoF 清单）
     Event/
     CommandQuery/
@@ -82,6 +82,7 @@ Mechanism 内部仍是三套，规则不变：
 |------|------|
 | IOC 容器 | [IOC容器](/02-程序-前/IOC容器.md) |
 | Architecture / 角色 | [Architecture与角色](/02-程序-前/Architecture与角色.md) |
+| Architecture 自动注册 | [Architecture自动注册](/02-程序-前/Architecture自动注册.md) |
 | 事件 | [TypeEvent](/02-程序-前/TypeEvent.md) |
 | 命令 / 查询 | [CommandQuery](/02-程序-前/CommandQuery.md) |
 | 状态机 | [CoreFsm](/02-程序-前/CoreFsm.md) |

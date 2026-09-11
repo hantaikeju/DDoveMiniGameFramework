@@ -125,18 +125,29 @@
 
 .ddove-content {
     flex-grow: 1;
-    min-width: 280px;
+    min-width: 0;
+    min-height: 0;
+    flex-direction: column;
+    overflow: hidden;
     padding: 16px 20px 20px 20px;
     background-color: rgb(36, 36, 36);
 }
 
 .ddove-page-head {
+    flex-shrink: 0;
     background-color: rgb(48, 48, 48);
     border-width: 1px;
     border-color: rgb(68, 68, 68);
     border-radius: 6px;
     padding: 12px 16px;
     margin-bottom: 12px;
+}
+
+.ddove-page-host {
+    flex-grow: 1;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
 }
 
 .ddove-page-title {
@@ -173,20 +184,86 @@
     background-color: rgb(40, 40, 40);
     border-width: 1px;
     border-color: rgb(58, 58, 58);
-    border-radius: 4px;
-    padding: 8px 10px;
+    border-radius: 6px;
+    padding: 10px 12px;
     margin-top: 10px;
+}
+
+.ddove-card-plate--lead {
+    margin-top: 0;
+}
+
+.ddove-card-plate > .ddove-hint {
+    margin-top: 0;
+}
+
+.ddove-tabs {
+    flex-direction: row;
+    background-color: rgb(40, 40, 40);
+    border-width: 1px;
+    border-color: rgb(58, 58, 58);
+    border-radius: 6px;
+    padding: 4px;
+    margin-bottom: 12px;
+}
+
+.ddove-tab {
+    flex-grow: 0;
+    flex-shrink: 0;
+    height: 24px;
+    margin: 0 2px;
+    padding: 0 12px;
+    min-width: 56px;
+    border-width: 0;
+    border-radius: 6px;
+    background-color: rgba(0, 0, 0, 0);
+    color: rgb(220, 220, 220);
+}
+
+.ddove-tab:hover {
+    background-color: rgb(62, 62, 62);
+}
+
+.ddove-tab--active {
+    background-color: rgb(42, 88, 128);
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
 }
 
 .ddove-row {
     flex-direction: row;
     align-items: center;
     margin-top: 8px;
+    min-height: 22px;
+    flex-shrink: 0;
 }
 
 .ddove-row > .unity-button {
     margin-right: 6px;
-    min-width: 72px;
+    min-width: 88px;
+    height: 22px;
+    flex-shrink: 0;
+}
+
+.ddove-field {
+    margin-top: 8px;
+    flex-shrink: 0;
+    min-width: 0;
+}
+
+.ddove-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
+.ddove-actions > .unity-button {
+    margin-top: 6px;
+    margin-right: 6px;
+    min-width: 88px;
+    height: 24px;
+    flex-shrink: 0;
+    border-radius: 6px;
 }
 
 .ddove-empty {
@@ -194,4 +271,254 @@
     justify-content: center;
     align-items: center;
     color: rgb(160, 160, 160);
+}
+
+.ddove-split {
+    flex-direction: row;
+    flex-grow: 1;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.ddove-catalog,
+.ddove-zones {
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+    margin-bottom: 0;
+}
+
+.ddove-catalog {
+    width: 240px;
+    min-width: 240px;
+    max-width: 240px;
+    flex-shrink: 0;
+}
+
+.ddove-zones {
+    flex-grow: 1;
+    min-width: 0;
+}
+
+.ddove-hotbox-chrome {
+    flex-shrink: 0;
+}
+
+.ddove-hotbox-slots {
+    flex-shrink: 0;
+    max-height: 148px;
+    min-height: 0;
+    margin-top: 8px;
+}
+
+.ddove-catalog > .ddove-card-title,
+.ddove-catalog > .ddove-field,
+.ddove-hotbox-chrome > .ddove-card-title,
+.ddove-hotbox-chrome > .ddove-hotbox-toolbar,
+.ddove-hotbox-chrome > .ddove-hotbox-name {
+    flex-shrink: 0;
+}
+
+.ddove-divider {
+    width: 1px;
+    background-color: rgb(28, 28, 28);
+    margin: 0 8px;
+    flex-shrink: 0;
+}
+
+.ddove-chip {
+    height: 24px;
+    margin-bottom: 4px;
+    padding: 0 8px;
+    border-radius: 4px;
+    background-color: rgba(54, 54, 54, 0.85);
+    color: rgb(230, 230, 230);
+    -unity-text-align: middle-left;
+}
+
+.ddove-chip:hover {
+    background-color: rgb(69, 102, 153);
+}
+
+.ddove-chip--missing {
+    background-color: rgba(140, 51, 51, 0.75);
+}
+
+.ddove-zone-head {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.ddove-zone-head > .unity-label {
+    -unity-font-style: bold;
+    flex-grow: 1;
+}
+
+.ddove-zone-entry {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.ddove-zone-entry > .ddove-chip {
+    flex-grow: 1;
+    margin-bottom: 0;
+    margin-right: 4px;
+}
+
+.ddove-drop {
+    height: 36px;
+    margin-top: 6px;
+    border-width: 1px;
+    border-color: rgb(58, 58, 58);
+    border-radius: 6px;
+    background-color: rgb(40, 40, 40);
+    color: rgb(128, 128, 128);
+    -unity-text-align: middle-center;
+}
+
+.ddove-drop--active {
+    border-color: rgb(80, 180, 80);
+    color: rgb(140, 220, 140);
+}
+
+.ddove-pie-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.28);
+}
+
+.ddove-pie {
+    position: absolute;
+    width: 280px;
+    height: 280px;
+}
+
+.ddove-pie-preview {
+    position: relative;
+    flex-grow: 1;
+    width: 100%;
+    min-height: 0;
+    background-color: rgb(40, 40, 40);
+    border-width: 1px;
+    border-color: rgb(74, 74, 74);
+    border-radius: 6px;
+    margin-top: 8px;
+    overflow: hidden;
+}
+
+.ddove-hotbox-toolbar {
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+}
+
+.ddove-hotbox-toolbar > .ddove-tabs {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+    flex-wrap: wrap;
+    margin-bottom: 0;
+}
+
+.ddove-hotbox-add,
+.ddove-hotbox-tool {
+    height: 24px;
+    margin-left: 6px;
+    padding: 0 10px;
+    flex-shrink: 0;
+    border-width: 0;
+    border-radius: 6px;
+    background-color: rgb(62, 62, 62);
+    color: rgb(230, 230, 230);
+}
+
+.ddove-hotbox-add {
+    width: 36px;
+    padding: 0;
+}
+
+.ddove-hotbox-add:hover,
+.ddove-hotbox-tool:hover {
+    background-color: rgb(42, 88, 128);
+}
+
+.ddove-hotbox-name {
+    flex-direction: row;
+    align-items: flex-end;
+    min-width: 0;
+}
+
+.ddove-hotbox-name > .ddove-field {
+    flex-grow: 1;
+    min-width: 0;
+    margin-top: 0;
+    margin-right: 8px;
+}
+
+.ddove-hotbox-name > .unity-button {
+    min-width: 44px;
+    height: 22px;
+    margin-left: 4px;
+    margin-bottom: 1px;
+    padding: 0 8px;
+}
+
+.ddove-pie-center {
+    position: absolute;
+    left: 110px;
+    top: 110px;
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    background-color: rgb(42, 88, 128);
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    font-size: 13px;
+}
+
+.ddove-pie-center:hover {
+    background-color: rgb(56, 112, 160);
+}
+
+.ddove-pie-item {
+    position: absolute;
+    width: 124px;
+    height: 30px;
+    padding: 0 10px;
+    border-radius: 15px;
+    background-color: rgb(52, 52, 52);
+    border-width: 1px;
+    border-color: rgb(92, 92, 92);
+    color: rgb(245, 245, 245);
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ddove-pie-item:hover {
+    background-color: rgb(42, 88, 128);
+    border-color: rgb(74, 128, 176);
+    color: rgb(255, 255, 255);
+}
+
+.ddove-pie-item--missing {
+    background-color: rgb(88, 40, 40);
+    border-color: rgb(140, 60, 60);
+}
+
+.ddove-pie-item--moving {
+    background-color: rgb(42, 88, 128);
+    border-color: rgb(110, 170, 220);
+    color: rgb(255, 255, 255);
 }

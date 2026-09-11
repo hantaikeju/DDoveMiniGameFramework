@@ -6,7 +6,7 @@
         </uie:Toolbar>
         <ui:VisualElement name="Body" class="ddove-body">
             <ui:VisualElement name="Nav" class="ddove-nav" />
-            <ui:ScrollView name="Content" mode="Vertical" class="ddove-content" />
+            <ui:VisualElement name="Content" class="ddove-content" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

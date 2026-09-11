@@ -9,9 +9,10 @@ namespace DDoveFramework.Extension.DDoveRes.Editor
         public override void OnInspectorGUI()
         {
             EditorGUILayout.HelpBox(
-                "包名 / PlayMode 已改从 Yoo Bundle Collector 读取，Boot 不再引用这份 SO。\n" +
-                "编辑器没有收集器 Package 时，运行时用 DefaultPackage 直接调 Yoo。",
+                "InitializeAsync 读这份 SO：默认包（只能有一个）、加载模式、启动场景。\n" +
+                "在 DDove/Editor 的 Res 页改；Boot 不拖这份资产。",
                 MessageType.Info);
+            DrawDefaultInspector();
         }
     }
 }

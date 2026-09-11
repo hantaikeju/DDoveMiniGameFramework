@@ -8,8 +8,6 @@ namespace DDoveFramework.Extension.DDoveBoot
 {
     public class DDoveBootLogic : MonoBehaviour
     {
-        [SerializeField] private string _launchSceneLocation = "Launch";
-
         private CancellationTokenSource _cts;
 
         private void Start()
@@ -49,18 +47,30 @@ namespace DDoveFramework.Extension.DDoveBoot
 
         protected virtual async UniTask OnExtensionsReadyAsync(CancellationToken cancellationToken)
         {
-            if (string.IsNullOrEmpty(_launchSceneLocation))
+            var launchSceneLocation = ResolveLaunchSceneLocation();
+            if (string.IsNullOrEmpty(launchSceneLocation))
             {
                 return;
             }
 
             var handle = await DDoveResKit.LoadSceneAsync(
-                _launchSceneLocation,
+                launchSceneLocation,
                 cancellationToken: cancellationToken);
             if (handle == null)
             {
-                DDoveDebug.LogError("DDoveBoot", ("location", _launchSceneLocation), ("reason", "load scene failed"));
+                DDoveDebug.LogError("DDoveBoot", ("location", launchSceneLocation), ("reason", "load scene failed"));
             }
+        }
+
+        private static string ResolveLaunchSceneLocation()
+        {
+            var info = DDoveResInitInfo.Load();
+            if (info != null && !string.IsNullOrEmpty(info.LaunchSceneLocation))
+            {
+                return info.LaunchSceneLocation;
+            }
+
+            return DDoveResKit.FallbackLaunchSceneLocation;
         }
     }
 }

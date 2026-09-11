@@ -56,6 +56,23 @@ namespace DDoveFramework.Editor
 
         private static int Compare(DDoveEditorPanelEntry left, DDoveEditorPanelEntry right)
         {
+            var leftNav = DDoveEditorNav.IndexOf(left.Id);
+            var rightNav = DDoveEditorNav.IndexOf(right.Id);
+            if (leftNav >= 0 || rightNav >= 0)
+            {
+                if (leftNav < 0)
+                {
+                    return 1;
+                }
+
+                if (rightNav < 0)
+                {
+                    return -1;
+                }
+
+                return leftNav.CompareTo(rightNav);
+            }
+
             var order = left.Order.CompareTo(right.Order);
             return order != 0 ? order : string.CompareOrdinal(left.Title, right.Title);
         }

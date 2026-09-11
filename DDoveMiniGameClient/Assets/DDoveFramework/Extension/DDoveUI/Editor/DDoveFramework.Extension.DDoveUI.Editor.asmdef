@@ -1,0 +1,23 @@
+{
+    "name": "DDoveFramework.Extension.DDoveUI.Editor",
+    "rootNamespace": "DDoveFramework.Extension.DDoveUI.Editor",
+    "references": [
+        "DDoveFramework.Extension.DDoveUI",
+        "DDoveFramework.Editor",
+        "UnityEngine.UI",
+        "Unity.TextMeshPro"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "Scriban.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

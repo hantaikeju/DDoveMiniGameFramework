@@ -12,6 +12,7 @@ namespace DDoveFramework.Extension.DDoveRes
     public static class DDoveResKit
     {
         public const string FallbackPackageName = "DefaultPackage";
+        public const string FallbackLaunchSceneLocation = "Launch";
 
         private static string s_defaultPackageName;
 
@@ -74,7 +75,12 @@ namespace DDoveFramework.Extension.DDoveRes
 
         public static UniTask<bool> InitializeAsync(CancellationToken cancellationToken = default)
         {
-            return InitializeAsync(ResolveInitPackageName(), ResolveInitPlayMode(), cancellationToken);
+            var info = DDoveResInitInfo.Load();
+            var packageName = info != null && !string.IsNullOrEmpty(info.PackageName)
+                ? info.PackageName
+                : ResolveInitPackageName();
+            var playMode = info != null ? info.PlayMode : ResolveInitPlayMode();
+            return InitializeAsync(packageName, playMode, cancellationToken);
         }
 
         public static async UniTask<bool> InitializeAsync(
