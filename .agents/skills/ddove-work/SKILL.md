@@ -3,12 +3,12 @@ name: ddove-work
 description: >-
   问答、排障、改代码。先按 ddove-wiki 检索，再用结论回答或改代码。
   Triggers: 框架问题、bug、改客户端、实现功能、排障。
-  Does not create wiki pages or upgrade SPEC.
+  Does not create wiki pages, upgrade SPEC, or edit DDoveMiniGameConfig tables (those are ddove-config).
 ---
 
 # ddove-work
 
-权威：`wiki/00-索引/OKF约定.md`。检索原语：`.agents/skills/ddove-wiki/SKILL.md`（读并执行，不要只口头说「先 wiki」）。
+权威：`DDoveMiniGameWiki/00-索引/OKF约定.md`。检索原语：`.agents/skills/ddove-wiki/SKILL.md`（读并执行，不要只口头说「先 wiki」）。
 
 不扫 `DDoveMiniGameClient/Library`。不建篇、不改 `status`（那些是 create / change-state）。
 

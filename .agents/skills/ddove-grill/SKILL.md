@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # ddove-grill
 
-权威：`wiki/00-索引/OKF约定.md`。工作流：`wiki/00-索引/Agent/需求稿工作流.md`。共享语言在 `wiki/`，不写 `CONTEXT.md`。
+权威：`DDoveMiniGameWiki/00-索引/OKF约定.md`。工作流：`DDoveMiniGameWiki/00-索引/Agent/需求稿工作流.md`。共享语言在 `DDoveMiniGameWiki/`，不写 `CONTEXT.md`。
 
 ## 步骤
 

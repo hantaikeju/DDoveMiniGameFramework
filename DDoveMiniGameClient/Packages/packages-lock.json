@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "com.code-philosophy.luban": {
+      "version": "file:com.code-philosophy.luban@1.2.0",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.cysharp.unitask": {
       "version": "file:com.cysharp.unitask@2.5.11",
       "depth": 0,

@@ -9,7 +9,7 @@ disable-model-invocation: true
 
 # 新建 wiki 概念
 
-权威：`wiki/00-索引/OKF约定.md`。短号表：`wiki/00-索引/整理人.md`。
+权威：`DDoveMiniGameWiki/00-索引/OKF约定.md`。短号表：`DDoveMiniGameWiki/00-索引/整理人.md`。
 
 **用户只需给生成人短号。** 职种、文件名、`type`、`title`、`description`、正文由 Agent 根据本条消息和会话上下文补齐。拿不准只再问**一句**（例如职种二选一），不要问卷。
 
@@ -21,7 +21,7 @@ disable-model-invocation: true
    - `type`：Playbook / Reference / Report / Skill / Stub / Table / Index
    - 文件名贴近 `title`，不要 `index.md` / `log.md`
    - `tags`：工程跟职种；AI 用法：`索引` + `agent`
-3. **防重**：`rg -g "!_log/**" "^title: |关键词" wiki/<目录>`。已有同类篇则停，不要第二份。
+3. **防重**：`rg -g "!_log/**" "^title: |关键词" DDoveMiniGameWiki/<目录>`。已有同类篇则停，不要第二份。
 4. **写篇**：`status: draft`，不要自动 `verified`。
 
 ```yaml
@@ -36,9 +36,9 @@ sources: []
 ---
 ```
 
-5. 只改该短号的 `index_<短号>.md`。不改根 `wiki/index.md`。
+5. 只改该短号的 `index_<短号>.md`。不改根 `DDoveMiniGameWiki/index.md`。
 6. `_log/log_YYYY-MM-DD_<短号>.md` 顶部 `**Add**`；根 `log.md` 缺该日 `##` 则补链接。
-7. `py -3 scripts/check_wiki.py`（或 `python scripts/check_wiki.py`），失败修到过。
+7. `py -3 DDoveMiniGameTools/check_wiki.py`（或 `python DDoveMiniGameTools/check_wiki.py`），失败修到过。
 
 改状态用 `/ddove-wiki-change-state`。本 skill 新建一律 `draft`。
 

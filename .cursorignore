@@ -6,6 +6,6 @@ DDoveMiniGameClient/obj/**
 DDoveMiniGameClient/*.csproj
 DDoveMiniGameClient/*.sln
 DDoveMiniGameClient/*.suo
-wiki/_tools/**
-wiki/_spec/**
-wiki/.obsidian/**
+DDoveMiniGameWiki/_tools/**
+DDoveMiniGameWiki/_spec/**
+DDoveMiniGameWiki/.obsidian/**

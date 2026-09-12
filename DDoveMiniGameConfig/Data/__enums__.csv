@@ -1,0 +1,3 @@
+﻿##var,full_name,flags,unique,group,comment,tags,*items,,,,
+##var,,,,,,,name,alias,value,comment,tags
+##,全名(包含模块和名字),是否为位标记枚举（每个枚举项是位标记，例如 System.IO.FileMode，可填 READ 或 WRITE）,枚举项是否唯一,,,,枚举名,别名,值,注释,

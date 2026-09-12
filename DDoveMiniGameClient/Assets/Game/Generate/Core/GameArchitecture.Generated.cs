@@ -11,6 +11,7 @@ namespace Game
     {
         protected override void Init()
         {
+            RegisterUtility(new Game.CfgUtility());
         }
     }
 }

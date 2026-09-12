@@ -1,0 +1,20 @@
+{
+    "name": "DDoveFramework.Extension.DDoveCfg",
+    "rootNamespace": "DDoveFramework.Extension.DDoveCfg",
+    "references": [
+        "DDoveFramework.Core",
+        "DDoveFramework.Extension.DDoveRes",
+        "UniTask",
+        "YooAsset",
+        "Luban.Runtime"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -3,7 +3,9 @@
     "rootNamespace": "Game",
     "references": [
         "DDoveFramework.Core",
+        "DDoveFramework.Extension.DDoveCfg",
         "DDoveFramework.Extension.DDoveUI",
+        "Luban.Runtime",
         "UniTask",
         "UnityEngine.UI",
         "Unity.TextMeshPro",

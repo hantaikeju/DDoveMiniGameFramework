@@ -1,4 +1,6 @@
 using Cysharp.Threading.Tasks;
+using DDoveFramework.Core;
+using DDoveFramework.Extension.DDoveCfg;
 using DDoveFramework.Extension.DDoveUI;
 using Game.UI;
 using UnityEngine;
@@ -32,7 +34,16 @@ namespace Game
 
         private async UniTaskVoid RunAsync()
         {
-            _ = GameArchitecture.Interface;
+            var loaded = await DDoveCfgKit.LoadAsync(this.GetCancellationTokenOnDestroy());
+            if (!loaded)
+            {
+                return;
+            }
+
+            var architecture = GameArchitecture.Interface;
+            var item = architecture.GetUtility<CfgUtility>().Tables.Tbitem.Get(1001);
+            DDoveDebug.Log(DDoveCfgKit.LogTitle, ("demo", item.Id), ("name", item.Name));
+
             DDoveUIKit.Initialize();
             await DDoveUIKit.OpenAsync<WndHome>();
         }

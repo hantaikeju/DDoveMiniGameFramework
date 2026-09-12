@@ -3,11 +3,13 @@ name: wiki-check
 on:
   pull_request:
     paths:
-      - "wiki/**"
+      - "DDoveMiniGameWiki/**"
+      - "DDoveMiniGameTools/**"
       - ".github/workflows/wiki-check.yml"
   push:
     paths:
-      - "wiki/**"
+      - "DDoveMiniGameWiki/**"
+      - "DDoveMiniGameTools/**"
       - ".github/workflows/wiki-check.yml"
 
 jobs:
@@ -19,4 +21,4 @@ jobs:
         with:
           python-version: "3.12"
       - name: Require type and status on concepts
-        run: python scripts/check_wiki.py
+        run: python DDoveMiniGameTools/check_wiki.py

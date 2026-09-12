@@ -1,0 +1,6 @@
+﻿##var,id,name,desc,count
+##type,int,string,string,int
+##group,,"c,s",c,
+##,id,名称,描述,个数
+,1001,道具1,描述1,10
+,1002,道具2,描述2,100

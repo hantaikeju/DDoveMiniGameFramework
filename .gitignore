@@ -12,6 +12,9 @@ DDoveMiniGameClient/*.pidb
 DDoveMiniGameClient/*.unityproj
 DDoveMiniGameClient/*.booproj
 
+# Vendor download scratch
+_tmp_vendor/
+
 # Local
 .vs/
 .idea/
