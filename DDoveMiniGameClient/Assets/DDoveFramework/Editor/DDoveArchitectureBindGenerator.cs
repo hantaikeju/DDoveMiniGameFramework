@@ -325,17 +325,45 @@ namespace DDoveFramework.Editor
                     }
 
                     var body = line.Substring(BindPrefix.Length);
-                    var parts = body.Split(':');
-                    if (parts.Length != 3)
+                    if (!TryParseBindBody(body, out var role, out var key, out var impl))
                     {
                         continue;
                     }
 
-                    set.Add(new DDoveArchitectureBindEntry(parts[0], parts[1], parts[2]));
+                    set.Add(new DDoveArchitectureBindEntry(role, key, impl));
                 }
             }
 
             return set;
+        }
+
+        private static bool TryParseBindBody(string body, out string role, out string key, out string impl)
+        {
+            role = null;
+            key = null;
+            impl = null;
+            var roleSep = body.IndexOf(':');
+            if (roleSep <= 0 || roleSep == body.Length - 1)
+            {
+                return false;
+            }
+
+            role = body.Substring(0, roleSep);
+            var rest = body.Substring(roleSep + 1);
+            var implSep = rest.LastIndexOf(":global::", StringComparison.Ordinal);
+            if (implSep <= 0)
+            {
+                implSep = rest.LastIndexOf(':');
+            }
+
+            if (implSep <= 0 || implSep == rest.Length - 1)
+            {
+                return false;
+            }
+
+            key = rest.Substring(0, implSep);
+            impl = rest.Substring(implSep + 1);
+            return !string.IsNullOrEmpty(role) && !string.IsNullOrEmpty(key) && !string.IsNullOrEmpty(impl);
         }
 
         private static string Render(IReadOnlyList<DDoveArchitectureBindEntry> entries)

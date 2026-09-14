@@ -1,0 +1,19 @@
+{
+    "name": "DDoveFramework.Extension.DDoveAtlas.Editor",
+    "rootNamespace": "DDoveFramework.Extension.DDoveAtlas.Editor",
+    "references": [
+        "DDoveFramework.Extension.DDoveAtlas",
+        "DDoveFramework.Editor"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

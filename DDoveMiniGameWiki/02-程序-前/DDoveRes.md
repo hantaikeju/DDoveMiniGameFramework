@@ -1,11 +1,11 @@
 ---
 type: Reference
 title: DDoveRes
-description: YooAsset 运行时门面。建包、初始化、LoadAssetAsync。失败打 DDoveDebug，不进 IOC。
+description: YooAsset 运行时门面。建包、初始化、LoadAssetAsync、Shutdown。失败打 DDoveDebug，不进 IOC。
 tags: [程序-前, ddoveres, yooasset]
 status: stable
 generated: { by: human:cjh, at: 2026-09-03T14:44:00Z }
-verified: { by: human:cjh, at: 2026-09-03T14:46:00Z }
+verified: { by: human:cjh, at: 2026-09-14T13:37:00Z }
 sources:
   - id: kit
     resource: ../../DDoveMiniGameClient/Assets/DDoveFramework/Extension/DDoveRes/DDoveResKit.cs
@@ -57,10 +57,29 @@ if (handle == null)
 | `CreateInitializeOptions` | EditorSimulate / Offline 组 options。Host / WebGL 尚未实现，`LogError` 返回 `null` |
 | `LoadAssetAsync<T>` | 空 location 抛。包或加载失败 `LogError`，返回 `null`（失败 handle 会 `Release`） |
 | `LoadSceneAsync` | 空 location 抛。包或加载失败 `LogError`，返回 `null`（失败 handle 会 `Release`） |
+| `Shutdown()` | 已创建的包走官方 `DestroyPackageAsync` → `RemovePackage`，再 `YooAssets.Destroy()`，清空默认包名 |
 
 `title` 固定 `DDoveRes`。取消走 `CancellationToken`，不改成 `LogError`。
 
-按需下、收集器 / tag、不接整包 Fsm：见 [DDoveRes 按需加载](/02-程序-前/DDoveRes按需加载.md)。
+按需下、收集器 / tag、不接整包 Fsm：见 [DDoveRes 按需加载](/02-程序-前/DDoveRes按需加载.md)。配法和进 Play：见 [DDoveRes 配置与使用](/02-程序-前/DDoveRes配置与使用.md)。
+
+## 退出
+
+停 Play / 退出：`Shutdown()`。不要改嵌入的 `Packages/com.tuyoogame.yooasset@3.0.5`。
+
+谁调：`Initialize()` 挂 `[DDoveRes]`（`DDoveResLifetime`，`OnApplicationQuit`，执行序 `-10000`，赶在 Yoo `YooAssetsDriver` 前）。不要再挂编辑器 `ExitingPlayMode`。停 Play 当帧没有下一帧，门面反射调 `YooAssets.Update` 把 `DestroyPackageAsync` 泵完。
+
+`DownloadSchedulerOperation` 是包 **Init** 拉起的常驻泵，不是一次 CDN 下载。Yoo **没有**公开停泵接口（`PauseScheduler` 不结束；`AbortOperation` 是 `internal`，只在文件系统 `OnDestroy` 里调）。边玩边下：单次文件任务 `IsDone` 会出队；泵自己不 `SetResult`，下一次 `Load` 还可能缺文件。`DestroyPackage` → `EditorFileSystem.OnDestroy` 对泵 `AbortOperation`，Yoo 打 Warning `Async operation 'DownloadSchedulerOperation' has been aborted.`。不是业务下载没停完。本库默认 [按需加载](/02-程序-前/DDoveRes按需加载.md)，这条 Warning **跟着承受**。启动前整批下完再进游戏才不必靠泵一直挂，那是另一套启动，默认不接。
+
+不要：
+
+- 等「所有 AsyncOperation」再 Destroy（泵永不完成，会卡死）
+- 门面 `CancelDownload` / `PauseDownload`（只属于 `CreateResourceDownloader`，本库没建过）
+- 门面反射 `Abort` / 自造 `StopDownloadSchedulers`（先停仍打同一条 Warning）
+- 用 `YooAssets.Initialize(ILogger)` 滤这条 Abort
+- 下完一批就停调度器（和 [按需加载](/02-程序-前/DDoveRes按需加载.md) 对着干）
+
+`DestroyPackageAsync` 内部会先 `UnloadAllAssets` 再拆文件系统。`Shutdown` **还没有**防重入。Init 仍是 `Processing` 时官方 Destroy 会失败。
 
 ## 程序集
 
@@ -68,4 +87,4 @@ if (handle == null)
 
 ## 还没有
 
-释放全集、Downloader、Host 版本/清单。json 表走已有 `LoadAssetAsync<TextAsset>`，见 [DDoveCfg](/02-程序-前/DDoveCfg.md)。bytes / RawFile 留给 bin。小游戏不接整包补丁 Fsm，见 [DDoveRes 按需加载](/02-程序-前/DDoveRes按需加载.md)。
+`UnloadAllAssets` / `CancelDownload` 门面、`Shutdown` 防重入、Downloader、Host 版本/清单。json 表走已有 `LoadAssetAsync<TextAsset>`，见 [DDoveCfg](/02-程序-前/DDoveCfg.md)。bytes / RawFile 留给 bin。小游戏不接整包补丁 Fsm，见 [DDoveRes 按需加载](/02-程序-前/DDoveRes按需加载.md)。

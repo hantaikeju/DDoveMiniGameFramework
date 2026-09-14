@@ -5,7 +5,7 @@ description: 本 bundle 按仓库根 SPEC.md 约束。AI 检索：grep frontmatt
 tags: [索引, 检索, okf]
 status: stable
 generated: { by: process:mgf-okf-init, at: 2026-08-28T07:41:00Z }
-verified: { by: human:cjh, at: 2026-08-31T03:36:00Z }
+verified: { by: human:cjh, at: 2026-09-14T02:43:00Z }
 resource: ../../SPEC.md
 sources:
   - id: okf-spec
@@ -79,19 +79,14 @@ Concept ID = 相对 `DDoveMiniGameWiki/` 的路径，去掉 `.md`。例如 `/00-
 | 中文 | `status` | 含义 |
 |------|----------|------|
 | 起草 | `draft` | 未审完，可引用但须标明 draft，不当发布依据 |
-| 正式 | `stable` | 可当现行约定。缺省（无 `status` 键）也按正式 |
+| 正式 | `stable` | 现行约定 = 人审过**当前正文**。缺省（无 `status` 键）也按正式 |
 | 废弃 | `deprecated` | 只留历史和旧链接，检索命中时先找替代篇 |
 
-人确认过没有，是另一列，不要和 `status` 混成一个字段：
+工作流只记这三态。`verified` 是 SPEC 出处字段，升 `stable` 时由 `/ddove-wiki-change-state` **同步写入**，不另当一道「再确认」闸门，不另造第四种 `status`。`now >= stale_after` → 过期，先核对源码。
 
-- 无 `verified` → **unverified**（谁起草了，但没人点头）
-- 仅 `process:` → **machine-confirmed**
-- `verified.by: human:<短号>` → **human-reviewed**
-- `now >= stale_after` → 过期，先核对源码
+生产上「能当依据」= `status: stable`。只有 `generated.by: human:cjh` 仍是起草人口径。
 
-生产上「能当依据」= `status: stable` **且** 有 `human:` 的 `verified`。只有 `generated.by: human:cjh` 仍是起草人口径。
-
-结论与代码冲突时以**当前代码**为准。改阶段：人把 `draft` 改成 `stable` 并写 `verified`；作废则改 `deprecated`，不要删文件抢链。
+结论与代码冲突时以**当前代码**为准。改阶段：`/ddove-wiki-change-state` 把 `draft` 改成 `stable` 并写 `verified`；改正文走 `/ddove-wiki-update`（回 `draft`，摘掉 `verified`）；作废则改 `deprecated`，不要删文件抢链。
 
 ## 检索（AI 优先；必须）
 
@@ -118,7 +113,7 @@ rg -n -g "!_log/**" "关键词" DDoveMiniGameWiki/00-索引/Agent
 
 1. 结论（1–3 句）
 2. Wiki 依据：Concept ID + `type` + **`status`（起草/正式/废弃）** + 要点
-3. 信任：unverified / machine-confirmed / human-reviewed；是否过期
+3. 信任：`status`（起草/正式/废弃）；`now >= stale_after` 则过期
 4. 代码核对（若有）
 5. 下一步
 
@@ -132,7 +127,7 @@ rg -n -g "!_log/**" "关键词" DDoveMiniGameWiki/00-索引/Agent
 
 短号必须能在 [整理人](/00-索引/整理人.md) 对上。表里没有：先问职种，补一行，并在对应职种 `index.md` 挂上 `index_<短号>.md`（没有就建空清单）。
 
-`verified.by: human:<短号>` 仍是人确认过，不要自动写。`process:` 只留给合规升级（现行 `ddove-okf-upgrade`）。历史页上的 `process:mgf-okf-init` 不要改。
+升 `stable` 时由 change-state 写 `verified.by: human:<短号>`，不要在 create / update 里写。`process:` 只留给合规升级（现行 `ddove-okf-upgrade`）。历史页上的 `process:mgf-okf-init` 不要改。
 
 ## 新增 / 改写概念
 
@@ -146,7 +141,7 @@ description: 一句摘要
 tags: [程序-前]
 status: draft
 generated: { by: human:cjh, at: 2026-08-31T00:00:00Z }
-# verified: { by: human:cjh, at: 2026-08-31T00:00:00Z }
+# verified: 升 stable 时由 change-state 写
 sources:
   - id: src
     resource: ../DDoveMiniGameClient/Assets/某脚本.cs
@@ -156,11 +151,11 @@ sources:
 
 不要用 `index.md` / `log.md` 当概念文件名。文件名贴近 `title`，不要「文件叫 Core工具、title 叫 Core Fsm」。
 
-**生产走主动 skill，不要在问答里顺手建篇。** 本库 skill 一律 `ddove-`。不知道用哪个：`/ddove-help`。只检索：`ddove-wiki`。问答 / 排障 / 改代码：`ddove-work`。改 / 加配表：`ddove-config`。需求拷问：`/ddove-grill`。新建：`/ddove-wiki-create`。改起草/正式/废弃：`/ddove-wiki-change-state`。写/改 Agent：`ddove-writing-for-agents`。需求稿生命周期见 [需求稿工作流](Agent/需求稿工作流.md)。工程篇进 `01`–`04`；AI 用法进 `00-索引/Agent/`。
+**生产走主动 skill，不要在问答里顺手建篇。** 本库 skill 一律 `ddove-`。不知道用哪个：`/ddove-help`。只检索：`ddove-wiki`。问答 / 排障 / 改代码：`ddove-work`。改 / 加配表：`ddove-config`。需求拷问：`/ddove-grill`。新建：`/ddove-wiki-create`。改正文：`/ddove-wiki-update`。改起草/正式/废弃：`/ddove-wiki-change-state`。写/改 Agent：`ddove-writing-for-agents`。需求稿生命周期见 [需求稿工作流](Agent/需求稿工作流.md)。工程篇进 `01`–`04`；AI 用法进 `00-索引/Agent/`。
 
 加一篇（`ddove-wiki-create` 已按此做）：先对该目录 grep `title` / 文件名，避免重复篇。再新增该 `.md`（`generated.by: human:<短号>`），并在**该短号**的 `index_<短号>.md` 补一条。不要改根 `/index.md`。职种 `index.md` 只在新人第一次出现时加一行。当日 `_log` 照常写。`00-索引` 仍可把约定篇直接列在该目录 `index.md`（改的人少）。
 
-改**别人已有篇**：只改正文；**不要**改 `generated.by`；**不要**再挂到自己的 `index_<短号>.md`（移交另说）。当日 log 写自己的 `_log/log_YYYY-MM-DD_<短号>.md`，不要写共享日文件。
+改**别人已有篇**：走 `/ddove-wiki-update`，只改正文；**不要**改 `generated.by`；**不要**再挂到自己的 `index_<短号>.md`（移交另说）。当日 log 写自己的 `_log/log_YYYY-MM-DD_<短号>.md`，不要写共享日文件。
 
 `SPEC.md` / `AGENTS.md` 留在仓库根。wiki 根 `index.md`「保留」只外链，不拷贝正文。
 

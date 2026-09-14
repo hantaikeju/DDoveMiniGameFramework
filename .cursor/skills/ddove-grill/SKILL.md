@@ -15,6 +15,6 @@ disable-model-invocation: true
 3. **对齐**：frontier 空则复述共享理解，等用户确认。完成：用户点头。
 4. **落盘**（仅当用户要落需求稿）：读并执行 `.agents/skills/ddove-wiki-create/SKILL.md`（读文件，不要再 `/` 一次）。`type: Playbook`；`status: draft`。工程稿进 `01`–`04`（职种 `tags` + `需求`）；AI 用法稿进 `00-索引/Agent`（`tags: [索引, agent, 需求]`）。用户不落盘：停，并告诉下一刀是 `/ddove-wiki-create`。
 
-入正式库不是本 skill：用户确认整篇处理后走 `/ddove-wiki-change-state`。
+入正式库不是本 skill：整篇处理完走 `/ddove-wiki-change-state`（升 `stable` 同步写 `verified`）。
 
 完成：用户确认对齐；若落盘，则 create 的完成条件也满足。

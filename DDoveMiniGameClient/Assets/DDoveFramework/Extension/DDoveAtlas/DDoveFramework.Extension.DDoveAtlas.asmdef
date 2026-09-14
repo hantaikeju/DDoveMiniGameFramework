@@ -1,0 +1,19 @@
+{
+    "name": "DDoveFramework.Extension.DDoveAtlas",
+    "rootNamespace": "DDoveFramework.Extension.DDoveAtlas",
+    "references": [
+        "DDoveFramework.Core",
+        "DDoveFramework.Extension.DDoveRes",
+        "UniTask",
+        "YooAsset"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

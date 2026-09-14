@@ -22,8 +22,11 @@ Concept ID：`/02-程序-前/index_cjh`。本目录里 cjh 整理的篇。别人
 * [DDoveRes 按需加载](DDoveRes按需加载.md) - 小游戏默认边玩边下。一个 DefaultPackage，多条 Collector + tag；用资源名 Load。不接整包下载 Fsm。 `Playbook`
 * [TL2 场景流式对照](TL2场景流式对照.md) - 提取 TL2 分块流式、sceneabdata、进场景暂停延迟加载。本库小游戏默认不做。 `Reference`
 * [DDoveBoot](DDoveBoot.md) - 起步场景与启动编排。只初始化资源包再 Yoo 加载真实场景。不进 IOC，不进 DDoveRes。 `Reference`
+* [Play 到 WndHome](Play到WndHome.md) - 点 Play 到看见 WndHome。GameLaunch 挂 Launch；Yoo 3.0.5 要版本+清单；收集器有资源不等于运行时已有清单。 `Playbook`
 * [DDoveCfg](DDoveCfg.md) - 第一刀接入 Luban。填表工程在 DDoveMiniGameConfig；客户端 Kit 用 Res 读表，Launch 先 Load 再进 Architecture。 `Playbook`
 * [DDoveUI](DDoveUI.md) - 第一刀垂直闭环已落地。制作场景导出 Prefab，DDoveRes 按文件名加载，Launch 打开 WndHome。 `Playbook`
+* [DDoveAtlas](DDoveAtlas.md) - 散图在 Excluded，Yoo 只收图集产物。Sprite Atlas V2 - Enabled。独立 Kit late-bind 与按名取图。 `Playbook`
+* [Sprite Atlas V1 与 V2](SpriteAtlasV1与V2.md) - 一代/二代运行时相同，只换 Pack 管线。Mode、Include in Build、第三方图集与代数正交。落地见 DDoveAtlas。 `Reference`
 * [PrimeTween](PrimeTween.md) - 接入免费 PrimeTween 1.4.x。只装包；Game 业务引用。DDoveUI Base 本刀不引用。 `Playbook`
 * [异步用 UniTask](UniTask异步.md) - 客户端异步统一 UniTask。Core 零引用。 `Playbook`
 * [NuGet 与 Scriban](NuGet与Scriban.md) - nuget 源装 Scriban。UnityTls / 梯子代理。与 manifest（UPM）无关。 `Playbook`

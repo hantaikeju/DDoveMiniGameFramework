@@ -17,7 +17,7 @@ description: >-
    - 正文是步骤，每步有完成条件。
    - OKF / 短号 / index / log 只指针约定篇，不抄表。
    - 正向步骤。
-3. **职责不抢**：整图指路归 `/ddove-help`；只检索归 `ddove-wiki`；问答 / 排障 / 改代码归 `ddove-work`；配表归 `ddove-config`；建篇归 `ddove-wiki-create`；升正式归 `ddove-wiki-change-state`；拷问归 `ddove-grill`。
+3. **职责不抢**：整图指路归 `/ddove-help`；只检索归 `ddove-wiki`；问答 / 排障 / 改代码归 `ddove-work`；配表归 `ddove-config`；建篇归 `ddove-wiki-create`；改正文归 `ddove-wiki-update`；升正式归 `ddove-wiki-change-state`；拷问归 `ddove-grill`；改四件套前缀归 `/ddove-rename-workspace`。
 4. **wiki**：用户要落 `type: Skill` 篇时走 create，写到 `00-索引/Agent/`。本 skill 不直接建概念。`AGENTS.md` 只加一行指针。
 
-完成：目标 `SKILL.md` 可运行；无 `CONTEXT.md`；无第二套 `status`；与现有四个生产 skill 不重复职责。
+完成：目标 `SKILL.md` 可运行；无 `CONTEXT.md`；无第二套 `status`；与现有生产 skill 不重复职责。

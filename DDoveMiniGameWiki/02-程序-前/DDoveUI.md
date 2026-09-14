@@ -5,7 +5,7 @@ description: 第一刀垂直闭环已落地。制作场景导出 Prefab，DDoveR
 tags: [程序-前, ddoveui]
 status: stable
 generated: { by: human:cjh, at: 2026-09-10T08:14:00Z }
-verified: { by: human:cjh, at: 2026-09-11T08:55:00Z }
+verified: { by: human:cjh, at: 2026-09-14T02:51:00Z }
 sources:
   - id: grill
     resource: /00-索引/Agent/需求稿工作流.md
@@ -40,13 +40,16 @@ sources:
   - id: primetween
     resource: /02-程序-前/PrimeTween.md
     title: PrimeTween
+  - id: atlas
+    resource: /02-程序-前/DDoveAtlas.md
+    title: DDoveAtlas
 ---
 
 # DDoveUI
 
 Concept ID：`/02-程序-前/DDoveUI`。清单：[index_cjh](/02-程序-前/index_cjh.md)。第一刀垂直闭环已落地（制作场景 → Prefab → Launch 开 `WndHome`）。对照 MeowPantry EUUI 迁第一刀；结论与代码冲突以代码为准。
 
-对照：[DDoveRes](/02-程序-前/DDoveRes.md)、[DDoveRes 按需加载](/02-程序-前/DDoveRes按需加载.md)、[DDoveBoot](/02-程序-前/DDoveBoot.md)、[DDove Editor](/02-程序-前/DDoveEditor.md)、[Architecture 与角色](/02-程序-前/Architecture与角色.md)。
+对照：[DDoveRes](/02-程序-前/DDoveRes.md)、[DDoveRes 按需加载](/02-程序-前/DDoveRes按需加载.md)、[DDoveAtlas](/02-程序-前/DDoveAtlas.md)、[DDoveBoot](/02-程序-前/DDoveBoot.md)、[DDove Editor](/02-程序-前/DDoveEditor.md)、[Architecture 与角色](/02-程序-前/Architecture与角色.md)。
 
 ## 第一刀（已落地）
 
@@ -68,7 +71,7 @@ DDoveFramework.Extension.DDoveRes.Editor    DDoveRes, DDoveFramework.Editor, Yoo
 DDoveFramework.Extension.DDoveBoot          Core, DDoveRes, UniTask, YooAsset
 DDoveFramework.Extension.DDoveUI            Core, DDoveRes, UniTask, YooAsset, UnityEngine.UI, Unity.TextMeshPro
 DDoveFramework.Extension.DDoveUI.Editor     DDoveUI, DDoveFramework.Editor；Scriban 只进此 Editor
-Game                                        Core, DDoveUI, UniTask, UnityEngine.UI, Unity.TextMeshPro；PrimeTween 见 [PrimeTween](/02-程序-前/PrimeTween.md)
+Game                                        Core, DDoveUI, UniTask, UnityEngine.UI, Unity.TextMeshPro；图集见 [DDoveAtlas](/02-程序-前/DDoveAtlas.md)；PrimeTween 见 [PrimeTween](/02-程序-前/PrimeTween.md)
 ```
 
 | 程序集 | 根命名空间 | 放哪 |
@@ -83,6 +86,7 @@ Game                                        Core, DDoveUI, UniTask, UnityEngine.
 - `DDoveUI` **不要**引用 `DDoveBoot`。`Initialize` 在 [业务](#业务) 的 `GameLaunch` 里调（Launch 加载之后，Res 已就绪）。
 - `DDoveUI` **不要**直打 `YooAssets` / `GetPackage`。持 `AssetHandle` 可以，Load / Release 只走 [DDoveRes](/02-程序-前/DDoveRes.md)。
 - `DDoveUI` **不要**引用 Input System、URP。本刀 **不要**引用 PrimeTween、不要做 ClickScale；业务在 `Game` 用，见 [PrimeTween](/02-程序-前/PrimeTween.md)。
+- `DDoveUI` **不要**引用 Atlas。换图与 late-bind 见 [DDoveAtlas](/02-程序-前/DDoveAtlas.md)。
 - `DDoveUI.Editor` **不要**引用 `DDoveBoot`、`DDoveRes`、`Game`。Scriban 只开 Editor，见 [NuGet 与 Scriban](/02-程序-前/NuGet与Scriban.md)。
 - `DDoveFramework.Editor` **不要**引用 UI（总门面已约定）。UI 页用 `[DDoveEditorPanel]` 自挂。`[DDoveHotboxEntry]` 属性放在门面程序集，编排走总窗 [DDove Editor](/02-程序-前/DDoveEditor.md) 的 **HotBox** 页。
 - `Game` **不要**引用 `DDoveBoot`、`DDoveRes`、YooAsset、Editor。业务开面板只碰 Kit + Architecture。
@@ -124,7 +128,7 @@ DDove/Editor · UI 页 · 制作
 Yoo Group Start  收 GameRes/UI/Start  tag: start  AddressByFileName
 Play
     Boot → DDoveRes Init → LoadScene(Launch)
-    GameLaunch → DDoveCfgKit.LoadAsync → GameArchitecture.Interface → DDoveUIKit.Initialize → OpenAsync<WndHome>
+    GameLaunch → DDoveCfgKit.LoadAsync → GameArchitecture.Interface → 图集 Init 见 [DDoveAtlas](/02-程序-前/DDoveAtlas.md) → DDoveUIKit.Initialize → OpenAsync<WndHome>
     DDoveResKit.LoadAssetAsync<GameObject>("WndHome")
 ```
 
@@ -141,7 +145,7 @@ Play
 | 开始阶段制作场景 | `GameResExcluded/CreateUIScenes/Start/` | 否 |
 | 开始阶段 Prefab | `GameRes/UI/Start/` | 是，Group `Start` |
 | 公用制作场景 | `GameResExcluded/CreateUIScenes/Common/` | 否 |
-| 公用 Prefab / 图集 | `GameRes/UI/Common/`、`GameRes/Atlases/Common/` | **有资产再加组**，不要先扫空目录、不要扫整个 `UI/` |
+| 公用 Prefab / 图集 | `GameRes/UI/Common/`、`GameRes/Atlases/Common/` | **有资产再加组**，不要先扫空目录、不要扫整个 `UI/`。图集见 [DDoveAtlas](/02-程序-前/DDoveAtlas.md) |
 
 `Start` = 开始阶段。`Common` = 多阶段共用，**不是**开始页。Login / Hall 有了再加组，见 [DDoveRes 按需加载](/02-程序-前/DDoveRes按需加载.md)。
 
@@ -178,7 +182,7 @@ Assets/Game/
 
 `GameArchitecture` 由 [Architecture 自动注册](/02-程序-前/Architecture自动注册.md) 生成，见 [Architecture 与角色](/02-程序-前/Architecture与角色.md)。面板 `IController`，`GetArchitecture()` 返回 `GameArchitecture.Interface`。本库没有 HybridCLR，**不要**造 `HotUpdate/`。
 
-`GameLaunch`：先 `DDoveCfgKit.LoadAsync`，再碰 `Interface`（触发 Init）→ `DDoveUIKit.Initialize` → `OpenAsync<WndHome>`。正式游戏换成自己的入口，删或改这一份占位。见 [DDoveCfg](/02-程序-前/DDoveCfg.md)。
+`GameLaunch`：先 `DDoveCfgKit.LoadAsync`，再碰 `Interface`（触发 Init）→ 图集 `Initialize` 见 [DDoveAtlas](/02-程序-前/DDoveAtlas.md) → `DDoveUIKit.Initialize` → `OpenAsync<WndHome>`。正式游戏换成自己的入口，删或改这一份占位。见 [DDoveCfg](/02-程序-前/DDoveCfg.md)。
 
 ## 不要
 
@@ -192,7 +196,7 @@ Assets/Game/
 
 ## 还没有（本刀之后）
 
-图集 Kit、按 tag 预下、Host/Web、导航手柄 API、OSA、多人。未实现前不要把猫柜那张全 API 当已有方法。
+按 tag 预下、Host/Web、导航手柄 API、OSA、多人。图集 Kit 已落地，见 [DDoveAtlas](/02-程序-前/DDoveAtlas.md)。未实现前不要把猫柜那张全 API 当已有方法。
 
 ## 验收
 

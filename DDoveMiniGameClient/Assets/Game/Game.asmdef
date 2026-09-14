@@ -4,6 +4,7 @@
     "references": [
         "DDoveFramework.Core",
         "DDoveFramework.Extension.DDoveCfg",
+        "DDoveFramework.Extension.DDoveAtlas",
         "DDoveFramework.Extension.DDoveUI",
         "Luban.Runtime",
         "UniTask",

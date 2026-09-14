@@ -31,6 +31,10 @@ MonoBehaviour:
       Placed: 1
       X: 0.24489796
       Y: 0.5
+    - EntryId: DDoveFramework.Extension.DDoveAtlas.Editor.DDoveAtlasSpriteEditor::GenerateAtlasFromFolder
+      Placed: 1
+      X: 0.80007255
+      Y: 0.3640487
   - Name: "\u67B6\u6784"
     Slots:
     - EntryId: DDoveFramework.Editor.DDoveArchitectureBindCreator::CreateModel

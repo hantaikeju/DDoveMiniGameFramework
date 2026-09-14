@@ -1,3 +1,4 @@
+using DDoveFramework.Core;
 using UnityEditor;
 using UnityEditor.Compilation;
 
@@ -7,6 +8,7 @@ namespace DDoveFramework.Editor
     internal static class DDoveArchitectureBindPlayGuard
     {
         private const string ResumePlayKey = "DDove.ArchitectureBind.ResumePlay";
+        private const string LogTitle = "Architecture";
 
         static DDoveArchitectureBindPlayGuard()
         {
@@ -35,6 +37,7 @@ namespace DDoveFramework.Editor
 
             if (!DDoveArchitectureBindGenerator.TryCollect(out var entries))
             {
+                DDoveDebug.LogError(LogTitle, ("reason", "play cancelled: bind collect failed"));
                 EditorApplication.isPlaying = false;
                 SessionState.SetBool(ResumePlayKey, false);
                 return;
@@ -47,20 +50,23 @@ namespace DDoveFramework.Editor
 
             if (!DDoveArchitectureBindGenerator.TryGenerate(out var wroteFile))
             {
+                DDoveDebug.LogError(LogTitle, ("reason", "play cancelled: bind generate failed"));
                 EditorApplication.isPlaying = false;
                 SessionState.SetBool(ResumePlayKey, false);
                 return;
             }
 
-            EditorApplication.isPlaying = false;
-            SessionState.SetBool(ResumePlayKey, true);
-            if (wroteFile)
+            if (!wroteFile)
             {
-                AssetDatabase.Refresh();
                 return;
             }
 
-            EditorApplication.delayCall += TryResumePlay;
+            DDoveDebug.LogWarning(
+                LogTitle,
+                ("reason", "play cancelled: architecture bind stale, will resume after compile"));
+            EditorApplication.isPlaying = false;
+            SessionState.SetBool(ResumePlayKey, true);
+            AssetDatabase.Refresh();
         }
 
         private static void TryResumePlay()

@@ -5,7 +5,7 @@ description: 工程 wiki 与 AI 用法 wiki 分轨。仓库 ddove-* 与个人 Cu
 tags: [索引, agent]
 status: stable
 generated: { by: human:cjh, at: 2026-09-09T08:16:00Z }
-verified: { by: human:cjh, at: 2026-09-09T08:42:00Z }
+verified: { by: human:cjh, at: 2026-09-14T02:43:00Z }
 sources:
   - id: okf
     resource: /00-索引/OKF约定.md
@@ -38,11 +38,13 @@ Concept ID：`/00-索引/Agent/Agent总览`。约定：[OKF 约定](/00-索引/O
 | `ddove-config` | 改 / 加配表、导表失败（对照 luban/ai，本库改编） | `.agents/skills/ddove-config/SKILL.md` |
 | `/ddove-grill` | 拷问对齐；可选落 `draft`+`需求` | `.agents/skills/ddove-grill/SKILL.md` |
 | `/ddove-wiki-create` | 新建概念（工程或本目录） | `.agents/skills/ddove-wiki-create/SKILL.md` |
-| `/ddove-wiki-change-state` | `draft`/`stable`/`deprecated`；入正式库 | `.agents/skills/ddove-wiki-change-state/SKILL.md` |
+| `/ddove-wiki-update` | 已有篇改正文（回 `draft`） | `.agents/skills/ddove-wiki-update/SKILL.md` |
+| `/ddove-wiki-change-state` | `draft`/`stable`/`deprecated`；升 `stable` 同步写 `verified` | `.agents/skills/ddove-wiki-change-state/SKILL.md` |
 | `ddove-okf-upgrade` | 换 SPEC 后合规 | `.agents/skills/ddove-okf-upgrade/SKILL.md` |
 | `ddove-writing-for-agents` | 写或改 `ddove-*` | `.agents/skills/ddove-writing-for-agents/SKILL.md` |
+| `/ddove-rename-workspace` | fork 开新游戏时改四件套前缀；本框架仓不跑 | `.agents/skills/ddove-rename-workspace/SKILL.md` |
 
-需求稿步骤见 [需求稿工作流](/00-索引/Agent/需求稿工作流.md)。换引擎见 [工作流迁移](/00-索引/Agent/工作流迁移.md)。上游 Release 见 [上游 skill 更新](/00-索引/Agent/上游skill更新.md)。
+需求稿步骤见 [需求稿工作流](/00-索引/Agent/需求稿工作流.md)。换引擎见 [工作流迁移](/00-索引/Agent/工作流迁移.md)。fork 改四件套见 [改工作区前缀](/00-索引/Agent/改工作区前缀.md)。上游 Release 见 [上游 skill 更新](/00-索引/Agent/上游skill更新.md)。
 
 ## 个人 skill（不进仓库）
 

@@ -23,10 +23,12 @@ disable-model-invocation: true
 改表 / 加表 / 导表失败 → ddove-config
 只查 wiki            → ddove-wiki
 方案没对齐            → /ddove-grill         → 落稿 /ddove-wiki-create（draft+需求）
-整篇能当约定          → /ddove-wiki-change-state  （stable；你确认才 verified）
-只建一篇 / 只改状态    → /ddove-wiki-create 或 /ddove-wiki-change-state
+已有篇改正文          → /ddove-wiki-update   （回 draft；再升正式走 change-state）
+整篇能当约定          → /ddove-wiki-change-state  （stable，同步写 verified）
+只建 / 改正文 / 改状态 → /ddove-wiki-create 或 /ddove-wiki-update 或 /ddove-wiki-change-state
 换了 SPEC.md          → /ddove-okf-upgrade
 写或改 skill          → ddove-writing-for-agents
+fork 改四件套前缀     → /ddove-rename-workspace（本框架仓不跑）
 上游 mattpocock 更新   → 读 DDoveMiniGameWiki/00-索引/Agent/上游skill更新.md
 要把话题画清楚        → /show-me             （本机，不进仓库）
 换引擎迁工作流        → 读 DDoveMiniGameWiki/00-索引/Agent/工作流迁移.md
@@ -44,10 +46,12 @@ disable-model-invocation: true
 
 ## 选路
 
+- fork / 拷走开新游戏、改 Client/Config/Wiki/Tools 目录名 → `/ddove-rename-workspace`
 - 改 / 加 `DDoveMiniGameConfig` 表、导表失败 → `ddove-config`
 - 已有篇、要答/排障/改代码 → `ddove-work`
 - 只要检索、不要结论 → `ddove-wiki`
 - 新功能还没想清 → `/ddove-grill`（不要先 create）
+- 已有篇正文过期 → `/ddove-wiki-update`
 - grill 完要落盘 → `/ddove-wiki-create`（工程进 `01`–`04`，AI 用法进 `Agent/`）
 - 上句没听懂 → 让用户把那句标出来重讲（无仓库 skill；用 wiki 词）
 - 窗口要换人 / 换目录 → 口头交班即可；无仓库 `/handoff`

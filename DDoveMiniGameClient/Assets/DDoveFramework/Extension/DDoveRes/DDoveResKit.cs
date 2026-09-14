@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using DDoveFramework.Core;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using YooAsset;
 
@@ -14,9 +16,23 @@ namespace DDoveFramework.Extension.DDoveRes
         public const string FallbackPackageName = "DefaultPackage";
         public const string FallbackLaunchSceneLocation = "Launch";
 
+        private static readonly MethodInfo s_yooUpdate = typeof(YooAssets).GetMethod(
+            "Update",
+            BindingFlags.NonPublic | BindingFlags.Static);
+
         private static string s_defaultPackageName;
+        private static GameObject s_lifetime;
 
         public static string DefaultPackageName => s_defaultPackageName;
+
+#if UNITY_EDITOR
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetStatics()
+        {
+            s_defaultPackageName = null;
+            s_lifetime = null;
+        }
+#endif
 
         public static void Initialize()
         {
@@ -26,6 +42,23 @@ namespace DDoveFramework.Extension.DDoveRes
             }
 
             YooAssets.Initialize();
+            EnsureLifetime();
+        }
+
+        public static void Shutdown()
+        {
+            if (YooAssets.IsInitialized)
+            {
+                DestroyCreatedPackages();
+                YooAssets.Destroy();
+            }
+
+            s_defaultPackageName = null;
+            if (s_lifetime != null)
+            {
+                UnityEngine.Object.Destroy(s_lifetime);
+                s_lifetime = null;
+            }
         }
 
         public static ResourcePackage CreatePackage(string packageName)
@@ -115,18 +148,21 @@ namespace DDoveFramework.Extension.DDoveRes
             }
 
             var package = CreatePackage(packageName);
-            if (package.InitializeStatus == EOperationStatus.Succeeded)
+            if (package.InitializeStatus != EOperationStatus.Succeeded)
             {
-                return true;
+                var operation = package.InitializePackageAsync(options);
+                await operation;
+                cancellationToken.ThrowIfCancellationRequested();
+
+                if (operation.Status != EOperationStatus.Succeeded)
+                {
+                    DDoveDebug.LogError("DDoveRes", ("package", packageName), ("error", operation.Error));
+                    return false;
+                }
             }
 
-            var operation = package.InitializePackageAsync(options);
-            await operation;
-            cancellationToken.ThrowIfCancellationRequested();
-
-            if (operation.Status != EOperationStatus.Succeeded)
+            if (!package.PackageValid && !await LoadActiveManifestAsync(package, cancellationToken))
             {
-                DDoveDebug.LogError("DDoveRes", ("package", packageName), ("error", operation.Error));
                 return false;
             }
 
@@ -138,18 +174,55 @@ namespace DDoveFramework.Extension.DDoveRes
             return true;
         }
 
+        private static async UniTask<bool> LoadActiveManifestAsync(
+            ResourcePackage package,
+            CancellationToken cancellationToken)
+        {
+            var versionOp = package.RequestPackageVersionAsync();
+            await versionOp;
+            cancellationToken.ThrowIfCancellationRequested();
+            if (versionOp.Status != EOperationStatus.Succeeded)
+            {
+                DDoveDebug.LogError("DDoveRes", ("package", package.PackageName), ("error", versionOp.Error));
+                return false;
+            }
+
+            var manifestOp = package.LoadPackageManifestAsync(
+                new LoadPackageManifestOptions(versionOp.PackageVersion, 60));
+            await manifestOp;
+            cancellationToken.ThrowIfCancellationRequested();
+            if (manifestOp.Status != EOperationStatus.Succeeded)
+            {
+                DDoveDebug.LogError("DDoveRes", ("package", package.PackageName), ("error", manifestOp.Error));
+                return false;
+            }
+
+            return true;
+        }
+
         public static InitializePackageOptions CreateInitializeOptions(string packageName, EPlayMode playMode)
         {
             switch (playMode)
             {
                 case EPlayMode.EditorSimulateMode:
 #if UNITY_EDITOR
-                    var buildResult = EditorSimulateBuildInvoker.Build(packageName, (int)EBundleType.VirtualAssetBundle);
-                    return new EditorSimulateModeOptions
+                    try
                     {
-                        EditorFileSystemParameters = FileSystemParameters.CreateDefaultEditorFileSystemParameters(
-                            buildResult.PackageRootDirectory)
-                    };
+                        DDoveDebug.Log("DDoveRes", ("playMode", playMode.ToString()), ("step", "simulate build"));
+                        var buildResult = EditorSimulateBuildInvoker.Build(
+                            packageName,
+                            (int)EBundleType.VirtualAssetBundle);
+                        return new EditorSimulateModeOptions
+                        {
+                            EditorFileSystemParameters = FileSystemParameters.CreateDefaultEditorFileSystemParameters(
+                                buildResult.PackageRootDirectory)
+                        };
+                    }
+                    catch (Exception e)
+                    {
+                        DDoveDebug.LogError("DDoveRes", ("playMode", playMode.ToString()), ("error", e.Message));
+                        return null;
+                    }
 #else
                     DDoveDebug.LogError("DDoveRes", ("playMode", playMode.ToString()), ("reason", "EditorSimulateMode is editor-only"));
                     return null;
@@ -190,7 +263,17 @@ namespace DDoveFramework.Extension.DDoveRes
                 return null;
             }
 
-            var handle = package.LoadAssetAsync<TObject>(location, priority);
+            AssetHandle handle;
+            try
+            {
+                handle = package.LoadAssetAsync<TObject>(location, priority);
+            }
+            catch (Exception e)
+            {
+                DDoveDebug.LogError("DDoveRes", ("location", location), ("error", e.Message));
+                return null;
+            }
+
             await handle;
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -221,7 +304,17 @@ namespace DDoveFramework.Extension.DDoveRes
                 return null;
             }
 
-            var handle = package.LoadSceneAsync(location, sceneMode);
+            SceneHandle handle;
+            try
+            {
+                handle = package.LoadSceneAsync(location, sceneMode);
+            }
+            catch (Exception e)
+            {
+                DDoveDebug.LogError("DDoveRes", ("location", location), ("error", e.Message));
+                return null;
+            }
+
             await handle;
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -307,5 +400,74 @@ namespace DDoveFramework.Extension.DDoveRes
             return first;
         }
 #endif
+
+        private static void EnsureLifetime()
+        {
+            if (s_lifetime != null)
+            {
+                return;
+            }
+
+            s_lifetime = new GameObject("[DDoveRes]");
+            s_lifetime.AddComponent<DDoveResLifetime>();
+            UnityEngine.Object.DontDestroyOnLoad(s_lifetime);
+        }
+
+        private static void DestroyCreatedPackages()
+        {
+            var packages = YooAssets.GetPackages();
+            var names = new List<string>(packages.Count);
+            for (var i = 0; i < packages.Count; i++)
+            {
+                names.Add(packages[i].PackageName);
+            }
+
+            foreach (var name in names)
+            {
+                if (!YooAssets.TryGetPackage(name, out var package))
+                {
+                    continue;
+                }
+
+                var operation = package.DestroyPackageAsync();
+                PumpUntilDone(operation);
+                if (operation.Status != EOperationStatus.Succeeded)
+                {
+                    DDoveDebug.LogError("DDoveRes", ("package", name), ("error", operation.Error));
+                    continue;
+                }
+
+                YooAssets.RemovePackage(name);
+            }
+        }
+
+        private static void PumpUntilDone(AsyncOperationBase operation)
+        {
+            if (s_yooUpdate == null)
+            {
+                DDoveDebug.LogError("DDoveRes", ("reason", "YooAssets.Update is not available"));
+                return;
+            }
+
+            var started = DateTime.UtcNow;
+            while (!operation.IsDone)
+            {
+                s_yooUpdate.Invoke(null, null);
+                if ((DateTime.UtcNow - started).TotalSeconds > 5)
+                {
+                    DDoveDebug.LogError("DDoveRes", ("reason", "shutdown timed out"));
+                    break;
+                }
+            }
+        }
+
+        [DefaultExecutionOrder(-10000)]
+        private sealed class DDoveResLifetime : MonoBehaviour
+        {
+            private void OnApplicationQuit()
+            {
+                Shutdown();
+            }
+        }
     }
 }

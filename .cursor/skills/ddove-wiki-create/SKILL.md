@@ -40,6 +40,6 @@ sources: []
 6. `_log/log_YYYY-MM-DD_<短号>.md` 顶部 `**Add**`；根 `log.md` 缺该日 `##` 则补链接。
 7. `py -3 DDoveMiniGameTools/check_wiki.py`（或 `python DDoveMiniGameTools/check_wiki.py`），失败修到过。
 
-改状态用 `/ddove-wiki-change-state`。本 skill 新建一律 `draft`。
+改正文用 `/ddove-wiki-update`。改状态用 `/ddove-wiki-change-state`。本 skill 新建一律 `draft`。
 
 完成：`check_wiki.py` 通过，且清单已挂（`01`–`04` 用 `index_<短号>.md`；`00-索引` / `Agent` 用该目录 `index.md`）与当日 `_log`。

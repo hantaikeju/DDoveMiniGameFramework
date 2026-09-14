@@ -51,6 +51,19 @@ MonoBehaviour:
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
+    - GroupName: StartAtlas
+      GroupDesc: Start stage sprite atlases
+      AssetTags: start
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/GameRes/Atlases
+        CollectorGUID: d2e3f4a5b60718293a4b5c6d7e8f9012
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackSeparately
+        FilterRuleName: CollectSpriteAtlas
+        AssetTags: 
+        UserData: 
     - GroupName: Cfg
       GroupDesc: Luban generated json
       AssetTags: cfg

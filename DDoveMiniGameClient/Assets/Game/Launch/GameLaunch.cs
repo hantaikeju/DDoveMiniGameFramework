@@ -1,5 +1,7 @@
+using System;
 using Cysharp.Threading.Tasks;
 using DDoveFramework.Core;
+using DDoveFramework.Extension.DDoveAtlas;
 using DDoveFramework.Extension.DDoveCfg;
 using DDoveFramework.Extension.DDoveUI;
 using Game.UI;
@@ -10,6 +12,23 @@ namespace Game
 {
     public sealed class GameLaunch : MonoBehaviour
     {
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void HookSceneLoaded()
+        {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        private static void OnSceneLoaded(Scene scene, LoadSceneMode _)
+        {
+            if (scene.name != "Launch")
+            {
+                return;
+            }
+
+            EnsureOnLaunch();
+        }
+
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         private static void EnsureOnLaunch()
         {
@@ -34,18 +53,28 @@ namespace Game
 
         private async UniTaskVoid RunAsync()
         {
-            var loaded = await DDoveCfgKit.LoadAsync(this.GetCancellationTokenOnDestroy());
-            if (!loaded)
+            try
             {
-                return;
+                var loaded = await DDoveCfgKit.LoadAsync(this.GetCancellationTokenOnDestroy());
+                if (!loaded)
+                {
+                    DDoveDebug.LogError("GameLaunch", ("reason", "cfg load failed, skip UI"));
+                    return;
+                }
+
+                var architecture = GameArchitecture.Interface;
+                var item = architecture.GetUtility<CfgUtility>().Tables.Tbitem.Get(1001);
+                DDoveDebug.Log(DDoveCfgKit.LogTitle, ("demo", item.Id), ("name", item.Name));
+
+                DDoveAtlasKit.Initialize();
+                DDoveUIKit.Initialize();
+                await DDoveUIKit.OpenAsync<WndHome>();
             }
-
-            var architecture = GameArchitecture.Interface;
-            var item = architecture.GetUtility<CfgUtility>().Tables.Tbitem.Get(1001);
-            DDoveDebug.Log(DDoveCfgKit.LogTitle, ("demo", item.Id), ("name", item.Name));
-
-            DDoveUIKit.Initialize();
-            await DDoveUIKit.OpenAsync<WndHome>();
+            catch (Exception e)
+            {
+                DDoveDebug.LogError("GameLaunch", ("error", e.Message));
+                Debug.LogException(e);
+            }
         }
     }
 }
