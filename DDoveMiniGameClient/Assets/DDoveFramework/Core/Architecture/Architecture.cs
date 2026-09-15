@@ -49,21 +49,31 @@ namespace DDoveFramework.Core
                 return;
             }
 
-            mArchitecture = new T();
-            mArchitecture.Init();
-            OnRegisterPatch?.Invoke(mArchitecture);
-
-            foreach (var model in mArchitecture.mModels)
+            var architecture = new T();
+            mArchitecture = architecture;
+            try
             {
-                model.Init();
-            }
+                architecture.Init();
+                OnRegisterPatch?.Invoke(architecture);
 
-            foreach (var system in mArchitecture.mSystems)
+                foreach (var model in architecture.mModels)
+                {
+                    model.Init();
+                }
+
+                foreach (var system in architecture.mSystems)
+                {
+                    system.Init();
+                }
+
+                architecture.mInited = true;
+            }
+            catch
             {
-                system.Init();
+                architecture.Deinitialize();
+                mArchitecture = null;
+                throw;
             }
-
-            mArchitecture.mInited = true;
         }
 
         protected abstract void Init();

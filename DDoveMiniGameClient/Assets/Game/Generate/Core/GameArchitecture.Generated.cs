@@ -14,8 +14,23 @@ namespace Game
     {
         protected override void Init()
         {
+            RegisterUtilities();
+            RegisterModels();
+            RegisterSystems();
+        }
+
+        private void RegisterUtilities()
+        {
             RegisterUtility(new global::Game.CfgUtility());
+        }
+
+        private void RegisterModels()
+        {
             RegisterModel(new global::Game.PlayerModel());
+        }
+
+        private void RegisterSystems()
+        {
             RegisterSystem(new global::Game.PlayerSystem());
         }
     }

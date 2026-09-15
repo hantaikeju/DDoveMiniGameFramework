@@ -394,15 +394,38 @@ namespace DDoveFramework.Editor
             sb.AppendLine("    {");
             sb.AppendLine("        protected override void Init()");
             sb.AppendLine("        {");
+            sb.AppendLine("            RegisterUtilities();");
+            sb.AppendLine("            RegisterModels();");
+            sb.AppendLine("            RegisterSystems();");
+            sb.AppendLine("        }");
+            AppendRoleMethod(sb, "RegisterUtilities", "Utility", entries);
+            AppendRoleMethod(sb, "RegisterModels", "Model", entries);
+            AppendRoleMethod(sb, "RegisterSystems", "System", entries);
+            sb.AppendLine("    }");
+            sb.AppendLine("}");
+            return sb.ToString();
+        }
+
+        private static void AppendRoleMethod(
+            StringBuilder sb,
+            string methodName,
+            string role,
+            IReadOnlyList<DDoveArchitectureBindEntry> entries)
+        {
+            sb.AppendLine();
+            sb.Append("        private void ").Append(methodName).AppendLine("()");
+            sb.AppendLine("        {");
             for (var i = 0; i < entries.Count; i++)
             {
+                if (entries[i].Role != role)
+                {
+                    continue;
+                }
+
                 AppendRegister(sb, entries[i]);
             }
 
             sb.AppendLine("        }");
-            sb.AppendLine("    }");
-            sb.AppendLine("}");
-            return sb.ToString();
         }
 
         private static void AppendRegister(StringBuilder sb, DDoveArchitectureBindEntry entry)
