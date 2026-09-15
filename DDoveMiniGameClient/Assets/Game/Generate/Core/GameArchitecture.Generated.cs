@@ -4,6 +4,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 // BIND:Utility:global::Game.CfgUtility:global::Game.CfgUtility
+// BIND:Utility:global::Game.IGameSave:global::Game.GameSaveUtility
 // BIND:Model:global::Game.PlayerModel:global::Game.PlayerModel
 // BIND:System:global::Game.PlayerSystem:global::Game.PlayerSystem
 using DDoveFramework.Core;
@@ -22,6 +23,7 @@ namespace Game
         private void RegisterUtilities()
         {
             RegisterUtility(new global::Game.CfgUtility());
+            RegisterUtility<global::Game.IGameSave>(new global::Game.GameSaveUtility());
         }
 
         private void RegisterModels()

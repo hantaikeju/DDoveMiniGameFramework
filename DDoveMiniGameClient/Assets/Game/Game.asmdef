@@ -7,6 +7,7 @@
         "DDoveFramework.Extension.DDoveAtlas",
         "DDoveFramework.Extension.DDoveUI",
         "DDoveFramework.Extension.DDoveAudio",
+        "DDoveFramework.Extension.DDoveSave",
         "Luban.Runtime",
         "UniTask",
         "UnityEngine.UI",

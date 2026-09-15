@@ -23,6 +23,7 @@ Concept ID：`/02-程序-前/index_cjh`。本目录里 cjh 整理的篇。别人
 * [DDoveBoot](DDoveBoot.md) - 起步场景与启动编排。只初始化资源包再 Yoo 加载真实场景。不进 IOC，不进 DDoveRes。 `Reference`
 * [Play 到 WndHome](Play到WndHome.md) - 点 Play 到看见 WndHome。GameLaunch 挂 Launch；Yoo 3.0.5 要版本+清单；收集器有资源不等于运行时已有清单。 `Playbook`
 * [DDoveCfg](DDoveCfg.md) - 第一刀接入 Luban。填表工程在 DDoveMiniGameConfig；客户端 Kit 用 Res 读表，Launch 先 Load 再进 Architecture。 `Playbook`
+* [DDoveSave](DDoveSave.md) - 第一刀本地档。Kit 只做 KV 文件；档名业务传入；按接口挂 Utility。Launch 先 LoadFile 再碰 Architecture。 `Playbook`
 * [DDovePool](DDovePool.md) - 静态对象池门面。C# 池与 GameObject 池；默认容量 30。不进 IOC，不进 Core。 `Reference`
 * [DDoveAudio](DDoveAudio.md) - 独立音频根。对外只碰 Kit；通道 / 设置 / 播放池不进 GameArchitecture。按名走 Res，播放器走 Pool。 `Reference`
 * [DDoveUI](DDoveUI.md) - 第一刀垂直闭环已落地。制作场景导出 Prefab，DDoveRes 按文件名加载，Launch 打开 WndHome。 `Playbook`* [UI 业务封装](UI业务封装.md) - 做窗到写业务的步骤，以及开窗 / 读写 / Tween 门槛。业务直调 DDoveUIKit。 `Playbook`* [DDoveAtlas](DDoveAtlas.md) - 散图在 Excluded，Yoo 只收图集产物。Sprite Atlas V2 - Enabled。独立 Kit late-bind 与按名取图。 `Playbook`

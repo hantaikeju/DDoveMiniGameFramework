@@ -4,6 +4,7 @@ using DDoveFramework.Core;
 using DDoveFramework.Extension.DDoveAtlas;
 using DDoveFramework.Extension.DDoveAudio;
 using DDoveFramework.Extension.DDoveCfg;
+using DDoveFramework.Extension.DDoveSave;
 using DDoveFramework.Extension.DDoveUI;
 using Game.UI;
 using UnityEngine;
@@ -63,6 +64,7 @@ namespace Game
                     return;
                 }
 
+                DDoveSaveKit.LoadFile("local_save.bin");
                 var architecture = GameArchitecture.Interface;
                 var player = architecture.GetModel<PlayerModel>();
                 DDoveDebug.Log("Player", ("id", player.ItemId), ("name", player.Name), ("count", player.Count));
