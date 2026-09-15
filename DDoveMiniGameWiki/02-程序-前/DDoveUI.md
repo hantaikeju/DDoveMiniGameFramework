@@ -5,7 +5,7 @@ description: 第一刀垂直闭环已落地。制作场景导出 Prefab，DDoveR
 tags: [程序-前, ddoveui]
 status: stable
 generated: { by: human:cjh, at: 2026-09-10T08:14:00Z }
-verified: { by: human:cjh, at: 2026-09-15T03:20:00Z }
+verified: { by: human:cjh, at: 2026-09-15T06:48:00Z }
 sources:
   - id: grill
     resource: /00-索引/Agent/需求稿工作流.md
@@ -43,13 +43,16 @@ sources:
   - id: atlas
     resource: /02-程序-前/DDoveAtlas.md
     title: DDoveAtlas
+  - id: ui-biz
+    resource: /02-程序-前/UI业务封装.md
+    title: UI 业务封装
 ---
 
 # DDoveUI
 
 Concept ID：`/02-程序-前/DDoveUI`。清单：[index_cjh](/02-程序-前/index_cjh.md)。第一刀垂直闭环已落地（制作场景 → Prefab → Launch 开 `WndHome`）。结论与代码冲突以代码为准。
 
-对照：[DDoveRes](/02-程序-前/DDoveRes.md)、[DDoveRes 按需加载](/02-程序-前/DDoveRes按需加载.md)、[DDoveAtlas](/02-程序-前/DDoveAtlas.md)、[DDoveBoot](/02-程序-前/DDoveBoot.md)、[DDove Editor](/02-程序-前/DDoveEditor.md)、[Architecture 与角色](/02-程序-前/Architecture与角色.md)。
+对照：[DDoveRes](/02-程序-前/DDoveRes.md)、[DDoveRes 按需加载](/02-程序-前/DDoveRes按需加载.md)、[DDoveAtlas](/02-程序-前/DDoveAtlas.md)、[DDoveBoot](/02-程序-前/DDoveBoot.md)、[DDove Editor](/02-程序-前/DDoveEditor.md)、[Architecture 与角色](/02-程序-前/Architecture与角色.md)、[UI 业务封装](/02-程序-前/UI业务封装.md)。
 
 ## 第一刀（已落地）
 
@@ -176,13 +179,13 @@ Assets/Game/
   Game.asmdef
   Generate/Core/GameArchitecture.Generated.cs   根类，不要手改
   Generate/UI/              绑定代码，不要手改
-  Launch/GameLaunch.cs      挂 Launch 场景
+  Mono/GameLaunch.cs        挂 Launch 场景；目录约定见 [UI 业务封装](/02-程序-前/UI业务封装.md)
   UI/Start/WndHome.cs       业务，只写一次
 ```
 
 `GameArchitecture` 由 [Architecture 自动注册](/02-程序-前/Architecture自动注册.md) 生成，见 [Architecture 与角色](/02-程序-前/Architecture与角色.md)。面板 `IController`，`GetArchitecture()` 返回 `GameArchitecture.Interface`。本库没有 HybridCLR，**不要**造 `HotUpdate/`。
 
-`GameLaunch`：先 `DDoveCfgKit.LoadAsync`，再碰 `Interface`（触发 Init）→ 图集 `Initialize` 见 [DDoveAtlas](/02-程序-前/DDoveAtlas.md) → `DDoveUIKit.Initialize` → `OpenAsync<WndHome>`。正式游戏换成自己的入口，删或改这一份占位。见 [DDoveCfg](/02-程序-前/DDoveCfg.md)。
+`GameLaunch`：先 `DDoveCfgKit.LoadAsync`，再碰 `Interface`（触发 Init）→ 图集 `Initialize` 见 [DDoveAtlas](/02-程序-前/DDoveAtlas.md) → `DDoveUIKit.Initialize` → `OpenAsync<WndHome>`。正式游戏换成自己的入口，删或改这一份占位。见 [DDoveCfg](/02-程序-前/DDoveCfg.md)。第二扇窗与读写门槛见 [UI 业务封装](/02-程序-前/UI业务封装.md)：业务继续直调 Kit，不要为开窗加只转发的 System。
 
 ## 不要
 
@@ -193,6 +196,7 @@ Assets/Game/
 - 业务脚本进框架程序集
 - 运行时引用 Scriban / Editor
 - 在制作场景 Prefab 上继续改，却不回场景重导
+- 为开窗加只转发 `DDoveUIKit` 的 System（`UISystem`）
 
 ## 还没有（本刀之后）
 

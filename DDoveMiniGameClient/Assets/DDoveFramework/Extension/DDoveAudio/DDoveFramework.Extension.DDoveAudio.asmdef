@@ -1,0 +1,20 @@
+{
+    "name": "DDoveFramework.Extension.DDoveAudio",
+    "rootNamespace": "DDoveFramework.Extension.DDoveAudio",
+    "references": [
+        "DDoveFramework.Core",
+        "DDoveFramework.Extension.DDovePool",
+        "DDoveFramework.Extension.DDoveRes",
+        "UniTask",
+        "YooAsset"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

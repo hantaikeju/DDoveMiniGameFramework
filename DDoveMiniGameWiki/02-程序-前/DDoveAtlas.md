@@ -128,7 +128,7 @@ GameLaunch
     OpenAsync<WndHome>
 ```
 
-改 [GameLaunch](../../DDoveMiniGameClient/Assets/Game/Launch/GameLaunch.cs)。不要手写 `GameArchitecture.Init`。
+改 [GameLaunch](../../DDoveMiniGameClient/Assets/Game/Mono/GameLaunch.cs)。不要手写 `GameArchitecture.Init`。
 
 ## 不要
 

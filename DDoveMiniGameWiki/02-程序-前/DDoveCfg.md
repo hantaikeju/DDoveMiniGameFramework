@@ -116,7 +116,7 @@ GameLaunch
     OpenAsync<WndHome>
 ```
 
-改 [GameLaunch](../../DDoveMiniGameClient/Assets/Game/Launch/GameLaunch.cs)：Load 必须在碰 `Interface` **之前**。不要手写 `GameArchitecture.Init`。
+改 [GameLaunch](../../DDoveMiniGameClient/Assets/Game/Mono/GameLaunch.cs)：Load 必须在碰 `Interface` **之前**。不要手写 `GameArchitecture.Init`。
 
 ## 数据与格式
 

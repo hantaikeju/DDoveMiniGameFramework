@@ -1,8 +1,10 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using DDoveFramework.Core;
 using DDoveFramework.Extension.DDoveAtlas;
 using DDoveFramework.Extension.DDoveUI;
+using Game;
 using PrimeTween;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,13 +21,18 @@ namespace Game.UI
 
         private Image _left;
         private Image _right;
+        private Text _bag;
         private Sprite _dot;
         private Sprite _mark;
         private bool _swapped;
         private CancellationTokenSource _swapCts;
+        private IUnRegister _itemChanged;
 
         protected override void OnOpen()
         {
+            _itemChanged = this.RegisterEvent<PlayerItemChangedEvent>(OnItemChanged);
+            CreateBagUi();
+            RefreshBag(this.GetModel<PlayerModel>());
             RunDemoAsync().Forget();
         }
 
@@ -39,6 +46,8 @@ namespace Game.UI
 
         protected override void OnClose()
         {
+            _itemChanged?.UnRegister();
+            _itemChanged = null;
             StopDemo();
             DDoveAtlasKit.ReleaseScope(GetInstanceID());
         }
@@ -93,6 +102,68 @@ namespace Game.UI
             var tween = Tween.Scale(image.transform, 1.2f, 0.2f, Ease.OutQuad, 2, CycleMode.Yoyo);
             await tween;
             ct.ThrowIfCancellationRequested();
+        }
+
+        private void OnItemChanged(PlayerItemChangedEvent e)
+        {
+            RefreshBag(e.Name, e.Count);
+        }
+
+        private void RefreshBag(PlayerModel player)
+        {
+            if (player == null)
+            {
+                return;
+            }
+
+            RefreshBag(player.Name, player.Count);
+        }
+
+        private void RefreshBag(string name, int count)
+        {
+            SetText(_bag, name + " x" + count);
+        }
+
+        private void CreateBagUi()
+        {
+            _bag = CreateDemoText("TxtBag", new Vector2(0f, 260f), new Vector2(480f, 48f));
+            var button = CreateDemoButton("BtnCollect", "领取", new Vector2(0f, 200f));
+            AddClick(button, () => this.SendCommand(new CollectDemoItemCommand()));
+        }
+
+        private Text CreateDemoText(string name, Vector2 anchored, Vector2 size)
+        {
+            var go = new GameObject(name, typeof(RectTransform), typeof(CanvasRenderer), typeof(Text));
+            var rect = go.GetComponent<RectTransform>();
+            rect.SetParent(transform, false);
+            rect.anchoredPosition = anchored;
+            rect.sizeDelta = size;
+            var text = go.GetComponent<Text>();
+            text.alignment = TextAnchor.MiddleCenter;
+            text.fontSize = 28;
+            text.color = Color.white;
+            text.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+            if (text.font == null)
+            {
+                text.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+            }
+
+            return text;
+        }
+
+        private Button CreateDemoButton(string name, string label, Vector2 anchored)
+        {
+            var go = new GameObject(name, typeof(RectTransform), typeof(CanvasRenderer), typeof(Image), typeof(Button));
+            var rect = go.GetComponent<RectTransform>();
+            rect.SetParent(transform, false);
+            rect.anchoredPosition = anchored;
+            rect.sizeDelta = new Vector2(200f, 56f);
+            go.GetComponent<Image>().color = new Color(0.2f, 0.45f, 0.85f, 1f);
+            var text = CreateDemoText(name + "Label", Vector2.zero, new Vector2(200f, 56f));
+            text.rectTransform.SetParent(rect, false);
+            text.rectTransform.anchoredPosition = Vector2.zero;
+            SetText(text, label);
+            return go.GetComponent<Button>();
         }
 
         private Image CreateDemoImage(string name, Vector2 anchored)

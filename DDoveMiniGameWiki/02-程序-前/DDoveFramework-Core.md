@@ -5,7 +5,7 @@ description: Architecture 组合根 + Mechanism（Event / CommandQuery / Fsm）+
 tags: [程序-前, core]
 status: stable
 generated: { by: human:cjh, at: 2026-08-31T02:00:00Z }
-verified: { by: human:cjh, at: 2026-09-15T03:20:00Z }
+verified: { by: human:cjh, at: 2026-09-15T06:48:00Z }
 sources:
   - id: core-asmdef
     resource: ../../DDoveMiniGameClient/Assets/DDoveFramework/Core/DDoveFramework.Core.asmdef
@@ -41,7 +41,7 @@ DDoveFramework/Core/
     Fsm/
 ```
 
-`Mechanism` 按**用法**收拢：事件、一次写/读、分步流程。不要改名叫 `Patterns`，也不要往里预置备忘录、单例、工厂。
+`Mechanism` 按**用法**收拢：事件、Command / Query、分步流程。不要改名叫 `Patterns`，也不要往里预置备忘录、单例、工厂。
 
 ## 两层
 
@@ -54,7 +54,7 @@ Mechanism 内部仍是三套，规则不变：
 
 | | Event | CommandQuery | Fsm |
 |---|---|---|---|
-| 干什么 | 按类型发/订 | 一次写 / 一次读 | 分步流程 |
+| 干什么 | 按类型发/订 | Command / Query | 分步流程 |
 | 和 Architecture | 组合一份 | **执行必须走 Architecture** | **不引用** |
 | 业务 | 也可 `new TypeEventSystem` | 继承后 `SendCommand` / `SendQuery` | `new StateMachine` |
 

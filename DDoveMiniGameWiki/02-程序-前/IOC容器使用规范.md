@@ -5,7 +5,7 @@ description: 一条闭环链路配一套 Architecture（一份 IOC）。不要 n
 tags: [程序-前, core, ioc]
 status: stable
 generated: { by: human:cjh, at: 2026-09-15T02:20:00Z }
-verified: { by: human:cjh, at: 2026-09-15T02:28:00Z }
+verified: { by: human:cjh, at: 2026-09-15T06:48:00Z }
 sources:
   - id: arch
     resource: ../../DDoveMiniGameClient/Assets/DDoveFramework/Core/Architecture/Architecture.cs
@@ -43,7 +43,7 @@ Concept ID：`/02-程序-前/IOC容器使用规范`。清单：[index_cjh](/02-�
 |------|------|
 | `GameArchitecture` | 对局、玩家、天赋、广告收益、跨面板 Command |
 | 独立 `XxxArchitecture` | 通道 / 设置 / 播放池这类能单独 `Reset` 的闭环 |
-| 不进任何 IOC | [DDoveRes](/02-程序-前/DDoveRes.md) / [DDoveUI](/02-程序-前/DDoveUI.md) / Yoo / 效果库；业务集合放 Model 内 `Dictionary` |
+| 不进任何 IOC | [DDoveRes](/02-程序-前/DDoveRes.md) / [DDoveUI](/02-程序-前/DDoveUI.md) / [DDoveAtlas](/02-程序-前/DDoveAtlas.md) / [DDovePool](/02-程序-前/DDovePool.md) / [DDoveCfg](/02-程序-前/DDoveCfg.md) / Yoo / 效果库；业务集合放 Model 内 `Dictionary` |
 
 对外只碰 Kit。Kit 内部 `GetModel` / `GetSystem` 走**自己那份** `XxxArchitecture.Interface`。跨链路不互相 `Get*`，只走 Kit 或事件。
 

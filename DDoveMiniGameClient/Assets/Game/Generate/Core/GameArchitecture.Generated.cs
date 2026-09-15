@@ -4,6 +4,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 // BIND:Utility:global::Game.CfgUtility:global::Game.CfgUtility
+// BIND:Model:global::Game.PlayerModel:global::Game.PlayerModel
+// BIND:System:global::Game.PlayerSystem:global::Game.PlayerSystem
 using DDoveFramework.Core;
 
 namespace Game
@@ -13,6 +15,8 @@ namespace Game
         protected override void Init()
         {
             RegisterUtility(new global::Game.CfgUtility());
+            RegisterModel(new global::Game.PlayerModel());
+            RegisterSystem(new global::Game.PlayerSystem());
         }
     }
 }

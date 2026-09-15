@@ -26,7 +26,7 @@ sources:
 
 # show-me 安装
 
-Concept ID：`/00-索引/Agent/show-me安装`。权威源：[humanlayer/skills](https://github.com/humanlayer/skills)、[Cursor Skills](https://cursor.com/docs/skills)。旧路径 `/02-程序-前/show-me安装` 是 Stub。
+Concept ID：`/00-索引/Agent/show-me安装`。权威源：[humanlayer/skills](https://github.com/humanlayer/skills)、[Cursor Skills](https://cursor.com/docs/skills)。
 
 `show-me` 是 Cursor **个人 skill**：用伪代码、调用树、文件树、Mermaid、diff、必要时写一个小 HTML，把当前话题画清楚。本库仓库 skill 一律 `ddove-` 开头，见 [OKF 约定](/00-索引/OKF约定.md)。**不要**把 `show-me` 放进 `.agents/skills/`。
 

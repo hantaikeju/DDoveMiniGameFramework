@@ -1,11 +1,11 @@
 ---
 type: Reference
 title: Architecture 与角色
-description: 玩法根 GameArchitecture 注册 Model/System/Utility；Command 写、Query 读。闭环根见 IOC 使用规范。
+description: 玩法根 GameArchitecture 注册 Model/System/Utility。读写与开窗门槛见 UI 业务封装。闭环根见 IOC 使用规范。
 tags: [程序-前, core, architecture]
 status: stable
 generated: { by: human:cjh, at: 2026-08-28T11:40:00Z }
-verified: { by: human:cjh, at: 2026-09-15T02:38:00Z }
+verified: { by: human:cjh, at: 2026-09-15T06:48:00Z }
 sources:
   - id: arch
     resource: ../../DDoveMiniGameClient/Assets/DDoveFramework/Core/Architecture/Architecture.cs
@@ -22,6 +22,9 @@ sources:
   - id: bind
     resource: /02-程序-前/Architecture自动注册.md
     title: Architecture 自动注册
+  - id: ui-biz
+    resource: /02-程序-前/UI业务封装.md
+    title: UI 业务封装
 ---
 
 # Architecture 与角色
@@ -39,7 +42,7 @@ Concept ID：`/02-程序-前/Architecture与角色`。权威实现见 `sources`�
 | Utility | `IUtility` 空标记 | 无状态可替换工具 | 不经 Architecture 找别人 |
 | Controller | `IController` | 面板等入口 | 发 Command、订事件、读 Model/System |
 
-Command / Query 的契约在 [CommandQuery](/02-程序-前/CommandQuery.md)。谁能 `SendCommand` / `SendQuery` 由本页角色决定。
+Command / Query 的契约在 [CommandQuery](/02-程序-前/CommandQuery.md)。谁能 `SendCommand` / `SendQuery` 由本页角色决定。面板怎么读、怎么开窗看 [UI 业务封装](/02-程序-前/UI业务封装.md)：读可 `GetModel`，开窗直调 Kit，不要空 System。
 
 默认按**具体类型**注册。只有会换实现（广告、存档）才 `RegisterUtility<IAd>(impl)`。
 

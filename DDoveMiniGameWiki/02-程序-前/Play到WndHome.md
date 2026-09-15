@@ -8,7 +8,7 @@ generated: { by: human:cjh, at: 2026-09-14T09:20:00Z }
 verified: { by: human:cjh, at: 2026-09-15T03:20:00Z }
 sources:
   - id: launch
-    resource: ../../DDoveMiniGameClient/Assets/Game/Launch/GameLaunch.cs
+    resource: ../../DDoveMiniGameClient/Assets/Game/Mono/GameLaunch.cs
     title: GameLaunch.cs
   - id: res-kit
     resource: ../../DDoveMiniGameClient/Assets/DDoveFramework/Extension/DDoveRes/DDoveResKit.cs
@@ -68,7 +68,7 @@ Play 后：`DDoveBoot` → 包可用 → `Launch` → `GameLaunch` → 开 `WndH
 
 ## GameLaunch 必须在 Launch 之后
 
-[DDoveUI](/02-程序-前/DDoveUI.md) 写：`GameLaunch` **挂 Launch 场景**。权威实现：[GameLaunch.cs](../../DDoveMiniGameClient/Assets/Game/Launch/GameLaunch.cs)。
+[DDoveUI](/02-程序-前/DDoveUI.md) 写：`GameLaunch` **挂 Launch 场景**。权威实现：[GameLaunch.cs](../../DDoveMiniGameClient/Assets/Game/Mono/GameLaunch.cs)。
 
 `RuntimeInitializeOnLoadMethod(AfterSceneLoad)` **只在第一场跑一次**。起步是 Boot 时，当时场景名不是 `Launch`，会直接 return。Boot 再用 Yoo 加载 Launch，**不会再触发** AfterSceneLoad。场景上没有组件、又只靠 AfterSceneLoad，就会停在空 Launch：没有 `DDoveUIRoot`，没有 `WndHome`。
 

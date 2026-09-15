@@ -5,7 +5,7 @@ description: 客户端异步统一 UniTask。Core 零引用；不要新开 Task 
 tags: [程序-前, unitask, 异步]
 status: stable
 generated: { by: human:cjh, at: 2026-08-31T03:09:00Z }
-verified: { by: human:cjh, at: 2026-08-31T03:36:00Z }
+verified: { by: human:cjh, at: 2026-09-15T06:48:00Z }
 sources:
   - id: unitask-pkg
     resource: ../../DDoveMiniGameClient/Packages/com.cysharp.unitask@2.5.11/package.json
@@ -64,7 +64,7 @@ Tween / 粒子不要包成 `ITween`。库自带 UniTask 扩展（如 DOTween）�
 
 `DDoveFramework.Core`：`references` 空，`noEngineReferences: false`（只为 [DDoveDebug](/02-程序-前/DDoveDebug.md)），**不引用** UniTask。
 
-Command / Query / Event / Fsm 保持同步。谁异步谁在自己的 asmdef 里引用 `UniTask`：DDoveRes、启动、面板 `OpenAsync`、业务 System。
+Command / Query / Event / Fsm 保持同步。谁异步谁在自己的 asmdef 里引用 `UniTask`：DDoveRes、启动、`DDoveUIKit` / 面板 `OpenAsync`、确有编排的业务 System。开窗不要为了 `await` 再包一层只转发 Kit 的 System，见 [UI 业务封装](/02-程序-前/UI业务封装.md)。
 
 ## 包
 

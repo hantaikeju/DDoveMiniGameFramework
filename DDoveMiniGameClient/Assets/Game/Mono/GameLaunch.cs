@@ -2,6 +2,7 @@ using System;
 using Cysharp.Threading.Tasks;
 using DDoveFramework.Core;
 using DDoveFramework.Extension.DDoveAtlas;
+using DDoveFramework.Extension.DDoveAudio;
 using DDoveFramework.Extension.DDoveCfg;
 using DDoveFramework.Extension.DDoveUI;
 using Game.UI;
@@ -63,12 +64,13 @@ namespace Game
                 }
 
                 var architecture = GameArchitecture.Interface;
-                var item = architecture.GetUtility<CfgUtility>().Tables.Tbitem.Get(1001);
-                DDoveDebug.Log(DDoveCfgKit.LogTitle, ("demo", item.Id), ("name", item.Name));
+                var player = architecture.GetModel<PlayerModel>();
+                DDoveDebug.Log("Player", ("id", player.ItemId), ("name", player.Name), ("count", player.Count));
 
                 DDoveAtlasKit.Initialize();
+                DDoveAudioKit.Initialize();
                 DDoveUIKit.Initialize();
-                await DDoveUIKit.OpenAsync<WndHome>();
+                DDoveUIKit.OpenAsync<WndHome>().Forget();
             }
             catch (Exception e)
             {

@@ -1,0 +1,16 @@
+{
+    "name": "DDoveFramework.Extension.DDovePool",
+    "rootNamespace": "DDoveFramework.Extension.DDovePool",
+    "references": [
+        "DDoveFramework.Core"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
