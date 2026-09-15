@@ -3,8 +3,9 @@ type: Reference
 title: DDoveAudio
 description: 独立音频根。对外只碰 Kit；通道 / 设置 / 播放池不进 GameArchitecture。按名走 Res，播放器走 Pool。
 tags: [程序-前, ddoveaudio]
-status: draft
+status: stable
 generated: { by: human:cjh, at: 2026-09-15T07:48:00Z }
+verified: { by: human:cjh, at: 2026-09-15T14:49:00Z }
 sources:
   - id: kit
     resource: ../../DDoveMiniGameClient/Assets/DDoveFramework/Extension/DDoveAudio/DDoveAudioKit.cs
