@@ -5,7 +5,7 @@ description: YooAsset 运行时门面。建包、初始化、LoadAssetAsync、Sh
 tags: [程序-前, ddoveres, yooasset]
 status: stable
 generated: { by: human:cjh, at: 2026-09-03T14:44:00Z }
-verified: { by: human:cjh, at: 2026-09-14T13:37:00Z }
+verified: { by: human:cjh, at: 2026-09-15T03:20:00Z }
 sources:
   - id: kit
     resource: ../../DDoveMiniGameClient/Assets/DDoveFramework/Extension/DDoveRes/DDoveResKit.cs
@@ -16,7 +16,7 @@ sources:
   - id: asmdef
     resource: ../../DDoveMiniGameClient/Assets/DDoveFramework/Extension/DDoveRes/DDoveFramework.Extension.DDoveRes.asmdef
     title: DDoveFramework.Extension.DDoveRes.asmdef
-  - id: eudebug
+  - id: debug
     resource: /02-程序-前/DDoveDebug.md
     title: DDoveDebug
   - id: core
@@ -34,7 +34,7 @@ Concept ID：`/02-程序-前/DDoveRes`。权威实现：[DDoveResKit.cs](../../D
 
 无参 `InitializeAsync()` 读 [DDoveResInitInfo](../../DDoveMiniGameClient/Assets/DDoveFramework/Extension/DDoveRes/Resources/DDoveResInitInfo.asset)（`Resources.Load`）：默认包名 + PlayMode。总窗 Res 页改这份 SO：默认包互斥（勾另一个则当前取消），加载模式用 `EPlayMode`。SO 缺失或包名为空时回退：编辑器从 Yoo 收集器取包名（优先 `DefaultPackage`，否则第一个）；真机 `DefaultPackage`。PlayMode 回退：编辑器 `EditorSimulate`，真机 `Offline`。Host / Web 尚未实现。不要在 Boot 场景上填包名 / PlayMode，见 [DDove Editor](/02-程序-前/DDoveEditor.md)。
 
-`InitializeAsync()` 内部 `Initialize` + 解析包名 / PlayMode + `CreateInitializeOptions` + `InitializePackageAsync`。成功且尚未设默认包时设默认。之后 `LoadAssetAsync` 可省略 `packageName`。
+`InitializeAsync()` 内部 `Initialize` + 解析包名 / PlayMode + `CreateInitializeOptions` + `InitializePackageAsync`。包 Init 成功后若还没有激活清单，再 `LoadActiveManifestAsync`（`RequestPackageVersionAsync` → `LoadPackageManifestAsync`）。成功且尚未设默认包时设默认。之后 `LoadAssetAsync` 可省略 `packageName`。EditorSimulate / Offline 这条主链（Init + 清单 + Load + Shutdown）**已落地**；进 Play 看见面板见 [Play 到 WndHome](/02-程序-前/Play到WndHome.md)。
 
 ```csharp
 await DDoveResKit.InitializeAsync();
@@ -53,7 +53,7 @@ if (handle == null)
 | `CreatePackage(name)` | 空名抛 `ArgumentException`。已有则返回已有 |
 | `SetDefaultPackage(name)` | 包不存在则 [DDoveDebug](/02-程序-前/DDoveDebug.md) `LogError` 并 return |
 | `GetPackage(name?)` | 未指定用默认包。解析失败或包不存在 `LogError`，返回 `null` |
-| `InitializePackageAsync` | `options == null` 抛。失败 `LogError`，返回 `false` |
+| `InitializePackageAsync` | `options == null` 抛。失败 `LogError`，返回 `false`。成功后必要时 `LoadActiveManifestAsync` |
 | `CreateInitializeOptions` | EditorSimulate / Offline 组 options。Host / WebGL 尚未实现，`LogError` 返回 `null` |
 | `LoadAssetAsync<T>` | 空 location 抛。包或加载失败 `LogError`，返回 `null`（失败 handle 会 `Release`） |
 | `LoadSceneAsync` | 空 location 抛。包或加载失败 `LogError`，返回 `null`（失败 handle 会 `Release`） |
@@ -87,4 +87,4 @@ if (handle == null)
 
 ## 还没有
 
-`UnloadAllAssets` / `CancelDownload` 门面、`Shutdown` 防重入、Downloader、Host 版本/清单。json 表走已有 `LoadAssetAsync<TextAsset>`，见 [DDoveCfg](/02-程序-前/DDoveCfg.md)。bytes / RawFile 留给 bin。小游戏不接整包补丁 Fsm，见 [DDoveRes 按需加载](/02-程序-前/DDoveRes按需加载.md)。
+`UnloadAllAssets` / `CancelDownload` 门面、`Shutdown` 防重入、Downloader、Host / Web 的远程 Init options（`CreateInitializeOptions` 现返回 `null`）。EditorSimulate / Offline 的要版本 + 清单已在 `InitializePackageAsync` 里做完。json 表走已有 `LoadAssetAsync<TextAsset>`，见 [DDoveCfg](/02-程序-前/DDoveCfg.md)。bytes / RawFile 留给 bin。小游戏不接整包补丁 Fsm，见 [DDoveRes 按需加载](/02-程序-前/DDoveRes按需加载.md)。

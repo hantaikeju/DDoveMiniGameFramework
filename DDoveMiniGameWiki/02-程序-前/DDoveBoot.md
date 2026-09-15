@@ -5,6 +5,7 @@ description: 起步场景与启动编排。只初始化资源包再 Yoo 加载�
 tags: [程序-前, ddoveboot, yooasset]
 status: stable
 generated: { by: human:cjh, at: 2026-09-04T01:28:00Z }
+verified: { by: human:cjh, at: 2026-09-15T03:20:00Z }
 sources:
   - id: logic
     resource: ../../DDoveMiniGameClient/Assets/DDoveFramework/Extension/DDoveBoot/DDoveBootLogic.cs
@@ -60,4 +61,4 @@ DDoveResKit.InitializeAsync()
 
 ## 还没有
 
-Host / Web 要版本与清单、进度 UI。业务 Architecture 已由 `GameLaunch` 碰 `Interface`，见 [Architecture 自动注册](/02-程序-前/Architecture自动注册.md)。不接整包下载 Fsm；按需约定见 [DDoveRes 按需加载](/02-程序-前/DDoveRes按需加载.md)。
+Host / Web 的远程 Init（`CreateInitializeOptions` 会失败）、进度 UI。EditorSimulate / Offline 的要版本 + 清单已在 [DDoveRes](/02-程序-前/DDoveRes.md) 里做完，见 [Play 到 WndHome](/02-程序-前/Play到WndHome.md)。业务 Architecture 已由 `GameLaunch` 碰 `Interface`，见 [Architecture 自动注册](/02-程序-前/Architecture自动注册.md)。不接整包下载 Fsm；按需约定见 [DDoveRes 按需加载](/02-程序-前/DDoveRes按需加载.md)。

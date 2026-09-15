@@ -3,8 +3,9 @@ type: Reference
 title: Sprite Atlas V1 与 V2
 description: Unity 一代/二代图集运行时相同，只换 Pack 管线。Mode、Include in Build、第三方图集与代数正交。本库落地见 DDoveAtlas。
 tags: [程序-前, ddoveatlas]
-status: draft
+status: stable
 generated: { by: human:cjh, at: 2026-09-14T06:51:00Z }
+verified: { by: human:cjh, at: 2026-09-15T03:20:00Z }
 sources:
   - id: atlas
     resource: /02-程序-前/DDoveAtlas.md

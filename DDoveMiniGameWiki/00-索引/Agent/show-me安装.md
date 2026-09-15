@@ -5,6 +5,7 @@ description: 把 HumanLayer show-me 装到本机 ~/.cursor/skills/，所有 Curs
 tags: [索引, agent, cursor, skill]
 status: stable
 generated: { by: human:cjh, at: 2026-09-07T05:54:00Z }
+verified: { by: human:cjh, at: 2026-09-15T03:20:00Z }
 sources:
   - id: humanlayer
     resource: https://github.com/humanlayer/skills

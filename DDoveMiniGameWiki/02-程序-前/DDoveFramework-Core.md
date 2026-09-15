@@ -5,7 +5,7 @@ description: Architecture 组合根 + Mechanism（Event / CommandQuery / Fsm）+
 tags: [程序-前, core]
 status: stable
 generated: { by: human:cjh, at: 2026-08-31T02:00:00Z }
-verified: { by: human:cjh, at: 2026-08-31T03:36:00Z }
+verified: { by: human:cjh, at: 2026-09-15T03:20:00Z }
 sources:
   - id: core-asmdef
     resource: ../../DDoveMiniGameClient/Assets/DDoveFramework/Core/DDoveFramework.Core.asmdef
@@ -22,7 +22,7 @@ sources:
   - id: cq
     resource: /02-程序-前/CommandQuery.md
     title: Command 与 Query
-  - id: eudebug
+  - id: debug
     resource: /02-程序-前/DDoveDebug.md
     title: DDoveDebug
 ---
@@ -81,6 +81,7 @@ Mechanism 内部仍是三套，规则不变：
 | 模块 | 概念 |
 |------|------|
 | IOC 容器 | [IOC容器](/02-程序-前/IOC容器.md) |
+| IOC 怎么用 | [IOC容器使用规范](/02-程序-前/IOC容器使用规范.md) |
 | Architecture / 角色 | [Architecture与角色](/02-程序-前/Architecture与角色.md) |
 | Architecture 自动注册 | [Architecture自动注册](/02-程序-前/Architecture自动注册.md) |
 | 事件 | [TypeEvent](/02-程序-前/TypeEvent.md) |

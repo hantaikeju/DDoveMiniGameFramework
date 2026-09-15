@@ -5,6 +5,7 @@ description: cjh 整理的服务端概念清单。
 tags: [程序-后]
 status: stable
 generated: { by: human:cjh, at: 2026-09-12T08:20:00Z }
+verified: { by: human:cjh, at: 2026-09-15T03:20:00Z }
 ---
 
 # 程序-后 · cjh

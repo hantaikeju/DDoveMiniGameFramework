@@ -5,7 +5,7 @@ description: 接入免费 PrimeTween 1.4.x。只装包；Game 业务引用。DDo
 tags: [程序-前, primetween]
 status: stable
 generated: { by: human:cjh, at: 2026-09-11T07:33:00Z }
-verified: { by: human:cjh, at: 2026-09-11T07:37:00Z }
+verified: { by: human:cjh, at: 2026-09-15T03:20:00Z }
 sources:
   - id: grill
     resource: /00-索引/Agent/需求稿工作流.md
@@ -81,7 +81,7 @@ DDoveMiniGameClient/Packages/com.kyrylokuzyk.primetween@版本/
 
 ## 不要
 
-- 上 PRO、锁死猫柜的 1.3.8（除非要对齐排障）
+- 上 PRO、锁死 1.3.8（除非要对齐旧工程排障）
 - Tween 进 Core、包 `ITween`、注册进 IOC
 - 本刀改 `AddClick`、做 ClickScale、拆 `Game` 程序集
 - `DDoveUI` Base 引用 `PrimeTween.Runtime`

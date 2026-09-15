@@ -5,7 +5,7 @@ description: 独立事件机制。Architecture 组合一份；业务也可自建
 tags: [程序-前, core, event]
 status: stable
 generated: { by: human:cjh, at: 2026-08-28T13:10:00Z }
-verified: { by: human:cjh, at: 2026-08-31T03:36:00Z }
+verified: { by: human:cjh, at: 2026-09-15T03:20:00Z }
 sources:
   - id: ev
     resource: ../../DDoveMiniGameClient/Assets/DDoveFramework/Core/Mechanism/Event/EventSystem.cs
@@ -28,4 +28,4 @@ Concept ID：`/02-程序-前/TypeEvent`。目录：`Core/Mechanism/Event/`。
 
 **同一实例才互通。** `GameArchitecture.SendEvent<Foo>()` 到不了业务自己 `new` 出来的那份。
 
-`Architecture<T>.Reset()` 只 `Clear` Architecture 持有的那份，清不掉业务自建的总线和 `Global`。
+每个 `Architecture<T>` 自带一份；拆闭环只 `Reset` 那一根，见 [IOC 容器使用规范](/02-程序-前/IOC容器使用规范.md)。`Reset()` 只 `Clear` 该 T 持有的那份，清不掉业务自建的总线和 `Global`。

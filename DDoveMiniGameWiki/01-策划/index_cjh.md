@@ -5,6 +5,7 @@ description: cjh 整理的策划概念清单。
 tags: [策划]
 status: stable
 generated: { by: human:cjh, at: 2026-09-12T08:20:00Z }
+verified: { by: human:cjh, at: 2026-09-15T03:20:00Z }
 ---
 
 # 策划 · cjh

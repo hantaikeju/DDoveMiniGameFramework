@@ -5,6 +5,7 @@ description: UIToolkit 总门面 DDove/Editor。没有特殊原因，工具一�
 tags: [程序-前, editor]
 status: stable
 generated: { by: human:cjh, at: 2026-09-04T09:06:00Z }
+verified: { by: human:cjh, at: 2026-09-15T03:20:00Z }
 sources:
   - id: core
     resource: /02-程序-前/DDoveFramework-Core.md

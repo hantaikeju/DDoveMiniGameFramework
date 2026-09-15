@@ -1,11 +1,11 @@
 ---
 type: Reference
 title: Architecture 与角色
-description: GameArchitecture 注册 Model/System/Utility；Command 写、Query 读、Controller 发令。
+description: 玩法根 GameArchitecture 注册 Model/System/Utility；Command 写、Query 读。闭环根见 IOC 使用规范。
 tags: [程序-前, core, architecture]
 status: stable
 generated: { by: human:cjh, at: 2026-08-28T11:40:00Z }
-verified: { by: human:cjh, at: 2026-08-31T03:36:00Z }
+verified: { by: human:cjh, at: 2026-09-15T02:38:00Z }
 sources:
   - id: arch
     resource: ../../DDoveMiniGameClient/Assets/DDoveFramework/Core/Architecture/Architecture.cs
@@ -13,13 +13,22 @@ sources:
   - id: roles
     resource: ../../DDoveMiniGameClient/Assets/DDoveFramework/Core/Architecture/CoreInterface.cs
     title: CoreInterface.cs
+  - id: ioc
+    resource: /02-程序-前/IOC容器.md
+    title: IOC 容器
+  - id: ioc-use
+    resource: /02-程序-前/IOC容器使用规范.md
+    title: IOC 容器使用规范
+  - id: bind
+    resource: /02-程序-前/Architecture自动注册.md
+    title: Architecture 自动注册
 ---
 
 # Architecture 与角色
 
 Concept ID：`/02-程序-前/Architecture与角色`。权威实现见 `sources`。与代码冲突以代码为准。
 
-业务根类仍是 `GameArchitecture : Architecture<GameArchitecture>`。怎么进根见 [Architecture 自动注册](/02-程序-前/Architecture自动注册.md)：挂特性，Editor 生成 `Init()`。不要手写 `GameArchitecture`。实例存在 [IOC 容器](/02-程序-前/IOC容器.md) 里。业务不要 `new IOCContainer()`。
+玩法根仍是 `GameArchitecture : Architecture<GameArchitecture>`。怎么进根见 [Architecture 自动注册](/02-程序-前/Architecture自动注册.md)：挂特性，Editor 生成 `Init()`。**不要手写** `GameArchitecture`。`Architecture<T>` 每个 `T` 自带一份 [IOC](/02-程序-前/IOC容器.md)；几根、谁进谁不进见 [IOC 容器使用规范](/02-程序-前/IOC容器使用规范.md)。业务不要 `new IOCContainer()`。
 
 ## 角色
 
@@ -38,13 +47,13 @@ Command / Query 的契约在 [CommandQuery](/02-程序-前/CommandQuery.md)。�
 
 1. 首次 `GameArchitecture.Interface` → `Init()` 注册 → 先 `Model.Init` 再 `System.Init`
 2. 已启动后再 Register，立即 Init
-3. `Architecture<T>.Reset()`：先 System 再 Model 调 `Deinit`，清空 IOC 与事件，丢掉单例
+3. `Architecture<T>.Reset()`：先 System 再 Model 调 `Deinit`，清空**该 T** 的 IOC 与事件，丢掉单例。拆闭环只 `Reset` 那一根，见 [IOC 容器使用规范](/02-程序-前/IOC容器使用规范.md)
 
 `OnInit` 里把 `GetModel` 结果存字段，不要每帧 Get。`OnDeinit` 默认可空，有订阅再卸。必须有用 `Get*`（未注册抛）；可选读取用 `TryGetModel` / `TryGetSystem` / `TryGetUtility`，失败再 [DDoveDebug](/02-程序-前/DDoveDebug.md) `LogError`。
 
 ## 业务怎么挂
 
-怎么进根见 [Architecture 自动注册](/02-程序-前/Architecture自动注册.md)：挂 `[DDoveBindModel]` / `[DDoveBindSystem]` / `[DDoveBindUtility]`，不要手写 `GameArchitecture`。生成的 `Init()` 仍是：
+玩法三类挂 `[DDoveBindModel]` / `[DDoveBindSystem]` / `[DDoveBindUtility]`，不要手写 `GameArchitecture`。闭环内部件**不要**挂这些特性。生成的 `Init()` 仍是：
 
 ```csharp
 RegisterUtility(new GameSaveUtility());
@@ -56,4 +65,4 @@ RegisterSystem(new PlayerSystem());
 
 ## 不做
 
-Core 不写业务 Model。不把道具列表放进 IOC。Command 第一轮不池化，见 [CommandQuery](/02-程序-前/CommandQuery.md)。
+Core 不写业务 Model。不把道具列表、`Tables`、Kit 放进 IOC。Command 第一轮不池化，见 [CommandQuery](/02-程序-前/CommandQuery.md)。

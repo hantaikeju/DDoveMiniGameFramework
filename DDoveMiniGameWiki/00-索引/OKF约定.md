@@ -1,16 +1,22 @@
 ---
 type: Playbook
 title: OKF 约定与检索
-description: 本 bundle 按仓库根 SPEC.md 约束。AI 检索：grep frontmatter（排除 _log）。index 只服务写入。
+description: 本 bundle 按仓库根 SPEC.md 约束。AI 检索：grep frontmatter（排除 _log）。index 只服务写入。流程篇不绑仓外工程。
 tags: [索引, 检索, okf]
 status: stable
 generated: { by: process:mgf-okf-init, at: 2026-08-28T07:41:00Z }
-verified: { by: human:cjh, at: 2026-09-14T02:43:00Z }
+verified: { by: human:cjh, at: 2026-09-15T02:40:00Z }
 resource: ../../SPEC.md
 sources:
   - id: okf-spec
     resource: ../../SPEC.md
     title: Open Knowledge Format
+  - id: ioc-playbook
+    resource: /02-程序-前/IOC容器使用规范.md
+    title: IOC 容器使用规范
+  - id: tl2-ref
+    resource: /02-程序-前/TL2场景流式对照.md
+    title: TL2 场景流式对照
 ---
 
 # OKF 约定与检索
@@ -160,6 +166,23 @@ sources:
 `SPEC.md` / `AGENTS.md` 留在仓库根。wiki 根 `index.md`「保留」只外链，不拷贝正文。
 
 替换仓库根 `SPEC.md` 后，主动调用 skill `ddove-okf-upgrade` 做检查与升级。不要在日常问答里改合规字段。
+
+写 `01`–`04` 工程篇还要满足下一节。
+
+## 流程篇与外库对照
+
+写 `01`–`04` 的 Playbook / 工程 Reference 时先问：把本仓拷到一台没有那份工程的机器上，这句话还能独立执行吗？不要维护外库名单。
+
+| 能（留下） | 不能（抽走） |
+|------------|--------------|
+| 本 bundle 互链（「对照：[DDoveRes]…」） | 另一仓的项目名、外库类名、外库 wiki 路径、本机盘符 |
+| `sources` / 正文链到本仓 `DDoveMiniGameClient/`、`DDoveMiniGameConfig/` | |
+| 已嵌入本仓的 `Packages/` | |
+| 公开上游 URL（Unity 手册、GitHub） | |
+
+不能独立执行的句子：改成**本库步骤**写进流程篇。还要留「为什么 / 不要抄哪个符号」时，另开对照 `Reference`（样板：[TL2 场景流式对照](/02-程序-前/TL2场景流式对照.md)）。开篇写清「外库提取，不是本库现行约定」；权威仍是流程篇。对照按**主题**开，不要按来源库开总目录。
+
+本库改名前缀（如旧 `EU` → `DDove`）可留一句史，不要写成「去某盘找旧工程」。
 
 ## index 怎么维护（多人）
 

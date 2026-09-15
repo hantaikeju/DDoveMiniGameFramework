@@ -5,7 +5,7 @@ description: 第一刀垂直闭环已落地。制作场景导出 Prefab，DDoveR
 tags: [程序-前, ddoveui]
 status: stable
 generated: { by: human:cjh, at: 2026-09-10T08:14:00Z }
-verified: { by: human:cjh, at: 2026-09-14T02:51:00Z }
+verified: { by: human:cjh, at: 2026-09-15T03:20:00Z }
 sources:
   - id: grill
     resource: /00-索引/Agent/需求稿工作流.md
@@ -47,7 +47,7 @@ sources:
 
 # DDoveUI
 
-Concept ID：`/02-程序-前/DDoveUI`。清单：[index_cjh](/02-程序-前/index_cjh.md)。第一刀垂直闭环已落地（制作场景 → Prefab → Launch 开 `WndHome`）。对照 MeowPantry EUUI 迁第一刀；结论与代码冲突以代码为准。
+Concept ID：`/02-程序-前/DDoveUI`。清单：[index_cjh](/02-程序-前/index_cjh.md)。第一刀垂直闭环已落地（制作场景 → Prefab → Launch 开 `WndHome`）。结论与代码冲突以代码为准。
 
 对照：[DDoveRes](/02-程序-前/DDoveRes.md)、[DDoveRes 按需加载](/02-程序-前/DDoveRes按需加载.md)、[DDoveAtlas](/02-程序-前/DDoveAtlas.md)、[DDoveBoot](/02-程序-前/DDoveBoot.md)、[DDove Editor](/02-程序-前/DDoveEditor.md)、[Architecture 与角色](/02-程序-前/Architecture与角色.md)。
 
@@ -57,7 +57,7 @@ Concept ID：`/02-程序-前/DDoveUI`。清单：[index_cjh](/02-程序-前/inde
 
 运行时带齐：`Initialize`、`OpenAsync` / `Close` / `CloseAll` / `OpenExclusiveAsync`、`NavigateToAsync` / `BackAsync` / `BackToAsync`、LRU、`DDoveUIPopupPanelBase`。样板页只用 `OpenAsync<WndHome>`。
 
-不搬：多人分屏、OSA、新 Input System、URP Overlay、EUAtlas、模块/扩展模板选择、Builtin+Remote。PrimeTween 不进 Base、不做 ClickScale；业务装包见 [PrimeTween](/02-程序-前/PrimeTween.md)。
+不搬：多人分屏、OSA、新 Input System、URP Overlay、图集进 UI 程序集（见 [DDoveAtlas](/02-程序-前/DDoveAtlas.md)）、模块/扩展模板选择、Builtin+Remote。PrimeTween 不进 Base、不做 ClickScale；业务装包见 [PrimeTween](/02-程序-前/PrimeTween.md)。
 
 ## 程序集
 
@@ -165,7 +165,7 @@ UIRoot 可 `DontDestroyOnLoad`。Boot 自己仍不 DDOL，见 [DDoveBoot](/02-�
 
 创建场景 / 绑定 / 导出 / 样板挂 `[DDoveHotboxEntry]`。属性在 `DDoveFramework.Editor`。Space 饼环在总窗 **HotBox** 页编排：给环起名，条目沿一圈散开；点中心切环。
 
-不搬独立 `EUUIEditorWindow`、模块管理、扩展模板选择。Create 资产菜单可以留 `DDove/UI/Init Info`。
+不搬独立 UI EditorWindow、模块管理、扩展模板选择。Create 资产菜单可以留 `DDove/UI/Init Info`。
 
 导出：Scriban 渲染绑定 + 业务初稿 → 编译后把字段绑到 `UIRoot` 上的面板组件 → `SaveAsPrefabAsset`。流程拆开（生成 / 绑定 / 存 Prefab），不要揉成一个上帝类。
 
@@ -196,7 +196,7 @@ Assets/Game/
 
 ## 还没有（本刀之后）
 
-按 tag 预下、Host/Web、导航手柄 API、OSA、多人。图集 Kit 已落地，见 [DDoveAtlas](/02-程序-前/DDoveAtlas.md)。未实现前不要把猫柜那张全 API 当已有方法。
+按 tag 预下、Host/Web、导航手柄 API、OSA、多人。图集 Kit 已落地，见 [DDoveAtlas](/02-程序-前/DDoveAtlas.md)。未实现前不要把未落地 API 当已有方法。
 
 ## 验收
 

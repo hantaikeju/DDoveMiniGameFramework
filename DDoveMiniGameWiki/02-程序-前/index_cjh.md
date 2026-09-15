@@ -32,6 +32,7 @@ Concept ID：`/02-程序-前/index_cjh`。本目录里 cjh 整理的篇。别人
 * [NuGet 与 Scriban](NuGet与Scriban.md) - nuget 源装 Scriban。UnityTls / 梯子代理。与 manifest（UPM）无关。 `Playbook`
 * [UPM 落地](UPM落地.md) - GitHub URL 装完后拷一份到 `Packages/`，无科学上网不再 download err。 `Playbook`
 * [IOC 容器](IOC容器.md) - 按注册泛型类型存一份实例；找不到抛错。不是构造注入框架。 `Reference`
+* [IOC 容器使用规范](IOC容器使用规范.md) - 一条闭环链路配一套 Architecture（一份 IOC）。不要 new 容器当全局定位器。 `Playbook`
 * [Architecture 与角色](Architecture与角色.md) - GameArchitecture 注册 Model/System/Utility；谁能发令。 `Reference`
 * [Architecture 自动注册](Architecture自动注册.md) - 三类特性收集并生成 GameArchitecture；总窗 Architecture 页配路径、Hotbox 创建三类。 `Playbook`
 * [TypeEvent](TypeEvent.md) - 独立事件机制。Architecture 与业务都可用。 `Reference`

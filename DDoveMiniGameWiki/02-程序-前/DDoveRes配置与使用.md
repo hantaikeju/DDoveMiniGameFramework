@@ -5,6 +5,7 @@ description: 总窗 Res 页怎么配默认包、加载模式、启动场景；Bo
 tags: [程序-前, ddoveres, yooasset]
 status: stable
 generated: { by: human:cjh, at: 2026-09-10T07:35:00Z }
+verified: { by: human:cjh, at: 2026-09-15T03:20:00Z }
 sources:
   - id: init-info
     resource: ../../DDoveMiniGameClient/Assets/DDoveFramework/Extension/DDoveRes/DDoveResInitInfo.cs
@@ -93,4 +94,4 @@ if (handle == null)
 
 ## 还没有
 
-Host / Web 的版本与清单、Downloader、进度 UI、bytes / RawFile、释放全集。配表走 [DDoveCfg](/02-程序-前/DDoveCfg.md)。未实现前不要把按需加载篇里的预下 API 当已有方法。
+Host / Web 的远程 Init options（现在会 Init 失败）、Downloader、进度 UI、bytes / RawFile、释放全集。EditorSimulate / Offline 的要版本 + 清单已接，见 [DDoveRes](/02-程序-前/DDoveRes.md)。配表走 [DDoveCfg](/02-程序-前/DDoveCfg.md)。未实现前不要把按需加载篇里的预下 API 当已有方法。

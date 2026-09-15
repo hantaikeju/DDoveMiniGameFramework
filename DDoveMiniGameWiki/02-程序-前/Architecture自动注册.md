@@ -1,11 +1,11 @@
 ---
 type: Playbook
 title: Architecture 自动注册
-description: 三类特性收集并生成 GameArchitecture；总窗 Architecture 页配路径、Hotbox 创建三类。不手写 Init。
+description: 三类特性收集并生成 GameArchitecture；总窗 Architecture 页配路径、Hotbox 创建三类。不手写游戏根 Init。
 tags: [程序-前, architecture]
 status: stable
 generated: { by: human:cjh, at: 2026-09-11T06:48:00Z }
-verified: { by: human:cjh, at: 2026-09-11T08:06:00Z }
+verified: { by: human:cjh, at: 2026-09-15T02:38:00Z }
 sources:
   - id: grill
     resource: /00-索引/Agent/需求稿工作流.md
@@ -16,6 +16,9 @@ sources:
   - id: ioc
     resource: /02-程序-前/IOC容器.md
     title: IOC 容器
+  - id: ioc-use
+    resource: /02-程序-前/IOC容器使用规范.md
+    title: IOC 容器使用规范
   - id: core
     resource: /02-程序-前/DDoveFramework-Core.md
     title: DDoveFramework Core
@@ -29,9 +32,9 @@ sources:
 
 # Architecture 自动注册
 
-Concept ID：`/02-程序-前/Architecture自动注册`。清单：[index_cjh](/02-程序-前/index_cjh.md)。角色与 IOC 仍看 [Architecture 与角色](/02-程序-前/Architecture与角色.md)、[IOC 容器](/02-程序-前/IOC容器.md)。结论与代码冲突以代码为准。
+Concept ID：`/02-程序-前/Architecture自动注册`。清单：[index_cjh](/02-程序-前/index_cjh.md)。角色与 IOC 仍看 [Architecture 与角色](/02-程序-前/Architecture与角色.md)、[IOC 容器](/02-程序-前/IOC容器.md)。几根、谁进游戏根见 [IOC 容器使用规范](/02-程序-前/IOC容器使用规范.md)。结论与代码冲突以代码为准。
 
-对照：[DDoveFramework Core](/02-程序-前/DDoveFramework-Core.md)、[DDove Editor](/02-程序-前/DDoveEditor.md)、[DDoveUI](/02-程序-前/DDoveUI.md)。
+对照：[DDoveFramework Core](/02-程序-前/DDoveFramework-Core.md)、[DDove Editor](/02-程序-前/DDoveEditor.md)、[DDoveUI](/02-程序-前/DDoveUI.md)、[IOC 容器使用规范](/02-程序-前/IOC容器使用规范.md)。
 
 ## 要什么
 
@@ -58,6 +61,7 @@ Concept ID：`/02-程序-前/Architecture自动注册`。清单：[index_cjh](/0
 - 不合格、或同一键收两次：生成**失败、不写文件**。
 - Controller / 面板不挂、不进 IOC。
 - Kit、Boot 不参与注册。
+- 闭环内部件**不要**挂特性，否则会进 `GameArchitecture.Generated`。独立根手写 `Init()`，见 [IOC 容器使用规范](/02-程序-前/IOC容器使用规范.md)。生成器多根本篇不做。
 
 `As` 只出现在 Utility。不写 `As` 按具体类型当键，与 [IOC 容器](/02-程序-前/IOC容器.md) 一致。
 
@@ -115,8 +119,8 @@ UI 绑定在 `Assets/Game/Generate/UI`，与根类同挂 `Generate/`。
 ## 不要
 
 - 在 `Architecture<T>` 里运行时扫类型
-- 手写第二份 `GameArchitecture` 或手写 `Register`
-- 把 `DDoveUIKit` / Res / Yoo 注册进 IOC
+- 手写第二份 `GameArchitecture`，或把玩法 `Register` 手写进游戏根
+- 把 `DDoveUIKit` / Res / Yoo 注册进游戏 IOC
 - Architecture 页引用 `DDoveUI`
 - 造 `HotUpdate/` 程序集（本库没有 HybridCLR）
 

@@ -5,7 +5,7 @@ description: 点 Play 到看见 WndHome。Boot 加载 Launch 后必须有 GameLa
 tags: [程序-前, ddoveboot, ddoveres, ddoveui]
 status: stable
 generated: { by: human:cjh, at: 2026-09-14T09:20:00Z }
-verified: { by: human:cjh, at: 2026-09-14T09:33:00Z }
+verified: { by: human:cjh, at: 2026-09-15T03:20:00Z }
 sources:
   - id: launch
     resource: ../../DDoveMiniGameClient/Assets/Game/Launch/GameLaunch.cs
@@ -81,7 +81,7 @@ Play 后：`DDoveBoot` → 包可用 → `Launch` → `GameLaunch` → 开 `WndH
 
 ## Yoo 3.0.5 清单
 
-[DDoveRes 按需加载](/02-程序-前/DDoveRes按需加载.md) 把「要版本 + 清单」写成 Host/Web 以后才做。当前 Yoo **3.0.5** 的 EditorSimulate / Offline **同样要**，否则 `LoadSceneAsync` 抛 `Active package manifest not found`。实现在 [DDoveResKit](../../DDoveMiniGameClient/Assets/DDoveFramework/Extension/DDoveRes/DDoveResKit.cs) 的 `LoadActiveManifestAsync`。
+Yoo **3.0.5** 的 EditorSimulate / Offline **也要**要版本 + 清单，否则 `LoadSceneAsync` 抛 `Active package manifest not found`。实现在 [DDoveResKit](../../DDoveMiniGameClient/Assets/DDoveFramework/Extension/DDoveRes/DDoveResKit.cs) 的 `LoadActiveManifestAsync`。约定见 [DDoveRes](/02-程序-前/DDoveRes.md)、[DDoveRes 按需加载](/02-程序-前/DDoveRes按需加载.md)。
 
 ```
 InitializePackageAsync

@@ -5,7 +5,7 @@ description: 散图在 Excluded，Yoo 只收图集产物。工程用 Sprite Atla
 tags: [程序-前, ddoveatlas]
 status: stable
 generated: { by: human:cjh, at: 2026-09-12T10:31:00Z }
-verified: { by: human:cjh, at: 2026-09-14T02:04:00Z }
+verified: { by: human:cjh, at: 2026-09-15T03:20:00Z }
 sources:
   - id: grill
     resource: /00-索引/Agent/需求稿工作流.md
@@ -44,7 +44,7 @@ sources:
 
 # DDoveAtlas
 
-Concept ID：`/02-程序-前/DDoveAtlas`。清单：[index_cjh](/02-程序-前/index_cjh.md)。实现未齐时以本约定为准；与代码冲突以当前代码为准。对照猫柜 EUAtlas 只取目录/生成/按名取图；不搬双包裹。
+Concept ID：`/02-程序-前/DDoveAtlas`。清单：[index_cjh](/02-程序-前/index_cjh.md)。与代码冲突以当前代码为准。只取目录 / 生成 / 按名取图；不搬 Builtin + Remote 双包裹。
 
 对照：[DDoveUI](/02-程序-前/DDoveUI.md)、[DDoveRes](/02-程序-前/DDoveRes.md)、[DDoveRes 按需加载](/02-程序-前/DDoveRes按需加载.md)、[DDoveCfg](/02-程序-前/DDoveCfg.md)、[DDove Editor](/02-程序-前/DDoveEditor.md)。官方：[Sprite Atlas V2](https://docs.unity3d.com/cn/2023.1/Manual/SpriteAtlasV2.html)。
 
@@ -80,7 +80,7 @@ V2 改的是 Pack 管线（ADBV2 导入器），不是改成加载散图。运�
 
 ## 程序集
 
-学 [DDoveCfg](/02-程序-前/DDoveCfg.md)，避开猫柜 Core 膨胀。[DDoveFramework Core](/02-程序-前/DDoveFramework-Core.md) `references` 空。**没装 Atlas 时** Core / Res / Boot / UI / `DDove/Editor` 仍能编。
+学 [DDoveCfg](/02-程序-前/DDoveCfg.md)。[DDoveFramework Core](/02-程序-前/DDoveFramework-Core.md) `references` 空。**没装 Atlas 时** Core / Res / Boot / UI / `DDove/Editor` 仍能编。
 
 ```
 DDoveFramework.Extension.DDoveAtlas           Core, DDoveRes, UniTask, YooAsset
@@ -132,19 +132,19 @@ GameLaunch
 
 ## 不要
 
-- 搬猫柜 Builtin + Remote、`isRemote`、完整资产路径当 location
+- 搬 Builtin + Remote、`isRemote`、完整资产路径当 location
 - `LoadAssetSync`、启动预载全部图集、一张总图集
 - 一条收集器扫整个 `GameRes/Atlases`，或把散图收成 addressable
 - 散图进 `GameRes/` 当正式资源；图集进 `GameResExcluded`
 - `DDoveUI` / Boot / Core 引用 Atlas
-- 基类 `SetImage(url)`、Scriban 扩展模板、OSA / `IEUSpriteProvider`
+- 基类 `SetImage(url)`、Scriban 扩展模板、OSA / 第三方骨骼图集 Provider
 - 总窗 Atlas 页、双份 Config SO
 - 留着一代 `StartDemo` 让 Unity 自动迁；Mode 用一代或 V2 Enabled for Builds
 - `GetIncludeInBuild`（当前编辑器 API 没有）
 
 ## 还没有（本刀之后）
 
-按 tag 预下图集、阶段退出整批卸、Host/Web、`04-美术` 命名规范篇。未实现前不要把猫柜那张全 API 当已有方法。
+按 tag 预下图集、阶段退出整批卸、Host/Web、`04-美术` 命名规范篇。未实现前不要把未落地 API 当已有方法。
 
 ## 验收
 

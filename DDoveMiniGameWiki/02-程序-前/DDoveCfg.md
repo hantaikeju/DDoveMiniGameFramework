@@ -5,7 +5,7 @@ description: 第一刀接入 Luban。填表工程与生成器在 DDoveMiniGameCo
 tags: [程序-前, ddovecfg, luban]
 status: stable
 generated: { by: human:cjh, at: 2026-09-12T08:20:00Z }
-verified: { by: human:cjh, at: 2026-09-12T08:24:00Z }
+verified: { by: human:cjh, at: 2026-09-15T03:20:00Z }
 sources:
   - id: grill
     resource: /00-索引/Agent/需求稿工作流.md
@@ -86,7 +86,7 @@ Concept ID：`/02-程序-前/DDoveCfg`。清单：[index_cjh](/02-程序-前/ind
 
 ## 程序集
 
-避开猫柜那种 Core 引用膨胀。[DDoveFramework Core](/02-程序-前/DDoveFramework-Core.md) `references` 空，**零引用** Luban / 生成表类型 / json 库。
+[DDoveFramework Core](/02-程序-前/DDoveFramework-Core.md) `references` 空，**零引用** Luban / 生成表类型 / json 库。
 
 ```
 DDoveFramework.Extension.DDoveCfg           Core, DDoveRes, UniTask, YooAsset, Luban.Runtime

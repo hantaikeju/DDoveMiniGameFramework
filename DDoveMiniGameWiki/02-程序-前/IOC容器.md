@@ -1,15 +1,21 @@
 ---
 type: Reference
 title: IOC 容器
-description: EU Core 按注册泛型类型存一份实例；找不到抛错。不是构造注入框架。
+description: DDoveFramework.Core 按注册泛型类型存一份实例；找不到抛错。不是构造注入框架。
 tags: [程序-前, core, ioc]
 status: stable
 generated: { by: human:cjh, at: 2026-08-28T11:13:00Z }
-verified: { by: human:cjh, at: 2026-08-31T03:36:00Z }
+verified: { by: human:cjh, at: 2026-09-15T03:20:00Z }
 sources:
   - id: ioc-src
     resource: ../../DDoveMiniGameClient/Assets/DDoveFramework/Core/Architecture/IOCContainer.cs
     title: IOCContainer.cs
+  - id: roles
+    resource: /02-程序-前/Architecture与角色.md
+    title: Architecture 与角色
+  - id: ioc-use
+    resource: /02-程序-前/IOC容器使用规范.md
+    title: IOC 容器使用规范
 ---
 
 # IOC 容器
@@ -41,11 +47,11 @@ container.Get<IFoo>();         // 成功
 container.Get<Foo>();          // 抛：没按 Foo 注册
 ```
 
-当前约定：按**具体类型**注册（与旧 EU Architecture 的 `RegisterSystem<TSystem>` 一致）。不要先抽一层业务接口再当键。
+默认按**具体类型**注册。只有会换实现（广告、存档）才按接口当键，见 [Architecture 与角色](/02-程序-前/Architecture与角色.md) `RegisterUtility<IAd>`。
 
 ## 不做什么
 
-不要加构造注入、`Register<T>(Func<T>)`、瞬态/作用域 lifetime、按字符串取实例、线程安全。全是 Architecture 级一份实例，主线程用。
+不要加构造注入、`Register<T>(Func<T>)`、瞬态/作用域 lifetime、按字符串取实例、线程安全。每个 `Architecture<T>` 一份实例，主线程用；几根见 [IOC 容器使用规范](/02-程序-前/IOC容器使用规范.md)。
 
 效果库、YooAsset、广告不要进这个容器当「服务」。那些走 Kit 或业务 Utility。
 

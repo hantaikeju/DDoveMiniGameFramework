@@ -5,7 +5,7 @@ description: 小游戏默认边玩边下。一个 DefaultPackage，多条 Collec
 tags: [程序-前, ddoveres, yooasset]
 status: stable
 generated: { by: human:cjh, at: 2026-09-04T08:39:00Z }
-verified: { by: human:cjh, at: 2026-09-04T08:43:00Z }
+verified: { by: human:cjh, at: 2026-09-15T03:20:00Z }
 sources:
   - id: res
     resource: /02-程序-前/DDoveRes.md
@@ -13,6 +13,9 @@ sources:
   - id: boot
     resource: /02-程序-前/DDoveBoot.md
     title: DDoveBoot
+  - id: play
+    resource: /02-程序-前/Play到WndHome.md
+    title: Play 到 WndHome
   - id: fsm
     resource: /02-程序-前/CoreFsm.md
     title: Core Fsm
@@ -22,27 +25,27 @@ sources:
   - id: yoo-dl
     resource: ../../DDoveMiniGameClient/Packages/com.tuyoogame.yooasset@3.0.5/Runtime/ResourcePackage/Operations/DownloaderOptions.cs
     title: DownloaderOptions.cs
-  - id: h5
-    resource: TL2_LLM_Wiki/02-打包构建/运行时按需加载与流畅策略.md
-    title: TL2 运行时按需加载（外库对照）
+  - id: tl2
+    resource: /02-程序-前/TL2场景流式对照.md
+    title: TL2 场景流式对照
 ---
 
 # DDoveRes 按需加载
 
-Concept ID：`/02-程序-前/DDoveRes按需加载`。约定与 [DDoveRes](/02-程序-前/DDoveRes.md) 门面、[DDoveBoot](/02-程序-前/DDoveBoot.md) 配合。实现未齐时以本约定为准；与代码冲突以当前代码为准。
+Concept ID：`/02-程序-前/DDoveRes按需加载`。约定与 [DDoveRes](/02-程序-前/DDoveRes.md) 门面、[DDoveBoot](/02-程序-前/DDoveBoot.md) 配合。结论与代码冲突以当前代码为准。
 
-门面上 **还没有** `CreateResourceDownloader` / 按 location 预下。Host 要版本 + 拉清单也未接。下面是现行设计，不是已落地 API。
+门面上 **还没有** `CreateResourceDownloader` / 按 location 预下。下面预下 / tag 是现行设计，不是已落地 API。
 
 ## 结论
 
 小游戏（及默认 App）**边玩边下**：`LoadAssetAsync` / `LoadSceneAsync` 缺文件再拉对应 bundle。  
-**不接** MeowPantry 那种启动全量 `CreateDownloader()` + 补丁 Fsm。  
-**仍要** 包裹 Init；Host / Web 还要 **要版本 + 更新清单**，否则 Load 没有目录。
+**不接**启动全量 `CreateDownloader()` + 补丁 Fsm。  
+**仍要**包裹 Init + **要版本 + 加载清单**。Yoo 3.0.5 的 EditorSimulate / Offline 已在 [DDoveRes](/02-程序-前/DDoveRes.md) `LoadActiveManifestAsync` 里做完。Host / Web 的远程 Init options **未接**（`CreateInitializeOptions` 返回 `null`）。缺清单会 `Active package manifest not found`，见 [Play 到 WndHome](/02-程序-前/Play到WndHome.md)。
 
 ```
-DDoveBoot：Init（+ 以后：版本、清单）→ LoadScene(Launch)
+DDoveBoot：Init（含要版本 + 清单）→ LoadScene(Launch)
 之后：Load(资源名)；没有就下这个资源的包 + 依赖
-可选：业务进大厅 / 进本前，按 tag 或配表名字预下一批
+可选：业务进大厅 / 进本前，按 tag 或配表名字预下一批（门面还没有预下 API）
 ```
 
 释放 `Release` 卸的是内存。磁盘缓存还在则下次 Load 走本地；换清单或清缓存才再打 CDN。不是每次 Load 都对远端。
@@ -55,7 +58,7 @@ DDoveBoot：Init（+ 以后：版本、清单）→ LoadScene(Launch)
 | | 职责 |
 |--|------|
 | Collector | 收哪些目录、打成哪些 bundle |
-| Tag | `CreateDownloader(tag)` 分批预下 |
+| Tag | 以后 `CreateDownloader(tag)` 分批预下（门面还没有） |
 | location | 日常 `LoadAssetAsync(名字)` |
 
 资源根：`Assets/GameRes/`（进收集器）与 `Assets/GameResExcluded/`（不进，设计稿 / 临时候选）。不要扫整个 `GameRes/`，按子目录收。不要用 Unity 保留名 `Resources/` 当这棵树。
@@ -69,9 +72,9 @@ DefaultPackage
   Group Hall       CollectPath: Assets/GameRes/UI/…、Assets/GameRes/Atlases/…   tag: hall
 ```
 
-框架工程已落根：`GameRes/Scenes`、`GameRes/UI`、`GameRes/Atlases`、`GameRes/Config`、`GameRes/Cfg`、`GameResExcluded`。`Scene` 组已收 `Launch.unity`。UI 第一刀已加 `Start` 组（`GameRes/UI/Start`，AddressByFileName）。`Cfg` 组收 `GameRes/Cfg`（tag `cfg`），见 [DDoveCfg](/02-程序-前/DDoveCfg.md)。Common / Login / Hall 有了再加收集器。
+框架工程已落根：`GameRes/Scenes`、`GameRes/UI`、`GameRes/Atlases`、`GameRes/Config`、`GameRes/Cfg`、`GameResExcluded`。`Scene` 组已收 `Launch.unity`。UI 已加 `Start` 组（`GameRes/UI/Start`，AddressByFileName）。`Cfg` 组收 `GameRes/Cfg`（tag `cfg`），见 [DDoveCfg](/02-程序-前/DDoveCfg.md)。Common / Login / Hall 有了再加收集器。
 
-不要一条收集器扫整个 `UI/`。EUUI 仍可只有一个 Prefabs 根；**阶段靠子目录 + 收集器 tag**。  
+不要一条收集器扫整个 `UI/`。阶段靠子目录 + 收集器 tag。  
 图集体积大，必须按阶段分图集，不能一张总图集。
 
 清单出包时仍收录所有 Collector。分批的是**设备上下哪些文件**，不是少打进包。
@@ -98,18 +101,14 @@ dungeon_01 → Mob_Slime, Mob_Bat, HeroBase
 | 配表资源名 | 给本关怪、皮肤 |
 | 收集器 UserData 生成策略再编译出另一种 Load | **不做**；Load 始终一条路 |
 
-版本 + 清单可以是 Boot 里两步 `await`，不必上 [Core Fsm](/02-程序-前/CoreFsm.md)。Fsm 只留给以后「小批预下要重试/进度」的短链，不要做成空 tag 全下。
+EditorSimulate / Offline 的要版本 + 清单已经在 Res Init 里 `await`，不必上 [Core Fsm](/02-程序-前/CoreFsm.md)。Fsm 只留给以后「小批预下要重试/进度」的短链，不要做成空 tag 全下。
 
 Yoo `ClearCacheAsync`：热更后 `ClearUnusedBundleFiles` 清旧版本。没有「缓存满自动 LRU」。微信扩展主要认 All / Unused。`Release` ≠ 删磁盘。
 
-## 对照 H5 App 加载页
+## 对照
 
-H5 **没有** Yoo tag。加载页等的是 `PreloadEnterAssets`：**写死最小集 + 打包生成的 bytes 名单**，用 `abdata` 展开 AB 体积加总。第一次启动卡住进度条；以后后台预下。不是按 tag 统计，也不是整包。
-
-Yoo 对等：加载页绑 `CreateDownloader("login","common")`（或 Launch 依赖）的 `TotalDownloadBytes`。名单角色 = tag 或配表名字。
-
-分块流式、`sceneabdata`、进场景暂停 DelayLoad 是 TL2 大世界做法，本库默认不做。提取见 [TL2 场景流式对照](/02-程序-前/TL2场景流式对照.md)。
+H5 加载页、分块流式、`sceneabdata` 见 [TL2 场景流式对照](/02-程序-前/TL2场景流式对照.md)。本库默认不做。Yoo 侧若以后做加载页，绑 `CreateDownloader(tag)` 的 `TotalDownloadBytes`（门面还没有这个 API）。名单角色 = tag 或配表名字。
 
 ## 还没有（代码）
 
-Host / Web 的 Init options、要版本、拉清单、Downloader（按 tag / 按 location）、`ClearCache` 门面。未实现前不要把本篇 API 表当已有方法。
+Host / Web 的远程 Init options、Downloader（按 tag / 按 location）、`ClearCache` 门面。EditorSimulate / Offline 的要版本 + 清单已接。未实现前不要把本篇预下 API 当已有方法。

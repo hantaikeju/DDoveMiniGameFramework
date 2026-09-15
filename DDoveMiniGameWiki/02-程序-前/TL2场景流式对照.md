@@ -5,7 +5,7 @@ description: 提取 TL2 分块流式、sceneabdata、进场景暂停延迟加载
 tags: [程序-前, ddoveres, yooasset]
 status: stable
 generated: { by: human:cjh, at: 2026-09-09T09:20:00Z }
-verified: { by: human:cjh, at: 2026-09-09T09:16:00Z }
+verified: { by: human:cjh, at: 2026-09-15T03:20:00Z }
 sources:
   - id: ondemand
     resource: /02-程序-前/DDoveRes按需加载.md
@@ -26,7 +26,7 @@ sources:
 
 # TL2 场景流式对照
 
-Concept ID：`/02-程序-前/TL2场景流式对照`。外库提取，**不是**本库现行约定。小游戏默认仍走 [DDoveRes 按需加载](/02-程序-前/DDoveRes按需加载.md)：一个包裹、用资源名 Load、边玩边下。实现未齐时以那篇为准。
+Concept ID：`/02-程序-前/TL2场景流式对照`。外库提取，**不是**本库现行约定。小游戏默认仍走 [DDoveRes 按需加载](/02-程序-前/DDoveRes按需加载.md)：一个包裹、用资源名 Load、边玩边下。与代码冲突以当前代码为准。
 
 本库 **不要**抄 `sceneabdata`、`.sab`、`CustomSceneLoadManager`。下面只记 TL2 为什么这么做，以及以后若真有大世界可对照的点。
 
@@ -55,7 +55,7 @@ ForceLoad **两份目录都要齐**，才知道 CDN 上哪个文件对应哪块�
 
 优化点（以后若场景体积和 UI/模型不在一个量级）：
 
-- 目录必须先于 Load。Yoo 对等是 Host/Web **要版本 + 拉清单**，不必再造第二份 `sceneabdata`。
+- 目录必须先于 Load。Yoo 对等是 **要版本 + 拉清单**（EditorSimulate / Offline 已接；Host/Web 远程 Init 未接），不必再造第二份 `sceneabdata`。
 - TL2 把场景 AB 和普通 AB 分目录，是为了流式块和 UI 包互不扫。Yoo 用 **Collector 分组 + tag** 就能隔离，不要拆第二个 Package。
 - 热更只换「最新目录名」，变过的文件才再下。本库以后 `ClearUnusedBundleFiles` 对的是旧 bundle，不是另写场景清单。
 
@@ -113,7 +113,7 @@ Loading 期间把每帧预算提到 `0.100f`，进战斗再收紧。
 
 - 第二套场景目录格式（`sceneabdata` / `.sab`）。Yoo 清单就是目录。
 - Builtin + Remote 双包裹，或按模块拆 Package。
-- 把分块管理器塞进 Boot。Boot 只 Init（以后加版本/清单）再 `LoadScene(Launch)`。
+- 把分块管理器塞进 Boot。Boot 只 Init（含要版本/清单）再 `LoadScene(Launch)`。
 - 没有延迟队列就先做 `IsPauseDelayLoad`。
 - 整包 `CreateDownloader()` + 补丁 Fsm（按需加载篇已禁）。
 

@@ -3,8 +3,9 @@ type: Playbook
 title: 上游 skill 更新
 description: 对照 mattpocock/skills 的 Release 改编本库 ddove-*。不订阅读包、不 npx update 进本仓。
 tags: [索引, agent]
-status: draft
+status: stable
 generated: { by: human:cjh, at: 2026-09-09T08:52:00Z }
+verified: { by: human:cjh, at: 2026-09-15T03:20:00Z }
 sources:
   - id: upstream
     resource: https://github.com/mattpocock/skills
