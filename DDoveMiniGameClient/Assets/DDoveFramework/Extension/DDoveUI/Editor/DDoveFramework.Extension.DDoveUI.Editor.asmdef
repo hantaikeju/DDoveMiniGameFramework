@@ -5,7 +5,8 @@
         "DDoveFramework.Extension.DDoveUI",
         "DDoveFramework.Editor",
         "UnityEngine.UI",
-        "Unity.TextMeshPro"
+        "Unity.TextMeshPro",
+        "Unity.InputSystem"
     ],
     "includePlatforms": [
         "Editor"

@@ -75,7 +75,6 @@ namespace DDoveFramework.Extension.DDoveUI.Editor
             return bindType switch
             {
                 DDoveUINodeBindType.Image => typeof(Image),
-                DDoveUINodeBindType.Text => typeof(Text),
                 DDoveUINodeBindType.Button => typeof(Button),
                 DDoveUINodeBindType.TextMeshProUGUI => typeof(TextMeshProUGUI),
                 _ => typeof(RectTransform)

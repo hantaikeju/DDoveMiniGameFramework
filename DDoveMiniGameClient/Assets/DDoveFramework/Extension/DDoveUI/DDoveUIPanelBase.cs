@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using DDoveFramework.Core;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -123,7 +124,7 @@ namespace DDoveFramework.Extension.DDoveUI
             return null;
         }
 
-        protected void SetText(Text text, string content)
+        protected void SetText(TMP_Text text, string content)
         {
             if (text != null)
             {

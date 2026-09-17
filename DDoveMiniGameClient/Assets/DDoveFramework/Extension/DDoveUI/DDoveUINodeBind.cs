@@ -7,7 +7,6 @@ namespace DDoveFramework.Extension.DDoveUI
     {
         RectTransform = 0,
         Image = 1,
-        Text = 2,
         Button = 3,
         TextMeshProUGUI = 4
     }

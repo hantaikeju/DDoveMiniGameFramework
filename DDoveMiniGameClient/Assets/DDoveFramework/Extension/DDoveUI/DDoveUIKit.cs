@@ -5,6 +5,8 @@ using Cysharp.Threading.Tasks;
 using DDoveFramework.Core;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
 
 namespace DDoveFramework.Extension.DDoveUI
@@ -74,6 +76,7 @@ namespace DDoveFramework.Extension.DDoveUI
             InitCamera();
             InitCacheRoot();
             InitLayers();
+            ConfigureInputSystem();
             EnsureEventSystem();
             _initialized = true;
         }
@@ -402,17 +405,95 @@ namespace DDoveFramework.Extension.DDoveUI
             }
         }
 
+        private static DefaultInputActions _uiActions;
+
         private static void EnsureEventSystem()
         {
-            if (EventSystem.current != null)
+            var go = EventSystem.current != null ? EventSystem.current.gameObject : new GameObject("EventSystem");
+            if (go.GetComponent<EventSystem>() == null)
+            {
+                go.AddComponent<EventSystem>();
+            }
+
+            var standalone = go.GetComponent<StandaloneInputModule>();
+            if (standalone != null)
+            {
+                UnityEngine.Object.DestroyImmediate(standalone);
+            }
+
+            var module = go.GetComponent<InputSystemUIInputModule>();
+            if (module == null)
+            {
+                module = go.AddComponent<InputSystemUIInputModule>();
+            }
+
+            BindDefaultUiActions(module);
+            go.SetActive(true);
+            UnityEngine.Object.DontDestroyOnLoad(go);
+        }
+
+        private static void ConfigureInputSystem()
+        {
+            var settings = InputSystem.settings;
+            settings.updateMode = InputSettings.UpdateMode.ProcessEventsInDynamicUpdate;
+            settings.backgroundBehavior = InputSettings.BackgroundBehavior.IgnoreFocus;
+#if UNITY_EDITOR
+            settings.editorInputBehaviorInPlayMode =
+                InputSettings.EditorInputBehaviorInPlayMode.AllDeviceInputAlwaysGoesToGameView;
+#endif
+            if (settings.supportedDevices.Count > 0)
+            {
+                settings.supportedDevices = Array.Empty<string>();
+            }
+
+            EnsurePointerDevices();
+        }
+
+        private static void EnsurePointerDevices()
+        {
+            foreach (var device in InputSystem.devices)
+            {
+                if (device is Mouse existing)
+                {
+                    if (!existing.enabled)
+                    {
+                        InputSystem.EnableDevice(existing);
+                    }
+
+                    return;
+                }
+            }
+
+            try
+            {
+                InputSystem.AddDevice<Mouse>();
+            }
+            catch (Exception e)
+            {
+                DDoveDebug.LogError(DDoveUIInitInfo.LogTitle, ("mouse", "add failed"), ("error", e.Message));
+            }
+        }
+
+        private static void BindDefaultUiActions(InputSystemUIInputModule module)
+        {
+            if (module == null)
             {
                 return;
             }
 
-            var go = new GameObject("EventSystem");
-            go.AddComponent<EventSystem>();
-            go.AddComponent<StandaloneInputModule>();
-            UnityEngine.Object.DontDestroyOnLoad(go);
+            _uiActions ??= new DefaultInputActions();
+            _uiActions.Enable();
+            module.actionsAsset = _uiActions.asset;
+            module.point = InputActionReference.Create(_uiActions.UI.Point);
+            module.leftClick = InputActionReference.Create(_uiActions.UI.Click);
+            module.rightClick = InputActionReference.Create(_uiActions.UI.RightClick);
+            module.middleClick = InputActionReference.Create(_uiActions.UI.MiddleClick);
+            module.scrollWheel = InputActionReference.Create(_uiActions.UI.ScrollWheel);
+            module.move = InputActionReference.Create(_uiActions.UI.Navigate);
+            module.submit = InputActionReference.Create(_uiActions.UI.Submit);
+            module.cancel = InputActionReference.Create(_uiActions.UI.Cancel);
+            module.enabled = false;
+            module.enabled = true;
         }
 
         private static void RemoveFromPanelStack(string panelName)

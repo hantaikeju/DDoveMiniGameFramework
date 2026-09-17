@@ -1,11 +1,11 @@
 ---
 type: Playbook
 title: DDoveUI
-description: 第一刀垂直闭环已落地。制作场景导出 Prefab，DDoveRes 按文件名加载，Launch 打开 WndHome。程序集分 Kit / Editor / 业务，Boot 不引用 UI。
+description: 制作场景导出 Prefab，Launch 打开 WndHome。第二刀：UI EventSystem 只开 Input System Package，文本只留 TMP。
 tags: [程序-前, ddoveui]
 status: stable
 generated: { by: human:cjh, at: 2026-09-10T08:14:00Z }
-verified: { by: human:cjh, at: 2026-09-15T06:48:00Z }
+verified: { by: human:cjh, at: 2026-09-17T10:25:00Z }
 sources:
   - id: grill
     resource: /00-索引/Agent/需求稿工作流.md
@@ -46,13 +46,16 @@ sources:
   - id: ui-biz
     resource: /02-程序-前/UI业务封装.md
     title: UI 业务封装
+  - id: input-system
+    resource: /02-程序-前/DDoveUI切InputSystem.md
+    title: DDoveUI 切 Input System
 ---
 
 # DDoveUI
 
 Concept ID：`/02-程序-前/DDoveUI`。清单：[index_cjh](/02-程序-前/index_cjh.md)。第一刀垂直闭环已落地（制作场景 → Prefab → Launch 开 `WndHome`）。结论与代码冲突以代码为准。
 
-对照：[DDoveRes](/02-程序-前/DDoveRes.md)、[DDoveRes 按需加载](/02-程序-前/DDoveRes按需加载.md)、[DDoveAtlas](/02-程序-前/DDoveAtlas.md)、[DDoveBoot](/02-程序-前/DDoveBoot.md)、[DDove Editor](/02-程序-前/DDoveEditor.md)、[Architecture 与角色](/02-程序-前/Architecture与角色.md)、[UI 业务封装](/02-程序-前/UI业务封装.md)。
+对照：[DDoveRes](/02-程序-前/DDoveRes.md)、[DDoveRes 按需加载](/02-程序-前/DDoveRes按需加载.md)、[DDoveAtlas](/02-程序-前/DDoveAtlas.md)、[DDoveBoot](/02-程序-前/DDoveBoot.md)、[DDove Editor](/02-程序-前/DDoveEditor.md)、[Architecture 与角色](/02-程序-前/Architecture与角色.md)、[UI 业务封装](/02-程序-前/UI业务封装.md)、[DDoveUI 切 Input System](/02-程序-前/DDoveUI切InputSystem.md)。
 
 ## 第一刀（已落地）
 
@@ -60,7 +63,11 @@ Concept ID：`/02-程序-前/DDoveUI`。清单：[index_cjh](/02-程序-前/inde
 
 运行时带齐：`Initialize`、`OpenAsync` / `Close` / `CloseAll` / `OpenExclusiveAsync`、`NavigateToAsync` / `BackAsync` / `BackToAsync`、LRU、`DDoveUIPopupPanelBase`。样板页只用 `OpenAsync<WndHome>`。
 
-不搬：多人分屏、OSA、新 Input System、URP Overlay、图集进 UI 程序集（见 [DDoveAtlas](/02-程序-前/DDoveAtlas.md)）、模块/扩展模板选择、Builtin+Remote。PrimeTween 不进 Base、不做 ClickScale；业务装包见 [PrimeTween](/02-程序-前/PrimeTween.md)。
+不搬：多人分屏、OSA、URP Overlay、图集进 UI 程序集（见 [DDoveAtlas](/02-程序-前/DDoveAtlas.md)）、模块/扩展模板选择、Builtin+Remote。UI EventSystem 已切 Input System，见 [DDoveUI 切 Input System](/02-程序-前/DDoveUI切InputSystem.md)。PrimeTween 不进 Base、不做 ClickScale；业务装包见 [PrimeTween](/02-程序-前/PrimeTween.md)。
+
+## 第二刀（Input System + TMP）
+
+只开 Input System Package（`activeInputHandler: 2`）。不要 Both。EventSystem 用 `InputSystemUIInputModule`。文本只留 TMP。运行时 Canvas 仍是 Camera。不搬 Probe。细则与验收见 [DDoveUI 切 Input System](/02-程序-前/DDoveUI切InputSystem.md)。
 
 ## 程序集
 
@@ -72,9 +79,9 @@ DDoveFramework.Editor                       references 空；includePlatforms: E
 DDoveFramework.Extension.DDoveRes           Core, UniTask, YooAsset
 DDoveFramework.Extension.DDoveRes.Editor    DDoveRes, DDoveFramework.Editor, YooAsset, YooAsset.Editor
 DDoveFramework.Extension.DDoveBoot          Core, DDoveRes, UniTask, YooAsset
-DDoveFramework.Extension.DDoveUI            Core, DDoveRes, UniTask, YooAsset, UnityEngine.UI, Unity.TextMeshPro
-DDoveFramework.Extension.DDoveUI.Editor     DDoveUI, DDoveFramework.Editor；Scriban 只进此 Editor
-Game                                        Core, DDoveUI, UniTask, UnityEngine.UI, Unity.TextMeshPro；图集见 [DDoveAtlas](/02-程序-前/DDoveAtlas.md)；PrimeTween 见 [PrimeTween](/02-程序-前/PrimeTween.md)
+DDoveFramework.Extension.DDoveUI            Core, DDoveRes, UniTask, YooAsset, UnityEngine.UI, Unity.TextMeshPro, Unity.InputSystem
+DDoveFramework.Extension.DDoveUI.Editor     DDoveUI, DDoveFramework.Editor, Unity.InputSystem；Scriban 只进此 Editor
+Game                                        Core, DDoveUI, UniTask, UnityEngine.UI, Unity.TextMeshPro；不引 Input System；图集见 [DDoveAtlas](/02-程序-前/DDoveAtlas.md)；PrimeTween 见 [PrimeTween](/02-程序-前/PrimeTween.md)
 ```
 
 | 程序集 | 根命名空间 | 放哪 |
@@ -88,7 +95,7 @@ Game                                        Core, DDoveUI, UniTask, UnityEngine.
 - 运行时 **不要**引用任何 `*.Editor`。
 - `DDoveUI` **不要**引用 `DDoveBoot`。`Initialize` 在 [业务](#业务) 的 `GameLaunch` 里调（Launch 加载之后，Res 已就绪）。
 - `DDoveUI` **不要**直打 `YooAssets` / `GetPackage`。持 `AssetHandle` 可以，Load / Release 只走 [DDoveRes](/02-程序-前/DDoveRes.md)。
-- `DDoveUI` **不要**引用 Input System、URP。本刀 **不要**引用 PrimeTween、不要做 ClickScale；业务在 `Game` 用，见 [PrimeTween](/02-程序-前/PrimeTween.md)。
+- `DDoveUI` 引用 Input System 只给 UI EventSystem 用，**不要**引用 URP。**不要**引用 PrimeTween、不要做 ClickScale；业务在 `Game` 用，见 [PrimeTween](/02-程序-前/PrimeTween.md)。`Game` **不要**引用 Input System。
 - `DDoveUI` **不要**引用 Atlas。换图与 late-bind 见 [DDoveAtlas](/02-程序-前/DDoveAtlas.md)。
 - `DDoveUI.Editor` **不要**引用 `DDoveBoot`、`DDoveRes`、`Game`。Scriban 只开 Editor，见 [NuGet 与 Scriban](/02-程序-前/NuGet与Scriban.md)。
 - `DDoveFramework.Editor` **不要**引用 UI（总门面已约定）。UI 页用 `[DDoveEditorPanel]` 自挂。`[DDoveHotboxEntry]` 属性放在门面程序集，编排走总窗 [DDove Editor](/02-程序-前/DDoveEditor.md) 的 **HotBox** 页。
@@ -137,7 +144,7 @@ Play
 
 只导出 `UIRoot`。场景里的 Camera / Overlay Canvas / EventSystem / `Excluded_*` / `PanelDescription` 不进 Prefab。改布局回制作场景，不要直接改导出 Prefab。
 
-制作场景 Canvas 用 Overlay；运行时 Kit 自建 ScreenSpaceCamera（Built-in，无 URP）。EventSystem 用 `StandaloneInputModule`。
+制作场景 Canvas 用 Overlay；运行时 Kit 自建 ScreenSpaceCamera（Built-in，无 URP）。EventSystem 用 `InputSystemUIInputModule`，见 [DDoveUI 切 Input System](/02-程序-前/DDoveUI切InputSystem.md)。
 
 场景名 = 类名 = Prefab 文件名 = Yoo location。
 
@@ -200,7 +207,7 @@ Assets/Game/
 
 ## 还没有（本刀之后）
 
-按 tag 预下、Host/Web、导航手柄 API、OSA、多人。图集 Kit 已落地，见 [DDoveAtlas](/02-程序-前/DDoveAtlas.md)。未实现前不要把未落地 API 当已有方法。
+按 tag 预下、Host/Web、玩法键盘/手柄 Actions、OSA、多人。图集 Kit 已落地，见 [DDoveAtlas](/02-程序-前/DDoveAtlas.md)。未实现前不要把未落地 API 当已有方法。
 
 ## 验收
 
@@ -208,4 +215,4 @@ Assets/Game/
 2. 总窗侧栏是 HotBox / Architecture / Res / UI（见 [DDove Editor](/02-程序-前/DDoveEditor.md) `DDoveEditorNav.Ids`）。UI 页改分辨率写进 `DDoveUIInitInfo`。饼环在 HotBox 页编。
 3. 能建 `Start/WndHome` 制作场景，导出 Prefab 与生成代码；业务 `.cs` 第二次导出不覆盖。
 4. 收集器 Group `Start` 能 `LoadAssetAsync("WndHome")`。
-5. Play：Boot → Launch → 看见 `WndHome`。
+5. Play：Boot → Launch → 看见 `WndHome`，只开 Input System Package 时能点。输入细则见 [DDoveUI 切 Input System](/02-程序-前/DDoveUI切InputSystem.md)。

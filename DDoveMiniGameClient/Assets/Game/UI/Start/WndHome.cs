@@ -6,6 +6,7 @@ using DDoveFramework.Extension.DDoveAtlas;
 using DDoveFramework.Extension.DDoveUI;
 using Game;
 using PrimeTween;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,7 +22,7 @@ namespace Game.UI
 
         private Image _left;
         private Image _right;
-        private Text _bag;
+        private TMP_Text _bag;
         private Sprite _dot;
         private Sprite _mark;
         private bool _swapped;
@@ -131,23 +132,26 @@ namespace Game.UI
             AddClick(button, () => this.SendCommand(new CollectDemoItemCommand()));
         }
 
-        private Text CreateDemoText(string name, Vector2 anchored, Vector2 size)
+        private TMP_Text CreateDemoText(string name, Vector2 anchored, Vector2 size)
         {
-            var go = new GameObject(name, typeof(RectTransform), typeof(CanvasRenderer), typeof(Text));
+            var go = new GameObject(name, typeof(RectTransform), typeof(CanvasRenderer), typeof(TextMeshProUGUI));
             var rect = go.GetComponent<RectTransform>();
             rect.SetParent(transform, false);
             rect.anchoredPosition = anchored;
             rect.sizeDelta = size;
-            var text = go.GetComponent<Text>();
-            text.alignment = TextAnchor.MiddleCenter;
+            var text = go.GetComponent<TextMeshProUGUI>();
+            text.alignment = TextAlignmentOptions.Center;
             text.fontSize = 28;
             text.color = Color.white;
-            text.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-            if (text.font == null)
+            var font = TMP_Settings.defaultFontAsset
+                ?? Resources.Load<TMP_FontAsset>("Fonts & Materials/LiberationSans SDF");
+            if (font != null)
             {
-                text.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+                text.font = font;
             }
 
+            text.enableWordWrapping = true;
+            text.overflowMode = TextOverflowModes.Overflow;
             return text;
         }
 

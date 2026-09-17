@@ -4,6 +4,7 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
 
 namespace DDoveFramework.Extension.DDoveUI.Editor
@@ -59,7 +60,7 @@ namespace DDoveFramework.Extension.DDoveUI.Editor
             var es = new GameObject("EventSystem");
             es.transform.SetParent(root.transform);
             es.AddComponent<EventSystem>();
-            es.AddComponent<StandaloneInputModule>();
+            es.AddComponent<InputSystemUIInputModule>();
 
             if (EditorSceneManager.SaveScene(scene, scenePath))
             {
@@ -116,11 +117,6 @@ namespace DDoveFramework.Extension.DDoveUI.Editor
             if (go.GetComponent<Image>() != null)
             {
                 return DDoveUINodeBindType.Image;
-            }
-
-            if (go.GetComponent<Text>() != null)
-            {
-                return DDoveUINodeBindType.Text;
             }
 
             if (go.GetComponent<TMPro.TextMeshProUGUI>() != null)

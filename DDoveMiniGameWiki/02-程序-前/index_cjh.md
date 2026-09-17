@@ -26,7 +26,10 @@ Concept ID：`/02-程序-前/index_cjh`。本目录里 cjh 整理的篇。别人
 * [DDoveSave](DDoveSave.md) - 第一刀本地档。Kit 只做 KV 文件；档名业务传入；按接口挂 Utility。Launch 先 LoadFile 再碰 Architecture。 `Playbook`
 * [DDovePool](DDovePool.md) - 静态对象池门面。C# 池与 GameObject 池；默认容量 30。不进 IOC，不进 Core。 `Reference`
 * [DDoveAudio](DDoveAudio.md) - 独立音频根。对外只碰 Kit；通道 / 设置 / 播放池不进 GameArchitecture。按名走 Res，播放器走 Pool。 `Reference`
-* [DDoveUI](DDoveUI.md) - 第一刀垂直闭环已落地。制作场景导出 Prefab，DDoveRes 按文件名加载，Launch 打开 WndHome。 `Playbook`* [UI 业务封装](UI业务封装.md) - 做窗到写业务的步骤，以及开窗 / 读写 / Tween 门槛。业务直调 DDoveUIKit。 `Playbook`* [DDoveAtlas](DDoveAtlas.md) - 散图在 Excluded，Yoo 只收图集产物。Sprite Atlas V2 - Enabled。独立 Kit late-bind 与按名取图。 `Playbook`
+* [DDoveUI](DDoveUI.md) - 制作场景导出 Prefab，Launch 打开 WndHome。第二刀只开 Input System Package，文本只留 TMP。 `Playbook`
+* [DDoveUI 切 Input System](DDoveUI切InputSystem.md) - 第二刀：只开 Input System Package，文本只留 TMP。不用 Both，不搬 Probe。 `Playbook`
+* [UI 业务封装](UI业务封装.md) - 做窗到写业务的步骤，以及开窗 / 读写 / Tween 门槛。业务直调 DDoveUIKit。 `Playbook`
+* [DDoveAtlas](DDoveAtlas.md) - 散图在 Excluded，Yoo 只收图集产物。Sprite Atlas V2 - Enabled。独立 Kit late-bind 与按名取图。 `Playbook`
 * [Sprite Atlas V1 与 V2](SpriteAtlasV1与V2.md) - 一代/二代运行时相同，只换 Pack 管线。Mode、Include in Build、第三方图集与代数正交。落地见 DDoveAtlas。 `Reference`
 * [PrimeTween](PrimeTween.md) - 接入免费 PrimeTween 1.4.x。只装包；Game 业务引用。DDoveUI Base 本刀不引用。 `Playbook`
 * [异步用 UniTask](UniTask异步.md) - 客户端异步统一 UniTask。Core 零引用。 `Playbook`* [NuGet 与 Scriban](NuGet与Scriban.md) - nuget 源装 Scriban。UnityTls / 梯子代理。与 manifest（UPM）无关。 `Playbook`

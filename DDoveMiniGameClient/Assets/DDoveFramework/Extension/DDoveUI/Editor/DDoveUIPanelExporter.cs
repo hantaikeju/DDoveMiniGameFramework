@@ -123,7 +123,6 @@ namespace DDoveFramework.Extension.DDoveUI.Editor
             return bindType switch
             {
                 DDoveUINodeBindType.Image => "UnityEngine.UI.Image",
-                DDoveUINodeBindType.Text => "UnityEngine.UI.Text",
                 DDoveUINodeBindType.Button => "UnityEngine.UI.Button",
                 DDoveUINodeBindType.TextMeshProUGUI => "TMPro.TextMeshProUGUI",
                 _ => "UnityEngine.RectTransform"
