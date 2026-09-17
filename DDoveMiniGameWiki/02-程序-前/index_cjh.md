@@ -33,5 +33,6 @@ Concept ID：`/02-程序-前/index_cjh`。本目录里 cjh 整理的篇。别人
 * [UPM 落地](UPM落地.md) - GitHub URL 装完后拷一份到 `Packages/`，无科学上网不再 download err。 `Playbook`
 * [IOC 容器](IOC容器.md) - 按注册泛型类型存一份实例；找不到抛错。不是构造注入框架。 `Reference`
 * [IOC 容器使用规范](IOC容器使用规范.md) - 一条闭环链路配一套 Architecture（一份 IOC）。不要 new 容器当全局定位器。 `Playbook`* [Architecture 与角色](Architecture与角色.md) - GameArchitecture 注册 Model/System/Utility。读写与开窗门槛见 UI 业务封装。 `Reference`* [Architecture 自动注册](Architecture自动注册.md) - 三类特性收集并生成 GameArchitecture；总窗 Architecture 页配路径、Hotbox 创建三类。 `Playbook`
+* [正确路径与程序集方向](正确路径与程序集方向.md) - 常规路径短于捷径。五条都写；唯一新闸：框架程序集不得引用或编译到 Game。 `Playbook` `draft` `需求`
 * [TypeEvent](TypeEvent.md) - 独立事件机制。Architecture 与业务都可用。 `Reference`
 * [Command 与 Query](CommandQuery.md) - Command 是业务操作入口，Query 是可复用只读推导。执行走 Architecture。 `Reference`* [Core Fsm](CoreFsm.md) - 分步流程状态机。Architecture 不依赖。 `Reference`

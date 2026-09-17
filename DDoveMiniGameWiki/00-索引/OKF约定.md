@@ -5,7 +5,7 @@ description: 本 bundle 按仓库根 SPEC.md 约束。AI 检索：grep frontmatt
 tags: [索引, 检索, okf]
 status: stable
 generated: { by: process:mgf-okf-init, at: 2026-08-28T07:41:00Z }
-verified: { by: human:cjh, at: 2026-09-15T02:40:00Z }
+verified: { by: human:cjh, at: 2026-09-17T07:33:00Z }
 resource: ../../SPEC.md
 sources:
   - id: okf-spec
@@ -17,6 +17,9 @@ sources:
   - id: tl2-ref
     resource: /02-程序-前/TL2场景流式对照.md
     title: TL2 场景流式对照
+  - id: opening
+    resource: /00-索引/Agent/开篇与清单徽章.md
+    title: 开篇与清单徽章
 ---
 
 # OKF 约定与检索
@@ -196,7 +199,7 @@ sources:
 
 同一职种两个人各改各的 `index_<短号>.md`，不会撞。篇文件仍按主题命名（`DDoveFramework-Core.md`），`generated.by: human:cjh`。短号花名册：[整理人](/00-索引/整理人.md)。
 
-不要日常「重生成各层 index」。目录挤了再按**主题**拆子目录，不要按人拆目录。
+不要日常「重生成各层 index」。例外：`/ddove-wiki-change-state` 只改**本篇所在清单那一行**徽章，不重写整份。细则：[开篇与清单徽章](Agent/开篇与清单徽章.md)。目录挤了再按**主题**拆子目录，不要按人拆目录。
 
 ## 变更史（按日 + 短号）
 

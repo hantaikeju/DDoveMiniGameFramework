@@ -20,6 +20,7 @@ disable-model-invocation: true
 ```text
 不知道用哪个          → /ddove-help          （本 skill）
 问答 / 排障 / 改代码   → ddove-work           （内部先 ddove-wiki）
+按需求稿开工          → ddove-work           （draft+需求；见开工班组）
 改表 / 加表 / 导表失败 → ddove-config
 只查 wiki            → ddove-wiki
 方案没对齐            → /ddove-grill         → 落稿 /ddove-wiki-create（draft+需求）
@@ -34,7 +35,7 @@ fork 改四件套前缀     → /ddove-rename-workspace（本框架仓不跑）
 换引擎迁工作流        → 读 DDoveMiniGameWiki/00-索引/Agent/工作流迁移.md
 ```
 
-需求稿细则：`DDoveMiniGameWiki/00-索引/Agent/需求稿工作流.md`。
+需求稿细则：`DDoveMiniGameWiki/00-索引/Agent/需求稿工作流.md`。开工班组：`DDoveMiniGameWiki/00-索引/Agent/开工班组.md`。
 
 ## 两层 wiki
 
@@ -49,6 +50,7 @@ fork 改四件套前缀     → /ddove-rename-workspace（本框架仓不跑）
 - fork / 拷走开新游戏、改 Client/Config/Wiki/Tools 目录名 → `/ddove-rename-workspace`
 - 改 / 加 `DDoveMiniGameConfig` 表、导表失败 → `ddove-config`
 - 已有篇、要答/排障/改代码 → `ddove-work`
+- 已有 `draft`+`需求`、按稿实现 → `ddove-work`（开工班组）
 - 只要检索、不要结论 → `ddove-wiki`
 - 新功能还没想清 → `/ddove-grill`（不要先 create）
 - 已有篇正文过期 → `/ddove-wiki-update`

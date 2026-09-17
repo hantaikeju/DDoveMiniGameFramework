@@ -4,7 +4,7 @@
 
 本库 skill 一律 `ddove-` 开头（旧名 `mgf-*` 已废）。不知道用哪个：`/ddove-help`。
 
-1. 问答 / 排障 / 改代码：走 `ddove-work`（内部先跑 `ddove-wiki` 检索）。只要查篇：`ddove-wiki`。不要为了找篇去走 `index.md` → `index_<短号>`。不要默认翻 `DDoveMiniGameClient/Library`。
+1. 问答 / 排障 / 改代码：走 `ddove-work`（内部先跑 `ddove-wiki` 检索）。按需求稿开工见 `DDoveMiniGameWiki/00-索引/Agent/开工班组.md`。拆图 / 工人 / 审查 / 评分子代理在 `.cursor/agents/`（`ddove-plan` 只读；`ddove-worker` 可并行）。只要查篇：`ddove-wiki`。不要为了找篇去走 `index.md` → `index_<短号>`。不要默认翻 `DDoveMiniGameClient/Library`。
 2. **生产 wiki（主动触发，不要在问答里顺手写）**：`/ddove-wiki-create` 新建篇；`/ddove-wiki-update` 改正文（回 `draft`）；`/ddove-wiki-change-state` 改 `draft`/`stable`/`deprecated`（升 `stable` 同步写 `verified`）。
 3. 刚替换 `SPEC.md`，或要检查/升级 wiki 合规：主动调用 `ddove-okf-upgrade`（不要在日常问答里自动升级）。
 4. 约定：`DDoveMiniGameWiki/00-索引/OKF约定.md`。约定与 `SPEC.md` 冲突时以 `SPEC.md` 为准，再改约定。
