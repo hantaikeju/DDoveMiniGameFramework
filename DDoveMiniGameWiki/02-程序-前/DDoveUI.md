@@ -1,11 +1,11 @@
 ---
 type: Playbook
 title: DDoveUI
-description: 制作场景导出 Prefab，Launch 打开 WndHome。第二刀：UI EventSystem 只开 Input System Package，文本只留 TMP。
+description: 制作场景导出 Prefab，Launch 打开 WndHome。样板控件也在制作场景里摆，不运行时 new。第二刀：只开 Input System Package，文本只留 TMP。
 tags: [程序-前, ddoveui]
 status: stable
 generated: { by: human:cjh, at: 2026-09-10T08:14:00Z }
-verified: { by: human:cjh, at: 2026-09-17T10:25:00Z }
+verified: { by: human:cjh, at: 2026-09-19T17:58:00Z }
 sources:
   - id: grill
     resource: /00-索引/Agent/需求稿工作流.md
@@ -49,21 +49,36 @@ sources:
   - id: input-system
     resource: /02-程序-前/DDoveUI切InputSystem.md
     title: DDoveUI 切 Input System
+  - id: loop
+    resource: /02-程序-前/LoopList.md
+    title: LoopList
+  - id: sample
+    resource: ../../DDoveMiniGameClient/Assets/DDoveFramework/Extension/DDoveUI/Editor/DDoveUISampleBuilder.cs
+    title: DDoveUISampleBuilder.cs
+  - id: scene
+    resource: ../../DDoveMiniGameClient/Assets/DDoveFramework/Extension/DDoveUI/Editor/DDoveUISceneEditor.cs
+    title: DDoveUISceneEditor.cs
+  - id: exporter
+    resource: ../../DDoveMiniGameClient/Assets/DDoveFramework/Extension/DDoveUI/Editor/DDoveUIPrefabExporter.cs
+    title: DDoveUIPrefabExporter.cs
+  - id: wndhome
+    resource: ../../DDoveMiniGameClient/Assets/Game/UI/Start/WndHome.cs
+    title: WndHome.cs
 ---
 
 # DDoveUI
 
 Concept ID：`/02-程序-前/DDoveUI`。清单：[index_cjh](/02-程序-前/index_cjh.md)。第一刀垂直闭环已落地（制作场景 → Prefab → Launch 开 `WndHome`）。结论与代码冲突以代码为准。
 
-对照：[DDoveRes](/02-程序-前/DDoveRes.md)、[DDoveRes 按需加载](/02-程序-前/DDoveRes按需加载.md)、[DDoveAtlas](/02-程序-前/DDoveAtlas.md)、[DDoveBoot](/02-程序-前/DDoveBoot.md)、[DDove Editor](/02-程序-前/DDoveEditor.md)、[Architecture 与角色](/02-程序-前/Architecture与角色.md)、[UI 业务封装](/02-程序-前/UI业务封装.md)、[DDoveUI 切 Input System](/02-程序-前/DDoveUI切InputSystem.md)。
+对照：[DDoveRes](/02-程序-前/DDoveRes.md)、[DDoveRes 按需加载](/02-程序-前/DDoveRes按需加载.md)、[DDoveAtlas](/02-程序-前/DDoveAtlas.md)、[DDoveBoot](/02-程序-前/DDoveBoot.md)、[DDove Editor](/02-程序-前/DDoveEditor.md)、[Architecture 与角色](/02-程序-前/Architecture与角色.md)、[UI 业务封装](/02-程序-前/UI业务封装.md)、[DDoveUI 切 Input System](/02-程序-前/DDoveUI切InputSystem.md)、[LoopList](/02-程序-前/LoopList.md)。过期对照（本刀不改正文）：[DDoveUI 切 Input System](/02-程序-前/DDoveUI切InputSystem.md) 验收仍写「运行时新建」。
 
 ## 第一刀（已落地）
 
-一张 `WndHome`：制作场景 → 导出 Prefab → 收集器能 Load → Play 看见面板。
+一张 `WndHome`：制作场景 → 导出 Prefab → 收集器能 Load → Play 看见面板。样板标题、领取、左右图也在 `UIRoot` 下摆好；业务只找节点、换图、绑点击，不在 Play 里 `new GameObject`。
 
 运行时带齐：`Initialize`、`OpenAsync` / `Close` / `CloseAll` / `OpenExclusiveAsync`、`NavigateToAsync` / `BackAsync` / `BackToAsync`、LRU、`DDoveUIPopupPanelBase`。样板页只用 `OpenAsync<WndHome>`。
 
-不搬：多人分屏、OSA、URP Overlay、图集进 UI 程序集（见 [DDoveAtlas](/02-程序-前/DDoveAtlas.md)）、模块/扩展模板选择、Builtin+Remote。UI EventSystem 已切 Input System，见 [DDoveUI 切 Input System](/02-程序-前/DDoveUI切InputSystem.md)。PrimeTween 不进 Base、不做 ClickScale；业务装包见 [PrimeTween](/02-程序-前/PrimeTween.md)。
+不搬：多人分屏、OSA（定高列表不进本程序集，见 [LoopList](/02-程序-前/LoopList.md)）、URP Overlay、图集进 UI 程序集（见 [DDoveAtlas](/02-程序-前/DDoveAtlas.md)）、模块/扩展模板选择、Builtin+Remote。UI EventSystem 已切 Input System，见 [DDoveUI 切 Input System](/02-程序-前/DDoveUI切InputSystem.md)。PrimeTween 不进 Base、不做 ClickScale；业务装包见 [PrimeTween](/02-程序-前/PrimeTween.md)。
 
 ## 第二刀（Input System + TMP）
 
@@ -175,9 +190,11 @@ UIRoot 可 `DontDestroyOnLoad`。Boot 自己仍不 DDOL，见 [DDoveBoot](/02-�
 
 创建场景 / 绑定 / 导出 / 样板挂 `[DDoveHotboxEntry]`。属性在 `DDoveFramework.Editor`。Space 饼环在总窗 **HotBox** 页编排：给环起名，条目沿一圈散开；点中心切环。
 
+「创建样板 WndHome」走 [DDoveUISampleBuilder](../../DDoveMiniGameClient/Assets/DDoveFramework/Extension/DDoveUI/Editor/DDoveUISampleBuilder.cs)：`EnsureScene` 建或打开制作场景，在 `UIRoot` 摆 `Title` / `TxtBag` / `BtnCollect` / `ImgLeft` / `ImgRight` 并加 NodeBind，再 [导出 Prefab](../../DDoveMiniGameClient/Assets/DDoveFramework/Extension/DDoveUI/Editor/DDoveUIPrefabExporter.cs)。和「创建 UI 场景」+「导出 UI」同一条，不要只 `SaveAsPrefabAsset` 绕开制作场景。
+
 不搬独立 UI EditorWindow、模块管理、扩展模板选择。Create 资产菜单可以留 `DDove/UI/Init Info`。
 
-导出：Scriban 渲染绑定 + 业务初稿 → 编译后把字段绑到 `UIRoot` 上的面板组件 → `SaveAsPrefabAsset`。流程拆开（生成 / 绑定 / 存 Prefab），不要揉成一个上帝类。
+导出：Scriban 渲染绑定 + 业务初稿 → 编译后把字段绑到 `UIRoot` 上的面板组件 → `SaveAsPrefabAsset`。流程拆开（生成 / 绑定 / 存 Prefab），不要揉成一个上帝类。已有业务稿时，样板菜单不要用空成员再 `Generate` 盖掉绑定。
 
 ## 业务
 
@@ -189,6 +206,8 @@ Assets/Game/
   Mono/GameLaunch.cs        挂 Launch 场景；目录约定见 [UI 业务封装](/02-程序-前/UI业务封装.md)
   UI/Start/WndHome.cs       业务，只写一次
 ```
+
+[WndHome](../../DDoveMiniGameClient/Assets/Game/UI/Start/WndHome.cs) 找 `TxtBag` / `BtnCollect` / `ImgLeft` / `ImgRight`。换图走 [DDoveAtlas](/02-程序-前/DDoveAtlas.md)。不要再抽运行时拼控件的 `UiWidget`。
 
 `GameArchitecture` 由 [Architecture 自动注册](/02-程序-前/Architecture自动注册.md) 生成，见 [Architecture 与角色](/02-程序-前/Architecture与角色.md)。面板 `IController`，`GetArchitecture()` 返回 `GameArchitecture.Interface`。本库没有 HybridCLR，**不要**造 `HotUpdate/`。
 
@@ -204,15 +223,16 @@ Assets/Game/
 - 运行时引用 Scriban / Editor
 - 在制作场景 Prefab 上继续改，却不回场景重导
 - 为开窗加只转发 `DDoveUIKit` 的 System（`UISystem`）
+- 样板或业务在 Play 里 `new` 文本 / 按钮当窗；`Game` 直打 [DDoveRes](/02-程序-前/DDoveRes.md) / YooAsset 去 Load 字体
 
 ## 还没有（本刀之后）
 
-按 tag 预下、Host/Web、玩法键盘/手柄 Actions、OSA、多人。图集 Kit 已落地，见 [DDoveAtlas](/02-程序-前/DDoveAtlas.md)。未实现前不要把未落地 API 当已有方法。
+按 tag 预下、Host/Web、玩法键盘/手柄 Actions、多人。OSA 不进本程序集；定高垂直回收见 [LoopList](/02-程序-前/LoopList.md)。图集 Kit 已落地，见 [DDoveAtlas](/02-程序-前/DDoveAtlas.md)。未实现前不要把未落地 API 当已有方法。
 
 ## 验收
 
 1. 没装 `DDoveUI` 时 Core / Res / Boot / `DDove/Editor` 仍能编。
 2. 总窗侧栏是 HotBox / Architecture / Res / UI（见 [DDove Editor](/02-程序-前/DDoveEditor.md) `DDoveEditorNav.Ids`）。UI 页改分辨率写进 `DDoveUIInitInfo`。饼环在 HotBox 页编。
-3. 能建 `Start/WndHome` 制作场景，导出 Prefab 与生成代码；业务 `.cs` 第二次导出不覆盖。
+3. 能建 `Start/WndHome` 制作场景，导出 Prefab 与生成代码；业务 `.cs` 第二次导出不覆盖。HotBox「创建样板 WndHome」写出制作场景再导出，不直写 Prefab。
 4. 收集器 Group `Start` 能 `LoadAssetAsync("WndHome")`。
-5. Play：Boot → Launch → 看见 `WndHome`，只开 Input System Package 时能点。输入细则见 [DDoveUI 切 Input System](/02-程序-前/DDoveUI切InputSystem.md)。
+5. Play：Boot → Launch → 看见 `WndHome`，只开 Input System Package 时能点领取。领取 / 左右图来自 Prefab，不是运行时拼的。输入细则见 [DDoveUI 切 Input System](/02-程序-前/DDoveUI切InputSystem.md)。

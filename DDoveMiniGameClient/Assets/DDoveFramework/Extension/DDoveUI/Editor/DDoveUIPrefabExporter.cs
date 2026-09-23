@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace DDoveFramework.Extension.DDoveUI.Editor
 {
-    internal static class DDoveUIPrefabExporter
+    public static class DDoveUIPrefabExporter
     {
         public static bool Save(GameObject exportRoot, string stageName, string panelName)
         {
@@ -11,6 +11,8 @@ namespace DDoveFramework.Extension.DDoveUI.Editor
             var prefabPath = info.GetPrefabPath(stageName, panelName);
             var folder = prefabPath.Substring(0, prefabPath.LastIndexOf('/'));
             DDoveUIEditorPaths.EnsureFolder(folder);
+
+            DestroyUnsavedDescendants(exportRoot);
 
             var saved = PrefabUtility.SaveAsPrefabAsset(exportRoot, prefabPath, out var ok);
             if (!ok || saved == null)
@@ -20,6 +22,7 @@ namespace DDoveFramework.Extension.DDoveUI.Editor
             }
 
             var contents = PrefabUtility.LoadPrefabContents(prefabPath);
+            DestroyUnsavedDescendants(contents);
             var binds = contents.GetComponentsInChildren<DDoveUINodeBind>(true);
             for (var i = binds.Length - 1; i >= 0; i--)
             {
@@ -30,6 +33,38 @@ namespace DDoveFramework.Extension.DDoveUI.Editor
             PrefabUtility.UnloadPrefabContents(contents);
             AssetDatabase.Refresh();
             return cleaned;
+        }
+
+        static void DestroyUnsavedDescendants(GameObject root)
+        {
+            if (root == null)
+            {
+                return;
+            }
+
+            var transforms = root.GetComponentsInChildren<Transform>(true);
+            for (var i = transforms.Length - 1; i >= 0; i--)
+            {
+                var t = transforms[i];
+                if (t == null)
+                {
+                    continue;
+                }
+
+                var go = t.gameObject;
+                if (go == null || go == root || !HasUnsavedHideFlags(go.hideFlags))
+                {
+                    continue;
+                }
+
+                Object.DestroyImmediate(go);
+            }
+        }
+
+        static bool HasUnsavedHideFlags(HideFlags flags)
+        {
+            return (flags & HideFlags.DontSave) == HideFlags.DontSave
+                || (flags & HideFlags.HideAndDontSave) == HideFlags.HideAndDontSave;
         }
     }
 }

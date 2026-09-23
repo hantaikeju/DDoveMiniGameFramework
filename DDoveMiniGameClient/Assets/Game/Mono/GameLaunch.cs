@@ -72,7 +72,7 @@ namespace Game
                 DDoveAtlasKit.Initialize();
                 DDoveAudioKit.Initialize();
                 DDoveUIKit.Initialize();
-                DDoveUIKit.OpenAsync<WndHome>().Forget();
+                DDoveUIKit.NavigateToAsync<WndHome>().Forget();
             }
             catch (Exception e)
             {

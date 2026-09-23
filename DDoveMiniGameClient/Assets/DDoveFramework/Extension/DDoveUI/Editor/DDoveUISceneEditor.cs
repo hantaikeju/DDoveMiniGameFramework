@@ -27,6 +27,33 @@ namespace DDoveFramework.Extension.DDoveUI.Editor
                 return;
             }
 
+            if (string.IsNullOrWhiteSpace(EnsureScene(panelName, stageName, kind)))
+            {
+                return;
+            }
+
+            var root = GameObject.Find(panelName);
+            if (root != null)
+            {
+                Selection.activeGameObject = root;
+            }
+        }
+
+        public static string EnsureScene(string panelName, string stageName, DDoveUIPanelKind kind)
+        {
+            var info = DDoveUIEditorPaths.GetOrCreateInitInfo();
+            if (string.IsNullOrWhiteSpace(panelName))
+            {
+                return null;
+            }
+
+            var scenePath = info.GetCreateScenePath(stageName, panelName);
+            if (File.Exists(scenePath))
+            {
+                EditorSceneManager.OpenScene(scenePath);
+                return scenePath;
+            }
+
             var folder = Path.GetDirectoryName(scenePath)?.Replace("\\", "/");
             DDoveUIEditorPaths.EnsureFolder(folder);
 
@@ -62,11 +89,13 @@ namespace DDoveFramework.Extension.DDoveUI.Editor
             es.AddComponent<EventSystem>();
             es.AddComponent<InputSystemUIInputModule>();
 
-            if (EditorSceneManager.SaveScene(scene, scenePath))
+            if (!EditorSceneManager.SaveScene(scene, scenePath))
             {
-                AssetDatabase.Refresh();
-                Selection.activeGameObject = root;
+                return null;
             }
+
+            AssetDatabase.Refresh();
+            return scenePath;
         }
 
         [DDoveHotboxEntry("定位 UI Prefab", "UI 制作", "按当前制作场景定位已导出 Prefab")]
