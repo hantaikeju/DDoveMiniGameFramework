@@ -5,7 +5,7 @@ description: 制作场景导出 Prefab，Launch 打开 WndHome。样板控件也
 tags: [程序-前, ddoveui]
 status: stable
 generated: { by: human:cjh, at: 2026-09-10T08:14:00Z }
-verified: { by: human:cjh, at: 2026-09-19T17:58:00Z }
+verified: { by: human:cjh, at: 2026-09-24T02:46:00Z }
 sources:
   - id: grill
     resource: /00-索引/Agent/需求稿工作流.md
@@ -74,9 +74,9 @@ Concept ID：`/02-程序-前/DDoveUI`。清单：[index_cjh](/02-程序-前/inde
 
 ## 第一刀（已落地）
 
-一张 `WndHome`：制作场景 → 导出 Prefab → 收集器能 Load → Play 看见面板。样板标题、领取、左右图也在 `UIRoot` 下摆好；业务只找节点、换图、绑点击，不在 Play 里 `new GameObject`。
+一张 `WndHome`：制作场景 → 导出 Prefab → 收集器能 Load → Play 用 `NavigateToAsync` 看见面板。入口是三行列表：`LoopList`、领取/换图、`LoopH`。领取和左右图在 `WndCollectDemo`。业务只找节点、换图、绑点击，不在 Play 里 `new GameObject`。
 
-运行时带齐：`Initialize`、`OpenAsync` / `Close` / `CloseAll` / `OpenExclusiveAsync`、`NavigateToAsync` / `BackAsync` / `BackToAsync`、LRU、`DDoveUIPopupPanelBase`。样板页只用 `OpenAsync<WndHome>`。
+运行时带齐：`Initialize`、`OpenAsync` / `Close` / `CloseAll` / `OpenExclusiveAsync`、`NavigateToAsync` / `BackAsync` / `BackToAsync`、LRU、`DDoveUIPopupPanelBase`。样板入口用 `NavigateToAsync<WndHome>`。
 
 不搬：多人分屏、OSA（定高列表不进本程序集，见 [LoopList](/02-程序-前/LoopList.md)）、URP Overlay、图集进 UI 程序集（见 [DDoveAtlas](/02-程序-前/DDoveAtlas.md)）、模块/扩展模板选择、Builtin+Remote。UI EventSystem 已切 Input System，见 [DDoveUI 切 Input System](/02-程序-前/DDoveUI切InputSystem.md)。PrimeTween 不进 Base、不做 ClickScale；业务装包见 [PrimeTween](/02-程序-前/PrimeTween.md)。
 
@@ -153,7 +153,7 @@ DDove/Editor · UI 页 · 制作
 Yoo Group Start  收 GameRes/UI/Start  tag: start  AddressByFileName
 Play
     Boot → DDoveRes Init → LoadScene(Launch)
-    GameLaunch → DDoveCfgKit.LoadAsync → GameArchitecture.Interface → 图集 Init 见 [DDoveAtlas](/02-程序-前/DDoveAtlas.md) → DDoveUIKit.Initialize → OpenAsync<WndHome>
+    GameLaunch → DDoveCfgKit.LoadAsync → DDoveSaveKit.LoadFile → GameArchitecture.Interface → 图集 Init 见 [DDoveAtlas](/02-程序-前/DDoveAtlas.md) → 音频 Init 见 [DDoveAudio](/02-程序-前/DDoveAudio.md) → DDoveUIKit.Initialize → NavigateToAsync<WndHome>
     DDoveResKit.LoadAssetAsync<GameObject>("WndHome")
 ```
 
@@ -207,11 +207,11 @@ Assets/Game/
   UI/Start/WndHome.cs       业务，只写一次
 ```
 
-[WndHome](../../DDoveMiniGameClient/Assets/Game/UI/Start/WndHome.cs) 找 `TxtBag` / `BtnCollect` / `ImgLeft` / `ImgRight`。换图走 [DDoveAtlas](/02-程序-前/DDoveAtlas.md)。不要再抽运行时拼控件的 `UiWidget`。
+[WndHome](../../DDoveMiniGameClient/Assets/Game/UI/Start/WndHome.cs) 是三行入口：`LoopList`、领取/换图、`LoopH`。领取和左右换图在 `WndCollectDemo`，换图走 [DDoveAtlas](/02-程序-前/DDoveAtlas.md)。不要再抽运行时拼控件的 `UiWidget`。
 
 `GameArchitecture` 由 [Architecture 自动注册](/02-程序-前/Architecture自动注册.md) 生成，见 [Architecture 与角色](/02-程序-前/Architecture与角色.md)。面板 `IController`，`GetArchitecture()` 返回 `GameArchitecture.Interface`。本库没有 HybridCLR，**不要**造 `HotUpdate/`。
 
-`GameLaunch`：先 `DDoveCfgKit.LoadAsync`，再碰 `Interface`（触发 Init）→ 图集 `Initialize` 见 [DDoveAtlas](/02-程序-前/DDoveAtlas.md) → `DDoveUIKit.Initialize` → `OpenAsync<WndHome>`。正式游戏换成自己的入口，删或改这一份占位。见 [DDoveCfg](/02-程序-前/DDoveCfg.md)。第二扇窗与读写门槛见 [UI 业务封装](/02-程序-前/UI业务封装.md)：业务继续直调 Kit，不要为开窗加只转发的 System。
+`GameLaunch`：先 `DDoveCfgKit.LoadAsync`，再 `DDoveSaveKit.LoadFile`，再碰 `Interface`（触发 Init）→ 图集 `Initialize` 见 [DDoveAtlas](/02-程序-前/DDoveAtlas.md) → 音频 `Initialize` 见 [DDoveAudio](/02-程序-前/DDoveAudio.md) → `DDoveUIKit.Initialize` → `NavigateToAsync<WndHome>`。正式游戏换成自己的入口，删或改这一份占位。见 [DDoveCfg](/02-程序-前/DDoveCfg.md)。第二扇窗与读写门槛见 [UI 业务封装](/02-程序-前/UI业务封装.md)：业务继续直调 Kit，不要为开窗加只转发的 System。
 
 ## 不要
 

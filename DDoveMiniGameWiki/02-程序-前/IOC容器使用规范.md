@@ -5,7 +5,7 @@ description: 一条闭环链路配一套 Architecture（一份 IOC）。不要 n
 tags: [程序-前, core, ioc]
 status: stable
 generated: { by: human:cjh, at: 2026-09-15T02:20:00Z }
-verified: { by: human:cjh, at: 2026-09-15T06:48:00Z }
+verified: { by: human:cjh, at: 2026-09-24T02:46:00Z }
 sources:
   - id: arch
     resource: ../../DDoveMiniGameClient/Assets/DDoveFramework/Core/Architecture/Architecture.cs
@@ -55,7 +55,7 @@ Concept ID：`/02-程序-前/IOC容器使用规范`。清单：[index_cjh](/02-�
 4. 内部件**不要**挂 `[DDoveBind*]`，**不要**写进 `GameArchitecture.Generated`。
 5. 拆掉这条链路时调 `XxxArchitecture.Reset()`，不要动游戏根。
 
-本库还没有独立音频根；落地时按上面 1–5 开，不要先塞进游戏根。外库项目名、类名不进本篇。要对齐外工程时另开对照 `Reference`（样板：[TL2 场景流式对照](/02-程序-前/TL2场景流式对照.md)），开篇写清「外库提取，不是本库现行约定」。
+音频根已落地，见 [DDoveAudio](/02-程序-前/DDoveAudio.md)。再拆一条新根时仍按上面 1–5，不要先塞进游戏根。外库项目名、类名不进本篇。要对齐外工程时另开对照 `Reference`（样板：[TL2 场景流式对照](/02-程序-前/TL2场景流式对照.md)），开篇写清「外库提取，不是本库现行约定」。
 
 ## 不要
 

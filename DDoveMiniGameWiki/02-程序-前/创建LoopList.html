@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>创建 LoopList</title>
+<style>
+  body { margin: 0; font: 16px/1.55 "Segoe UI", sans-serif; color: #1c1c1c; background: #f6f4ef; }
+  main { max-width: 760px; margin: 0 auto; padding: 28px 20px 48px; }
+  h1 { font-size: 28px; margin: 0 0 20px; }
+  section { background: #fff; border: 1px solid #e2ddd4; border-radius: 10px; padding: 16px 18px 8px; margin: 0 0 16px; }
+  h2 { margin: 0 0 12px; font-size: 18px; }
+  p { margin: 0 0 12px; }
+  ul { margin: 0 0 12px; padding-left: 1.2em; }
+  code { font-family: Consolas, monospace; font-size: 0.92em; background: #f3efe6; padding: 0 4px; border-radius: 3px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>创建 LoopList</h1>
+  <section>
+    <h2>干什么</h2>
+    <p>HotBox「UI 制作」里的「创建 LoopList」在当前制作场景挂一条空 <code>LoopList</code>。点开小窗，选方向、<code>itemSize</code>、<code>spacing</code> 和一个 padding。确认后列表挂在 <code>UIRoot</code> 下并铺满它，然后选中这条新列表，自己再拖位置。</p>
+    <p>不看当前选中了什么。场景里没有名为 <code>UIRoot</code> 的节点就停并提示。<code>previewCount</code> 保持组件默认 <code>6</code>。</p>
+  </section>
+  <section>
+    <h2>有哪些接口</h2>
+    <ul>
+      <li><code>CreateLoopListWindow.Open</code></li>
+      <li>窗口字段：方向、<code>itemSize</code>、<code>spacing</code>、<code>padding</code></li>
+    </ul>
+  </section>
+  <section>
+    <h2>每个接口干什么</h2>
+    <p><code>CreateLoopListWindow.Open</code> 挂着 <code>[DDoveHotboxEntry("创建 LoopList", "UI 制作", ...)]</code>。它打开小窗，不直接造物体。</p>
+    <p>方向是 <code>LoopDirection</code>。初值竖。竖只开垂直滚动，Content 顶对齐。横只开水平滚动，Content 左对齐。</p>
+    <p><code>itemSize</code> 初值 <code>100</code>。竖是条高，横是条宽。<code>spacing</code> 初值 <code>8</code>。<code>padding</code> 是一个整数，初值 <code>8</code>，确认后写入四边。</p>
+    <p>没有 <code>UIRoot</code> 时不创建，并弹出提示。父节点下已有名为 <code>LoopList</code> 的子物体时，新物体名为 <code>LoopList (1)</code>，再重名继续加序号。创建成功后选中新列表。</p>
+    <p>造出的树是 <code>ScrollRect</code> + <code>Viewport</code> + <code>Content</code> + 一份失活的空 <code>itemTemplate</code>。列表铺满父节点。没有 <code>NodeBind</code>、样板格子、文字和入场 tween。</p>
+  </section>
+</main>
+</body>
+</html>

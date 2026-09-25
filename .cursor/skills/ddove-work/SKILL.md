@@ -34,10 +34,10 @@ description: >-
 4. **回写**：父会话执行 `roles/plan.md`「回写」。完成：入选需求稿已 update。
 5. **审查**：Task 拉 `.cursor/agents/ddove-review`。完成：`STATUS: PASS|FAIL`。
 6. **评分**：Task 拉 `.cursor/agents/ddove-score`。完成：`STATUS: SCORE`。
-7. **规格**：父会话执行 `roles/plan.md`「升级规格」。完成：开工评分已为 vN+1。
+7. **记分**：父会话执行 `roles/plan.md`「记分」。完成：得分已追加到入选需求稿的 `## 评分`；没有新的评分文件。
 8. **收口**：
    - 未过线且 `rework_used == 0`：`rework_used = 1`，回到步骤 1（补丁图 + 新 Task）。完成：已重做或无须重做。
-   - 未过线且已重做：停，交得分表。不摘 tag。完成：用户看得见表。
-   - 过线且 `PASS`：`roles/plan.md`「摘 tag」。建议 `/ddove-wiki-change-state`。完成：入选篇无 `需求` tag、`status` 仍 `draft`；回复含得分表。
+   - 未过线且已重做：停，交得分表。需求稿仍带 `需求`。完成：用户看得见表，分数在需求稿上。
+   - 过线且 `PASS`：需求稿仍留在 `05-需求`、仍带 `需求`。整份做完才由人跑 `/ddove-wiki-change-state`，按职种生成用法篇。完成：回复含得分表。
 
 规格中途不改。不自动升 `stable`。

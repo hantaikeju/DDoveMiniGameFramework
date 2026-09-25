@@ -54,6 +54,7 @@ namespace Game.UI
             }
 
             _list.Create(_bags);
+            _list.AddClick(index => Debug.Log("[WndLoopDemo] row " + index));
         }
 
         protected override void OnShow()

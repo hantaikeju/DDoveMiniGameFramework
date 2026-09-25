@@ -1,11 +1,11 @@
 ---
 type: Playbook
 title: UI 业务封装
-description: 做窗到写业务的步骤，以及开窗 / 读写 / Tween / 点击音门槛。业务直调 Kit。可复用挂件放 Game/Mono 并按种类拆，不进 DDoveUI。不按窗口加 Command，不写只转发 Kit 的 System。
+description: 做窗到写业务的步骤，以及开窗 / 读写 / Tween / 点击音门槛。列表格子换音走 ClickSound.SetSoundName，不改面板 AddClick。业务直调 Kit。可复用挂件放 Game/Mono 并按种类拆，不进 DDoveUI。不按窗口加 Command，不写只转发 Kit 的 System。
 tags: [程序-前, ddoveui, command]
 status: stable
 generated: { by: human:cjh, at: 2026-09-15T06:08:00Z }
-verified: { by: human:cjh, at: 2026-09-15T09:22:00Z }
+verified: { by: human:cjh, at: 2026-09-25T19:11:00Z }
 sources:
   - id: grill
     resource: /00-索引/Agent/需求稿工作流.md
@@ -70,6 +70,9 @@ sources:
   - id: addclick
     resource: ../../DDoveMiniGameClient/Assets/DDoveFramework/Extension/DDoveUI/DDoveUIPanelBase.cs
     title: DDoveUIPanelBase.cs
+  - id: loop
+    resource: /02-程序-前/LoopList.md
+    title: LoopList
 ---
 
 # UI 业务封装
@@ -84,7 +87,7 @@ Concept ID：`/02-程序-前/UI业务封装`。清单：[index_cjh](/02-程序-�
 
 改数据走 Command。读：先 `GetModel` / 订事件；同一套推导出现第二处再抽 Query。开窗：无门槛走 `DDoveUIKit`；有门槛或以后可能有门槛走**一个** `OpenWndCommand<T>`，过门后再打 Kit。本页 Tween / 换图留在面板。不要按窗口加 Command 类。
 
-可挂物体的 Game 脚本放 `Game/Mono`（不限于 UI）：[GameLaunch](../../DDoveMiniGameClient/Assets/Game/Mono/GameLaunch.cs)、[`ClickSound`](../../DDoveMiniGameClient/Assets/Game/Mono/Sound/ClickSound.cs)。不进 [DDoveUI](/02-程序-前/DDoveUI.md)，不进 IOC，不挂 `[DDoveBind*]`。不是窗。`Model` / `System` / 面板 Controller 各看各的目录，不要在 `Game` 根再开 `Launch/`。点了干什么、换哪一声仍在面板 `AddClick`。
+可挂物体的 Game 脚本放 `Game/Mono`（不限于 UI）：[GameLaunch](../../DDoveMiniGameClient/Assets/Game/Mono/GameLaunch.cs)、[`ClickSound`](../../DDoveMiniGameClient/Assets/Game/Mono/Sound/ClickSound.cs)。不进 [DDoveUI](/02-程序-前/DDoveUI.md)，不进 IOC，不挂 `[DDoveBind*]`。不是窗。`Model` / `System` / 面板 Controller 各看各的目录，不要在 `Game` 根再开 `Launch/`。点了干什么仍在面板 `AddClick`，或列表的 `LoopList.AddClick`（见 [LoopList](/02-程序-前/LoopList.md)）。换点击音写 `ClickSound.SetSoundName`，不改面板 `AddClick`。
 
 `Game/Mono` **按种类拆**子目录。命名空间继续 `Game.Mono`，不为子目录加一层。不要按「是不是 UI」分，不要一个 `Mono/UI/` 收所有挂件。只有一份的入口留在 `Mono/` 根：`GameLaunch`，不开 `Launch/`。点击音进 `Sound/`。粒子 / Rect Mask 落地时开 `Particle/`（或 `Mask/`），不要塞进 `Sound/`。Tween 挂件够一组再开 `Tween/`，不要先建空目录。第一份某类也可以直接开种类目录（`ClickSound` 已这样）。
 
@@ -94,7 +97,7 @@ Kit 不进 IOC，和 [DDoveAtlas](/02-程序-前/DDoveAtlas.md) / [DDovePool](/0
 
 1. **做窗**（已落地）：HotBox「UI」建制作场景 → `UIRoot` 摆控件 + NodeBind → 导出。场景名 = 类名 = Prefab 名 = Yoo location。业务稿 `Game/UI/{阶段}/WndXxx.cs` 已有不覆盖。细则、路径、不要改导出 Prefab：见 [DDoveUI](/02-程序-前/DDoveUI.md)。
 2. **收进包**：该阶段收集器 `AddressByFileName`。`Start` 已有。Login / Hall / Common **有资产再加组**，不要扫整个 `UI/`，见 [DDoveRes 按需加载](/02-程序-前/DDoveRes按需加载.md)。
-3. **图 / 动 / 表 / 音**（按需，已落地）：换图 [DDoveAtlas](/02-程序-前/DDoveAtlas.md)；动效该面板 `Tween.xxx`，关页停掉，见 [PrimeTween](/02-程序-前/PrimeTween.md)；表经 `CfgUtility`，Launch 已先 Load，见 [DDoveCfg](/02-程序-前/DDoveCfg.md)；默认点击音挂 `ClickSound`，播法见 [DDoveAudio](/02-程序-前/DDoveAudio.md)。
+3. **图 / 动 / 表 / 音**（按需，已落地）：换图 [DDoveAtlas](/02-程序-前/DDoveAtlas.md)；动效该面板 `Tween.xxx`，关页停掉，见 [PrimeTween](/02-程序-前/PrimeTween.md)；表经 `CfgUtility`，Launch 已先 Load，见 [DDoveCfg](/02-程序-前/DDoveCfg.md)；默认点击音挂 `ClickSound`，播法见 [DDoveAudio](/02-程序-前/DDoveAudio.md)。列表格子换音见 [LoopList](/02-程序-前/LoopList.md)。
 4. **写面板**：只改 `WndXxx.cs` 的 `OnOpen` / `OnShow` / `OnHide` / `OnClose`。生成的 `IController` 不要手改。需要 Model / System 用 HotBox「架构」创建并挂 `[DDoveBind*]`，再生成根，见 [Architecture 自动注册](/02-程序-前/Architecture自动注册.md)。面板不挂 Bind、不进 IOC。
 5. **谁打开**：一律 `DDoveUIKit`。`WndHome` 由 `GameLaunch` 打开，见 [Play 到 WndHome](/02-程序-前/Play到WndHome.md)。第二扇窗面板自己 `OpenAsync` / `Navigate` / `Back`。
 
@@ -114,7 +117,7 @@ Kit 不进 IOC，和 [DDoveAtlas](/02-程序-前/DDoveAtlas.md) / [DDovePool](/0
 
 | 谁 | 开窗 |
 |---|---|
-| `GameLaunch` | `DDoveUIKit.OpenAsync<WndHome>` |
+| `GameLaunch` | `DDoveUIKit.NavigateToAsync<WndHome>` |
 | 面板 | `DDoveUIKit`：`OpenAsync` / `Close` / `NavigateToAsync` / `BackAsync` |
 | Command | `SendCommand(new OpenWndCommand<T> { Data })`，过门后 `OpenAsync.Forget()`。不要无参 `SendCommand<T>()`（`new()` 带不上 `Data`） |
 | 对局结束 / 协议回来 | 有副作用先 Command，再在 Command 里打 Kit；不要为开窗单写 System |
@@ -134,7 +137,7 @@ Kit 不进 IOC，和 [DDoveAtlas](/02-程序-前/DDoveAtlas.md) / [DDovePool](/0
 | Launch / 确定无门槛的第二扇窗 | `DDoveUIKit.OpenAsync` | `OpenHomeCommand`、`UISystem` |
 | 按钮脉冲、数字跳动、本页入场 | 该面板 `Tween.xxx`，关页停掉 | `PunchCommand` / `TweenSystem` |
 | 默认点击音 | Prefab 挂 `ClickSound`（`IPointerClickHandler` → Kit）。Yoo location 与 `soundName` 一致 | 改 Base `AddClick`；`DDoveUI` 引用 Audio；走 `Button.onClick`（会被 `AddClick` 清掉） |
-| 这个钮换音 / 不出声 | 改组件名字，或面板 `AddClick` 里 `PlaySound` | 再挂一个只服务这一钮的 Mono |
+| 这个钮换音 / 不出声 | 改组件名字（`SetSoundName`），或面板 `AddClick` 里 `PlaySound`。列表格子把声音名传给 `LoopList.AddClick`，见 [LoopList](/02-程序-前/LoopList.md) | 再挂一个只服务这一钮的 Mono；改 Base `AddClick` |
 | 五扇窗同一套 punch | `Game/Mono` 或静态小帮手（仍不进 IOC） | 为对称进 Architecture |
 | 合窗位移、ClickScale | **还没有**，见 [PrimeTween](/02-程序-前/PrimeTween.md)。落地进 `Game/Mono`，够一组开 `Tween/` | 先改 Base `AddClick` / `OpenAsync` 或 Kit；为空开 `Tween/`；塞进 `Sound/` |
 | UI 粒子 / Rect Mask | **还没有**。落地开 `Mono/Particle/`（或 `Mask/`） | 写进 [DDoveUI](/02-程序-前/DDoveUI.md) Base；塞进 `Sound/` 或 `Mono/UI/` |

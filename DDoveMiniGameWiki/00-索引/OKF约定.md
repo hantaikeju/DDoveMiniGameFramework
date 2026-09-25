@@ -5,7 +5,7 @@ description: 本 bundle 按仓库根 SPEC.md 约束。AI 检索：grep frontmatt
 tags: [索引, 检索, okf]
 status: stable
 generated: { by: process:mgf-okf-init, at: 2026-08-28T07:41:00Z }
-verified: { by: human:cjh, at: 2026-09-17T07:33:00Z }
+verified: { by: human:cjh, at: 2026-09-25T05:10:00Z }
 resource: ../../SPEC.md
 sources:
   - id: okf-spec
@@ -62,11 +62,12 @@ Concept ID = 相对 `DDoveMiniGameWiki/` 的路径，去掉 `.md`。例如 `/00-
 
 | 层 | 路径 | 写什么 | `tags` |
 |----|------|--------|--------|
-| **工程** | `01`–`04` | 本游戏 / 框架：运行时、协议、配表、美术 | 职种：`策划` / `程序-前` / `程序-后` / `美术` |
+| **工程** | `01`–`04` | 本游戏 / 框架的用法：运行时、协议、配表、美术。整份需求做完，按职种把用法篇生成或改写到这里 | 职种：`策划` / `程序-前` / `程序-后` / `美术` |
+| **需求** | `05-需求` | 处理中的需求稿。得分记在该篇 `## 评分`。整份做完改为 `deprecated`（文件不删） | 目标职种 + `需求` |
 | **AI 用法** | `00-索引/Agent/` | 仓库 `ddove-*`、grill / 需求稿流程、个人 Cursor skill（如 show-me） | `索引` + `agent` |
 | **约定 / 合规** | `00-索引` 根（不含 `Agent/`） | OKF、检索、升级、整理人 | `索引` + `okf` |
 
-问答：工程收窄 `DDoveMiniGameWiki/02-程序-前` 等；skill / grill / Agent 收窄 `DDoveMiniGameWiki/00-索引/Agent`。约定只读本页。地图：[Agent 总览](Agent/Agent总览.md)。
+问答：工程用法收窄 `DDoveMiniGameWiki/02-程序-前` 等；需求稿收窄 `DDoveMiniGameWiki/05-需求`；skill / grill / Agent 收窄 `DDoveMiniGameWiki/00-索引/Agent`。约定只读本页。地图：[Agent 总览](Agent/Agent总览.md)。
 
 ## 分类：按职种，四个业务目录
 
@@ -95,7 +96,9 @@ Concept ID = 相对 `DDoveMiniGameWiki/` 的路径，去掉 `.md`。例如 `/00-
 
 生产上「能当依据」= `status: stable`。只有 `generated.by: human:cjh` 仍是起草人口径。
 
-结论与代码冲突时以**当前代码**为准。改阶段：`/ddove-wiki-change-state` 把 `draft` 改成 `stable` 并写 `verified`；改正文走 `/ddove-wiki-update`（回 `draft`，摘掉 `verified`）；作废则改 `deprecated`，不要删文件抢链。
+结论与代码冲突时以**当前代码**为准。改阶段：篇不在 `05-需求` 时，`/ddove-wiki-change-state` 把 `draft` 改成 `stable`，同步写 `verified`，并从 `tags` 去掉 `需求`。改正文走 `/ddove-wiki-update`（回 `draft`，摘掉 `verified`）。作废则改 `deprecated`，不要删文件抢链。
+
+`05-需求` 里的一篇整份做完，同样走 `/ddove-wiki-change-state`，不把需求稿本身留成用法。按 `tags` 里的职种生成或改写用法篇：`策划` → `01-策划`；`程序-前` → `02-程序-前`；`程序-后` → `03-程序-后`；`美术` → `04-美术`；只有 `索引` + `agent` → `00-索引/Agent`。用法篇同一文件名，只写三块：干什么、有哪些接口、每个接口干什么。没有需求稿的「要什么 / 不要 / 验收」，没有 `## 评分`。`tags` 无 `需求`。`status: stable`，同步写 `verified`。目标目录已有同名篇则改正文并升 `stable`，不另开第二份。需求稿改为 `deprecated`，文件不删。正文留下 `## 要什么`、`## 不要`、`## 评分` 和用法篇链接；不留 `## 验收`、`## 落点`。`title` 仍含「需求稿」。得分留在需求稿。用法篇挂到目标目录的 `index_<短号>.md`；需求稿那一行徽章改为 `deprecated`。
 
 ## 检索（AI 优先；必须）
 
@@ -110,7 +113,7 @@ rg -n -g "!_log/**" "关键词" DDoveMiniGameWiki/02-程序-前
 rg -n -g "!_log/**" "关键词" DDoveMiniGameWiki/00-索引/Agent
 ```
 
-工程收窄 `01`–`04`；AI 用法收窄 `DDoveMiniGameWiki/00-索引/Agent`。
+工程用法收窄 `01`–`04`；需求稿收窄 `DDoveMiniGameWiki/05-需求`；AI 用法收窄 `DDoveMiniGameWiki/00-索引/Agent`。
 
 3. **读正文**：`type: Stub` 或 `wiki_stub: true` → 跟 `sources[].resource` 与文内权威链接，不要把 stub 当全文。
 4. **链接**：优先 bundle 根路径 `/00-索引/OKF约定.md`。约定只读本页；`检索指南` / `来源说明` 是摘抄，问答不必先开。
@@ -160,7 +163,7 @@ sources:
 
 不要用 `index.md` / `log.md` 当概念文件名。文件名贴近 `title`，不要「文件叫 Core工具、title 叫 Core Fsm」。
 
-**生产走主动 skill，不要在问答里顺手建篇。** 本库 skill 一律 `ddove-`。不知道用哪个：`/ddove-help`。只检索：`ddove-wiki`。问答 / 排障 / 改代码：`ddove-work`。改 / 加配表：`ddove-config`。需求拷问：`/ddove-grill`。新建：`/ddove-wiki-create`。改正文：`/ddove-wiki-update`。改起草/正式/废弃：`/ddove-wiki-change-state`。写/改 Agent：`ddove-writing-for-agents`。需求稿生命周期见 [需求稿工作流](Agent/需求稿工作流.md)。工程篇进 `01`–`04`；AI 用法进 `00-索引/Agent/`。
+**生产走主动 skill，不要在问答里顺手建篇。** 本库 skill 一律 `ddove-`。不知道用哪个：`/ddove-help`。只检索：`ddove-wiki`。问答 / 排障 / 改代码：`ddove-work`。改 / 加配表：`ddove-config`。需求拷问：`/ddove-grill`。新建：`/ddove-wiki-create`。改正文：`/ddove-wiki-update`。改起草/正式/废弃：`/ddove-wiki-change-state`。写/改 Agent：`ddove-writing-for-agents`。需求稿生命周期见 [需求稿工作流](Agent/需求稿工作流.md)。需求稿进 `05-需求`。整份做完才生成或改写用法篇（职种目录见上一节「信任与生命周期」）：只写干什么、有哪些接口、每个接口干什么；`stable` + `verified`；`tags` 无 `需求`；无 `## 评分`；无「要什么 / 不要 / 验收」。需求稿改为 `deprecated`，文件不删，正文留下 `## 要什么`、`## 不要`、`## 评分` 和用法篇链接，不留 `## 验收`、`## 落点`，`title` 仍含「需求稿」。
 
 加一篇（`ddove-wiki-create` 已按此做）：先对该目录 grep `title` / 文件名，避免重复篇。再新增该 `.md`（`generated.by: human:<短号>`），并在**该短号**的 `index_<短号>.md` 补一条。不要改根 `/index.md`。职种 `index.md` 只在新人第一次出现时加一行。当日 `_log` 照常写。`00-索引` 仍可把约定篇直接列在该目录 `index.md`（改的人少）。
 

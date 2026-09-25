@@ -5,7 +5,7 @@ description: 散图在 Excluded，Yoo 只收图集产物。工程用 Sprite Atla
 tags: [程序-前, ddoveatlas]
 status: stable
 generated: { by: human:cjh, at: 2026-09-12T10:31:00Z }
-verified: { by: human:cjh, at: 2026-09-15T03:20:00Z }
+verified: { by: human:cjh, at: 2026-09-24T02:46:00Z }
 sources:
   - id: grill
     resource: /00-索引/Agent/需求稿工作流.md
@@ -122,10 +122,12 @@ Game                                          现有引用 + DDoveAtlas
 Boot → DDoveResKit.InitializeAsync → LoadScene(Launch)
 GameLaunch
     await DDoveCfgKit.LoadAsync()
+    DDoveSaveKit.LoadFile
     GameArchitecture.Interface
     DDoveAtlasKit.Initialize          开任何 UI 之前
+    DDoveAudioKit.Initialize
     DDoveUIKit.Initialize
-    OpenAsync<WndHome>
+    NavigateToAsync<WndHome>
 ```
 
 改 [GameLaunch](../../DDoveMiniGameClient/Assets/Game/Mono/GameLaunch.cs)。不要手写 `GameArchitecture.Init`。

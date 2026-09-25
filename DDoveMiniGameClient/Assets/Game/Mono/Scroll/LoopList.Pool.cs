@@ -152,6 +152,7 @@ namespace Game.Mono
             }
 
             cell.Index = index;
+            ApplyCellClick(cell);
         }
 
         int CalcStartIndex()
@@ -277,6 +278,7 @@ namespace Game.Mono
         {
             public RectTransform Rect;
             public int Index;
+            public bool ClickAttached;
         }
     }
 }

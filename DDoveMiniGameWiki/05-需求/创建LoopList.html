@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>创建 LoopList（需求稿）</title>
+<style>
+  body { margin: 0; font: 16px/1.55 "Segoe UI", sans-serif; color: #1c1c1c; background: #f6f4ef; }
+  main { max-width: 960px; margin: 0 auto; padding: 28px 20px 48px; }
+  h1 { font-size: 28px; margin: 0 0 20px; }
+  .cols { display: flex; gap: 16px; align-items: flex-start; }
+  section { flex: 1; background: #fff; border: 1px solid #e2ddd4; border-radius: 10px; padding: 16px 18px 8px; }
+  h2 { margin: 0 0 12px; font-size: 18px; }
+  p { margin: 0 0 12px; }
+  ul { margin: 0 0 12px; padding-left: 1.2em; }
+  code { font-family: Consolas, monospace; font-size: 0.92em; background: #f3efe6; padding: 0 4px; border-radius: 3px; }
+  @media (max-width: 720px) {
+    .cols { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>创建 LoopList（需求稿）</h1>
+  <div class="cols">
+    <section>
+      <h2>要什么</h2>
+      <p>HotBox 增加「创建 LoopList」，分组「UI 制作」。实现放 <code>Game.Editor</code>。点开后是小窗，字段为方向（横 / 竖）、<code>itemSize</code>、<code>spacing</code>、一个 padding。初值：竖、<code>100</code>、间距 <code>8</code>、padding <code>8</code>。这一个 padding 写进四边。<code>previewCount</code> 保持组件默认 <code>6</code>，不进窗口。</p>
+      <p>没选中物体：挂到场景里名为 <code>UIRoot</code> 的节点下。场景里没有 <code>UIRoot</code> 就停并提示。选中恰好一个带 <code>RectTransform</code> 的节点：挂在该节点下。选中多个，或选中的没有 <code>RectTransform</code>：停并提示，不创建。</p>
+      <p>父节点下已有名为 <code>LoopList</code> 的子物体时，新物体命名为 <code>LoopList (1)</code> 再创建。再重名则继续加序号。</p>
+      <p>树是 <code>ScrollRect</code> + <code>Viewport</code> + <code>Content</code> + 一份失活的空 <code>itemTemplate</code>。列表铺满父节点。方向只开对应滚动轴：竖关水平，横关垂直。Content 竖为顶对齐，横为左对齐。不加 <code>NodeBind</code>。不挂 <code>DemoRow</code>，不挂 <code>DefaultTween_V</code> / <code>DefaultTween_H</code>，模板里不放文字。</p>
+      <p>不改 LoopList 运行时。不改 <code>Game/Build WndLoopDemo Assets</code> 与 <code>Game/Build WndLoopHDemo Assets</code>。</p>
+    </section>
+    <section>
+      <h2>不要</h2>
+      <ul>
+        <li>把这条指令放进 <code>DDoveUI</code> 或任何会引用 <code>Game</code> 的框架程序集</li>
+        <li>给列表根加 <code>NodeBind</code></li>
+        <li>模板里放样板格子、<code>Anim</code>、文字或入场 tween</li>
+        <li>改 <code>LoopList</code> 的 <code>Create</code>、回收、夹紧或对外签名</li>
+        <li>改两条 Build 样板菜单，或改已导出的 <code>WndLoopDemo</code> / <code>WndLoopHDemo</code> Prefab</li>
+        <li>窗口里把 padding 拆成四边，或让人选 <code>previewCount</code></li>
+        <li>用 <code>VerticalLayoutGroup</code> / <code>HorizontalLayoutGroup</code> / <code>ContentSizeFitter</code> 排格子</li>
+        <li>选中多个时挂到第一个</li>
+      </ul>
+    </section>
+  </div>
+</main>
+</body>
+</html>

@@ -1,11 +1,11 @@
 ---
 type: Playbook
 title: DDove Editor
-description: UIToolkit 总门面 DDove/Editor。没有特殊原因，工具一律 UIToolkit。面板用 [DDoveEditorPanel] 挂上去。SO Inspector 仍跟 Extension。
+description: UIToolkit 总门面 DDove/Editor。编辑器 MenuItem 以 DDove 为根，允许 DDove/XX/XX。没有特殊原因，工具一律 UIToolkit。面板用 [DDoveEditorPanel] 挂上去。SO Inspector 仍跟 Extension。
 tags: [程序-前, editor]
 status: stable
 generated: { by: human:cjh, at: 2026-09-04T09:06:00Z }
-verified: { by: human:cjh, at: 2026-09-15T03:20:00Z }
+verified: { by: human:cjh, at: 2026-09-25T18:04:00Z }
 sources:
   - id: core
     resource: /02-程序-前/DDoveFramework-Core.md
@@ -38,6 +38,10 @@ sources:
 Concept ID：`/02-程序-前/DDoveEditor`。权威实现：[DDoveEditorWindow.cs](../../DDoveMiniGameClient/Assets/DDoveFramework/Editor/DDoveEditorWindow.cs)。结论与代码冲突以代码为准。
 
 总门面是一个 UIToolkit 窗口，菜单 **`DDove/Editor`**。以后要给使用者看的面板，**不要**再开独立 `EditorWindow`，用注册宏挂到这扇窗上。
+
+## 菜单根
+
+后续编辑器拓展的 `[MenuItem]` 以 **`DDove`** 为根。允许再往下分，例如 `DDove/Editor`、`DDove/Res/Init Info`。`[CreateAssetMenu]` 用同一根。
 
 ## 用哪套 UI
 
@@ -93,7 +97,7 @@ Yoo 官方收集器照旧，不要再包一层。
 
 一个 asmdef 引用所有 Kit → 没装 UI 也编 UI Editor。  
 门面源码里 `#if` / 手写 `Add(new XxxPanel())`。  
-独立 `MenuItem` 再开一扇业务窗（Create 资产菜单除外）。  
+编辑器 `[MenuItem]` / `[CreateAssetMenu]` 的根不写 `DDove`。  
 新写 `OnGUI` / 用 `IMGUIContainer` 包旧面板。  
 Editor 进 [Core](/02-程序-前/DDoveFramework-Core.md)。
 
@@ -104,7 +108,7 @@ Editor 进 [Core](/02-程序-前/DDoveFramework-Core.md)。
 运行时 asmdef **不要**引用 Editor。`DDoveRes.Editor` **不要**引用 `DDoveBoot`。  
 Scriban 等生成器只开 Editor，见 [NuGet 与 Scriban](/02-程序-前/NuGet与Scriban.md)。
 
-菜单：总窗 `DDove/Editor`；Create 仍可 `DDove/Res/Init Info`。
+菜单根是 `DDove`。总窗 `DDove/Editor`。子路径允许 `DDove/XX`、`DDove/XX/XX`，Create 例如 `DDove/Res/Init Info`。
 
 ## 和启动的关系
 

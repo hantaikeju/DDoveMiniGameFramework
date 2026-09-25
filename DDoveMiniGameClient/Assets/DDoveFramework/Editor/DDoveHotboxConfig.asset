@@ -35,6 +35,10 @@ MonoBehaviour:
       Placed: 1
       X: 0.80007255
       Y: 0.3640487
+    - EntryId: Game.Editor.CreateLoopListWindow::Open
+      Placed: 1
+      X: 0.219653
+      Y: 0.64027244
   - Name: "\u67B6\u6784"
     Slots:
     - EntryId: DDoveFramework.Editor.DDoveArchitectureBindCreator::CreateModel

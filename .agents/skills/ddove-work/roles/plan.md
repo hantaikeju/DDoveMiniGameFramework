@@ -2,7 +2,7 @@
 
 权威：`DDoveMiniGameWiki/00-索引/Agent/开工班组.md`。拆图子代理：`.cursor/agents/ddove-plan.md`。写 wiki 只在**父会话**：读并执行 `.agents/skills/ddove-wiki-update/SKILL.md` 或 `ddove-wiki-create/SKILL.md`。短号 / `_log` / `check_wiki.py` 只按 `DDoveMiniGameWiki/00-索引/OKF约定.md`。本会话无短号则问一次。
 
-不改代码、不改表、不 `change-state`、不 `update` 对照篇。不建工程概念篇。`开工评分` 不要打 `需求` tag。拆图子代理不写文件。
+不改代码、不改表、不 `change-state`、不 `update` 对照篇。刀中不在 `01`–`04` 生成用法篇。不另开评分文件。`开工评分` 只当尺子，不要打 `需求` tag。拆图子代理不写文件。
 
 ## 拆图（仅 ddove-plan）
 
@@ -29,10 +29,12 @@ STATUS: PLAN | NEED_GRILL
 
 对入选需求稿逐篇 wiki-update：按**当前代码**改正文 / `description` / `sources`；点名过期对照篇。依据工人 STATUS 的改动路径，不把 diff 全文写进父回复。完成：update 完成条件满足。
 
-## 升级规格（父会话）
+## 记分（父会话）
 
-把评分 `STATUS: SCORE` 的 vN+1 写入 `/00-索引/Agent/开工评分`。完成：规格篇版本为 vN+1，`check_wiki.py` 通过。
+把 `STATUS: SCORE` 的得分表追加到入选需求稿的 `## 评分`（没有这一节就补上）。同一篇接着写，不新建评分 md。当日 `_log`。`check_wiki.py`。完成：该需求稿里有本轮总分。
 
-## 摘 tag（父会话）
+尺子仍读 `/00-索引/Agent/开工评分` 的 `规格版本: vN`。只有 SCORE 里的 vN+1 改了尺子条文，才 update 开工评分。完成：条文没变则开工评分不动。
 
-入选需求稿 `tags` 去掉 `需求`；`status` 保持 `draft`；不写 `verified`。当日 `_log`。`check_wiki.py`。完成：入选篇 tags 无 `需求`。
+## 整份完成
+
+不在过线当轮做。人认定整份需求做完后跑 `/ddove-wiki-change-state`：按职种生成用法篇，需求稿改为 `deprecated`。

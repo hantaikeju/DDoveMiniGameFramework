@@ -8,6 +8,11 @@ namespace Game.Mono
     {
         [SerializeField] private string soundName = "click";
 
+        public void SetSoundName(string value)
+        {
+            soundName = value;
+        }
+
         public void OnPointerClick(PointerEventData eventData)
         {
             if (eventData.button != PointerEventData.InputButton.Left)

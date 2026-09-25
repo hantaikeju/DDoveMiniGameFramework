@@ -5,7 +5,7 @@ description: 第一刀接入 Luban。填表工程与生成器在 DDoveMiniGameCo
 tags: [程序-前, ddovecfg, luban]
 status: stable
 generated: { by: human:cjh, at: 2026-09-12T08:20:00Z }
-verified: { by: human:cjh, at: 2026-09-15T03:20:00Z }
+verified: { by: human:cjh, at: 2026-09-24T02:46:00Z }
 sources:
   - id: grill
     resource: /00-索引/Agent/需求稿工作流.md
@@ -111,9 +111,12 @@ Game                                        现有引用 + DDoveCfg + Luban.Runt
 Boot → DDoveResKit.InitializeAsync → LoadScene(Launch)
 GameLaunch
     await DDoveCfgKit.LoadAsync()     失败则 return，不碰 Interface
+    DDoveSaveKit.LoadFile
     GameArchitecture.Interface        此时 Model.OnInit 能读表
+    DDoveAtlasKit.Initialize
+    DDoveAudioKit.Initialize
     DDoveUIKit.Initialize
-    OpenAsync<WndHome>
+    NavigateToAsync<WndHome>
 ```
 
 改 [GameLaunch](../../DDoveMiniGameClient/Assets/Game/Mono/GameLaunch.cs)：Load 必须在碰 `Interface` **之前**。不要手写 `GameArchitecture.Init`。

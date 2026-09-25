@@ -41,7 +41,8 @@ fork 改四件套前缀     → /ddove-rename-workspace（本框架仓不跑）
 
 | 内容 | 检索 / 落篇 |
 |------|-------------|
-| 本工程（Res / Boot / Editor…） | `DDoveMiniGameWiki/01`–`04` |
+| 本工程用法（Res / Boot / Editor…） | `DDoveMiniGameWiki/01`–`04` |
+| 处理中的需求稿 | `DDoveMiniGameWiki/05-需求` |
 | AI 怎么用 | `DDoveMiniGameWiki/00-索引/Agent` |
 | 约定 / 合规 | `DDoveMiniGameWiki/00-索引` 根，只读 `OKF约定.md` |
 
@@ -54,6 +55,6 @@ fork 改四件套前缀     → /ddove-rename-workspace（本框架仓不跑）
 - 只要检索、不要结论 → `ddove-wiki`
 - 新功能还没想清 → `/ddove-grill`（不要先 create）
 - 已有篇正文过期 → `/ddove-wiki-update`
-- grill 完要落盘 → `/ddove-wiki-create`（工程进 `01`–`04`，AI 用法进 `Agent/`）
+- grill 完要落盘 → `/ddove-wiki-create`（需求稿进 `05-需求`；整份做完才生成到 `01`–`04` 或 `Agent/`）
 - 上句没听懂 → 让用户把那句标出来重讲（无仓库 skill；用 wiki 词）
 - 窗口要换人 / 换目录 → 口头交班即可；无仓库 `/handoff`

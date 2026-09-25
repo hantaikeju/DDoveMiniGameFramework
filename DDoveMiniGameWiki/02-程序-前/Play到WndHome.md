@@ -5,7 +5,7 @@ description: 点 Play 到看见 WndHome。Boot 加载 Launch 后必须有 GameLa
 tags: [程序-前, ddoveboot, ddoveres, ddoveui]
 status: stable
 generated: { by: human:cjh, at: 2026-09-14T09:20:00Z }
-verified: { by: human:cjh, at: 2026-09-15T03:20:00Z }
+verified: { by: human:cjh, at: 2026-09-24T02:46:00Z }
 sources:
   - id: launch
     resource: ../../DDoveMiniGameClient/Assets/Game/Mono/GameLaunch.cs
@@ -44,7 +44,9 @@ Concept ID：`/02-程序-前/Play到WndHome`。清单：[index_cjh](/02-程序-�
 
 ## 要什么
 
-Play 后：`DDoveBoot` → 包可用 → `Launch` → `GameLaunch` → 开 `WndHome`。Canvas 运行时叫 **`DDoveUIRoot`**（DontDestroyOnLoad）；预制体导出根才叫 `UIRoot`。
+Play 后：`DDoveBoot` → 包可用 → `Launch` → `GameLaunch` → `NavigateToAsync<WndHome>`。Canvas 运行时叫 **`DDoveUIRoot`**（DontDestroyOnLoad）；预制体导出根才叫 `UIRoot`。
+
+`WndHome` 是列表入口，三行：`LoopList`、领取/换图、`LoopH`。点行 `NavigateToAsync` 打开对应样板。
 
 ## 整条链
 
@@ -58,10 +60,12 @@ Play 后：`DDoveBoot` → 包可用 → `Launch` → `GameLaunch` → 开 `WndH
   LoadSceneAsync("Launch")
   GameLaunch（场景上已挂，或 sceneLoaded 补挂）
     DDoveCfgKit.LoadAsync
+    DDoveSaveKit.LoadFile
     GameArchitecture.Interface
     DDoveAtlasKit.Initialize
+    DDoveAudioKit.Initialize
     DDoveUIKit.Initialize         建 DDoveUIRoot
-    OpenAsync<WndHome>            Load 预制体 WndHome
+    NavigateToAsync<WndHome>      Load 预制体 WndHome，入 PanelStack
 ```
 
 收集器是编辑器菜单。Yoo Collector 里 Scene 组有 `Launch.unity`，只说明**以后能打到**。运行时还要加载清单，`LoadScene("Launch")` 才找得到名字。
@@ -103,7 +107,7 @@ Console 刷 `[Architecture] play cancelled: architecture bind stale` 就是这�
 | Play 立刻退、刷 Architecture stale | BIND 解析 / PlayGuard |
 | 停在 Boot 黑屏，`Active package manifest not found` | Init 后没加载清单；不是收集器空 |
 | 进了 Launch，只有 Camera + YooAssets，没有 DDoveUIRoot | `GameLaunch` 没跑 |
-| 有 DDoveUIRoot，没有 WndHome | `OpenAsync` / 收集器 Group Start 能否 `Load("WndHome")` |
+| 有 DDoveUIRoot，没有 WndHome | `NavigateToAsync` / 收集器 Group Start 能否 `Load("WndHome")` |
 | WndHome 在、图白 | [DDoveAtlas](/02-程序-前/DDoveAtlas.md) late-bind / `LoadSpriteAsync` |
 
 ## 不要

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,6 +28,8 @@ namespace Game.Mono
         int _boundCount;
         int _startIndex = int.MinValue;
         bool _subscribed;
+        Action<int> _onClick;
+        string _clickSoundName;
 
         public bool HorizontalMotion => direction == LoopDirection.Horizontal;
 
@@ -86,6 +89,16 @@ namespace Game.Mono
         {
             var rect = GetShown(index);
             return rect != null ? rect.GetComponent<ILoopItem<T>>() : null;
+        }
+
+        public void AddClick(Action<int> onClick, string soundName = null)
+        {
+            _onClick = onClick;
+            _clickSoundName = soundName;
+            for (int i = 0; i < _cells.Count; i++)
+            {
+                ApplyCellClick(_cells[i]);
+            }
         }
 
         public void ScrollTo(int index, LoopAlign align)
@@ -366,6 +379,60 @@ namespace Game.Mono
                 nav.mode = Navigation.Mode.None;
                 selectables[i].navigation = nav;
             }
+        }
+
+        void ApplyCellClick(Cell cell)
+        {
+            if (cell == null || cell.Rect == null)
+            {
+                return;
+            }
+
+            AttachCellClick(cell);
+            ApplyCellClickSound(cell);
+        }
+
+        void AttachCellClick(Cell cell)
+        {
+            if (cell.ClickAttached)
+            {
+                return;
+            }
+
+            var button = cell.Rect.GetComponent<Button>();
+            if (button == null)
+            {
+                return;
+            }
+
+            cell.ClickAttached = true;
+            button.onClick.AddListener(() => OnCellClicked(cell));
+        }
+
+        void OnCellClicked(Cell cell)
+        {
+            if (_onClick == null || cell == null || cell.Index < 0)
+            {
+                return;
+            }
+
+            _onClick(cell.Index);
+        }
+
+        void ApplyCellClickSound(Cell cell)
+        {
+            if (string.IsNullOrEmpty(_clickSoundName))
+            {
+                return;
+            }
+
+            var clickSound = cell.Rect.GetComponent<ClickSound>();
+            if (clickSound == null)
+            {
+                clickSound = cell.Rect.gameObject.AddComponent<ClickSound>();
+            }
+
+            clickSound.SetSoundName(_clickSoundName);
         }
 
         static void StripNodeBind(GameObject go)

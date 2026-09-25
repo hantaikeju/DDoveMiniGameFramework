@@ -19,7 +19,7 @@ description: >-
 rg -n -g "*.md" -g "!_log/**" -g "!_tools/**" -g "!_spec/**" "^type: |^title: |^tags: |关键词1|关键词2" DDoveMiniGameWiki
 ```
 
-工程收窄 `DDoveMiniGameWiki/01`–`04`；AI / skill 收窄 `DDoveMiniGameWiki/00-索引/Agent`。只读 `OKF约定.md`，不走 `index.md` → `index_<短号>`。
+工程用法收窄 `DDoveMiniGameWiki/01`–`04`；需求稿收窄 `DDoveMiniGameWiki/05-需求`；AI / skill 收窄 `DDoveMiniGameWiki/00-索引/Agent`。只读 `OKF约定.md`，不走 `index.md` → `index_<短号>`。
 3. **读命中篇**：`type` / `status` / `sources` / `generated.by` / `verified`。Stub 跟 `sources` 与文内链接。
 4. **交出检索结果**：每条 Concept ID + type + status + 一句要点；无命中写「Wiki 未收录」。
 

@@ -1,11 +1,11 @@
 ---
 type: Playbook
 title: LoopList
-description: 已按稿落地。竖、横样板格子进视口时播入场并铺平；离开视口不播退场，滑出遮罩即可。翻页写在 Anim 上。不再做中心缩放，不再复制离场影子。Home 不挂。LoopList 不引用 PrimeTween。
+description: 已按稿落地。竖、横样板格子进视口时播入场并铺平；离开视口不播退场，滑出遮罩即可。翻页写在 Anim 上。不再做中心缩放，不再复制离场影子。Home 不挂。LoopList 不引用 PrimeTween。格子点击走 AddClick，下标在点击当时读；非空声音名经 ClickSound.SetSoundName。
 tags: [程序-前, ddoveui]
 status: stable
 generated: { by: human:cjh, at: 2026-09-18T13:54:00Z }
-verified: { by: human:cjh, at: 2026-09-23T08:24:00Z }
+verified: { by: human:cjh, at: 2026-09-25T19:11:00Z }
 sources:
   - id: grill
     resource: /00-索引/Agent/需求稿工作流.md
@@ -67,6 +67,9 @@ sources:
   - id: demo-row
     resource: ../../DDoveMiniGameClient/Assets/Game/UI/Start/DemoRow.cs
     title: DemoRow.cs
+  - id: click-sound
+    resource: ../../DDoveMiniGameClient/Assets/Game/Mono/Sound/ClickSound.cs
+    title: ClickSound.cs
   - id: demo-menu
     resource: ../../DDoveMiniGameClient/Assets/Game/Editor/OpenLoopDemoMenu.cs
     title: OpenLoopDemoMenu.cs
@@ -88,7 +91,7 @@ sources:
 
 Concept ID：`/02-程序-前/LoopList`。清单：[index_cjh](/02-程序-前/index_cjh.md)。制作导出仍看 [DDoveUI](/02-程序-前/DDoveUI.md)。挂件目录看 [UI 业务封装](/02-程序-前/UI业务封装.md)。输入看 [DDoveUI 切 Input System](/02-程序-前/DDoveUI切InputSystem.md)。入口行数看 [WndHome Sample入口](/02-程序-前/WndHomeSample入口.md)。
 
-对照：[PrimeTween](/02-程序-前/PrimeTween.md)、[DDovePool](/02-程序-前/DDovePool.md)、[正确路径与程序集方向](/02-程序-前/正确路径与程序集方向.md)。过期对照（本刀不改正文）：[DDoveUI](/02-程序-前/DDoveUI.md)「还没有」仍写 OSA，且只点定高垂直；[UI 业务封装](/02-程序-前/UI业务封装.md) 未点名 `LoopList` / `WndLoopDemo`，入场仍写成面板 tween；[WndHome Sample入口](/02-程序-前/WndHomeSample入口.md) 仍写两行、且不改本内核；[PrimeTween](/02-程序-前/PrimeTween.md) 未写格子进退场。
+对照：[PrimeTween](/02-程序-前/PrimeTween.md)、[DDovePool](/02-程序-前/DDovePool.md)、[正确路径与程序集方向](/02-程序-前/正确路径与程序集方向.md)。仍过期：[DDoveUI](/02-程序-前/DDoveUI.md)「还没有」仍写 OSA，且只点定高垂直；[UI 业务封装](/02-程序-前/UI业务封装.md) 入场仍写成面板 tween，未点名 `WndLoopDemo`；[WndHome Sample入口](/02-程序-前/WndHomeSample入口.md) 仍写两行、且不改本内核；[PrimeTween](/02-程序-前/PrimeTween.md) 未写格子进退场。
 
 权威实现：[LoopList.cs](../../DDoveMiniGameClient/Assets/Game/Mono/Scroll/LoopList.cs)。结论与代码冲突以当前代码为准。
 
@@ -133,7 +136,7 @@ Concept ID：`/02-程序-前/LoopList`。清单：[index_cjh](/02-程序-前/ind
 
 | 文件 | 放什么 |
 |------|--------|
-| `LoopList.cs` | `Create` / `GetData` / `GetShown` / `ScrollTo` / `Refresh`、开关、`DataSource`、序列化字段 |
+| `LoopList.cs` | `Create` / `AddClick` / `GetData` / `GetShown` / `ScrollTo` / `Refresh`、开关、`DataSource`、序列化字段 |
 | `LoopList.Layout.cs` | 方向、padding、Content 尺寸、格子坐标、轴锁与夹紧 |
 | `LoopList.Pool.cs` | 格子池、头出尾进、`RefreshVisible`、每次滚动调用 `ApplyPage` |
 | `LoopList.Preview.cs` | 仅 `#if UNITY_EDITOR` 的占位预览 |
@@ -163,6 +166,7 @@ NodeBind 只绑列表根 `RectTransform`。样板用 `GetComponentInChildren<Loo
 ```csharp
 _bags = new List<DemoRowData>(80);
 _list.Create(_bags);
+_list.AddClick(index => Debug.Log("[WndLoopDemo] row " + index));
 ```
 
 `Create<T>(IList<T> data)` 只借引用，包在内部 `DataSource<T>`，不 `new T`，不 `Clear` / `Dispose`。Query 的 list 由窗 `OnClose` 丢掉（样板 `_bags = null`）。改了 IList 不监听，再 `Create` 或 `Refresh()`。
@@ -173,7 +177,7 @@ _list.Create(_bags);
 
 内部：`ILoopItem<T>.Bind(data[i], i)`。没有 `BindItem` / `SetCount`。当前格子若有 `IScrollItemTween`，每次滚动刷新调用 `ApplyPage`。没有接口则跳过。不再按距离调用缩放。
 
-`DemoRow` 在 `Awake` 缓存 TMP / Button，并绑一次 `onClick`。`Bind` 只写字。距离、缩放和入场不在 `DemoRow` 里算。
+`DemoRow` 在 `Awake` 只缓存 TMP。`Bind` 只写字，不再自己挂 `onClick`。距离、缩放和入场不在 `DemoRow` 里算。
 
 不要用 [DDovePool](/02-程序-前/DDovePool.md) 回收格子。
 
@@ -181,7 +185,7 @@ _list.Create(_bags);
 
 指针与滚轮：现有 `InputSystemUIInputModule`，列表不读 InputAction。格子上的 `Selectable.navigation = None`。
 
-点击：格子 Button 走面板 `AddClick`，或格子自己的 `onClick`；不要改 [UI 业务封装](/02-程序-前/UI业务封装.md) 的 `AddClick`。
+点击：格子根 `Button` 走 `LoopList.AddClick(Action<int> onClick, string soundName = null)`。下标在点击当时读这次 `Bind` 写下的值。再调一次替掉上一次的动作和记下的声音名。非空声音名对露出的格子保证一份 `ClickSound`，经 `SetSoundName` 写入；播放仍在 `ClickSound`，列表不调用 `PlaySound`。声音名为空则不加、也不改已有的那份。没有根上 `Button` 的格子不挂这次点击。竖样板在 `Create` 之后调用，不传声音名。不要改 [UI 业务封装](/02-程序-前/UI业务封装.md) 的面板 `AddClick`。不新增 `LoopItem` 基类。
 
 ## Tween
 
