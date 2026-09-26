@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>页内 Tab 显 On Off（需求稿）</title>
+<style>
+  body { margin: 0; font: 16px/1.55 "Segoe UI", sans-serif; color: #1c1c1c; background: #f6f4ef; }
+  main { max-width: 960px; margin: 0 auto; padding: 28px 20px 48px; }
+  h1 { font-size: 28px; margin: 0 0 20px; }
+  .cols { display: flex; gap: 16px; align-items: flex-start; }
+  section { flex: 1; background: #fff; border: 1px solid #e2ddd4; border-radius: 10px; padding: 16px 18px 8px; }
+  h2 { margin: 0 0 12px; font-size: 18px; }
+  p { margin: 0 0 12px; }
+  ul { margin: 0 0 12px; padding-left: 1.2em; }
+  code { font-family: Consolas, monospace; font-size: 0.92em; background: #f3efe6; padding: 0 4px; border-radius: 3px; }
+  @media (max-width: 720px) {
+    .cols { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>页内 Tab 显 On Off（需求稿）</h1>
+  <div class="cols">
+    <section>
+      <h2>要什么</h2>
+      <p>每个 Tab 按钮挂一个 Mono，放在 <code>Assets/Game/Mono/</code> 下、与 <code>Scroll</code> 并列的目录里，命名空间 <code>Game.Mono</code>。不进 DDoveUI。它和 <code>Toggle</code> 挂在同一个物体上，引用该按钮下的 <code>On</code>、<code>Off</code> 两个根。两个根各自有一张 <code>Image</code> 和一行字。</p>
+      <p><code>Toggle.isOn</code> 为真时显示 <code>On</code>、藏起 <code>Off</code>。为假时显示 <code>Off</code>、藏起 <code>On</code>。图和字在场景里摆好。Mono 只切换这两套的显示，不改它们的颜色，也不换 Sprite。启用时按当前 <code>isOn</code> 刷一次，这样 <code>SetIsOnWithoutNotify</code> 之后外观也是对的。</p>
+      <p>样例 <code>WndTabDemo</code> 的 <code>BtnTabA</code>、<code>BtnTabB</code> 挂上它。<code>On</code> 底图白、字深色 <code>0.15</code>；<code>Off</code> 底图灰 <code>0.55</code>、字白。两套字都是该 Tab 的名字。两张 <code>Image</code> 的 Sprite 留空，以后在 <code>Image</code> 上换图。<code>WndTabDemo</code> 不再写 <code>Image.color</code>。打开时仍用 <code>SetIsOnWithoutNotify</code> 把 <code>BtnTabA</code> 设为真、<code>BtnTabB</code> 设为假，并只打开一次 <code>WndTabPageA</code>。</p>
+      <p><code>ToggleGroup</code> 仍在父页上，<code>allowSwitchOff</code> 仍关掉。子页仍走 <code>OpenChildAsync</code>。点另一个：它变成真并显示 <code>On</code>，原来的变成假并显示 <code>Off</code>，并打开对应子页。再点已经是真的那个：保持，不再次打开。返回仍是 <code>Button</code>，仍走 <code>BackAsync</code>。</p>
+      <p>子场景 <code>Excluded_Top</code> 里的 Tab 拷贝同样摆 <code>On</code> / <code>Off</code>，仍不进子页 Prefab。</p>
+    </section>
+    <section>
+      <h2>不要</h2>
+      <ul>
+        <li>继续用 <code>ApplyTabColor</code> 改底图颜色来表示选中</li>
+        <li>用 <code>Toggle</code> 的变色或 Sprite Swap 表示选中</li>
+        <li>把这个 Mono 放进 DDoveUI</li>
+        <li>给样例另做 Sprite 文件</li>
+        <li><code>On</code> 和 <code>Off</code> 同时显示，或同时藏起</li>
+        <li>再点已经是真的 Tab 时再次 <code>OpenChildAsync</code></li>
+        <li>改 <code>OpenChildAsync</code>、<code>GameLaunch</code>，或其它窗</li>
+      </ul>
+    </section>
+  </div>
+</main>
+</body>
+</html>

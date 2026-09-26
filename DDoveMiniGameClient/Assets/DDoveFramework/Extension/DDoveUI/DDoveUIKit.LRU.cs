@@ -22,6 +22,11 @@ namespace DDoveFramework.Extension.DDoveUI
 
         private static bool TryCachePanel(string panelName, IDDoveUIPanel panel)
         {
+            if (PanelsWithChildren.Contains(panelName))
+            {
+                return false;
+            }
+
             var capacity = Config.PanelCacheCapacity;
             if (capacity <= 0 || !(panel is MonoBehaviour behaviour))
             {
@@ -79,16 +84,16 @@ namespace DDoveFramework.Extension.DDoveUI
             }
 
             LruCache.Remove(panelName);
-            panel.Close();
-            OnPanelClosed(panelName);
+            CloseRegisteredChildren(panelName);
+            ReleasePanelInstance(panelName, panel);
         }
 
         private static void ClearLRUCache()
         {
             foreach (var pair in LruCache)
             {
-                pair.Value.Close();
-                OnPanelClosed(pair.Key);
+                CloseRegisteredChildren(pair.Key);
+                ReleasePanelInstance(pair.Key, pair.Value);
             }
 
             LruCache.Clear();
@@ -112,8 +117,8 @@ namespace DDoveFramework.Extension.DDoveUI
             }
 
             LruCache.Remove(tailName);
-            evicted.Close();
-            OnPanelClosed(tailName);
+            CloseRegisteredChildren(tailName);
+            ReleasePanelInstance(tailName, evicted);
             DDoveDebug.Log(DDoveUIInitInfo.LogTitle, ("lru", tailName));
         }
     }

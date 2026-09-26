@@ -14,11 +14,13 @@ Concept ID：`/05-需求/index_cjh`。本目录里 cjh 整理的需求稿。别�
 
 # 处理中
 
-* [创建 LoopList 标题栏](创建LoopList标题栏.md) - 改成跟 DDove 编辑器一样的深色标题栏，再次打开聚焦已有那一扇。 `Playbook` `draft` `需求`
-* [同名HTML说明页](同名HTML说明页.md) - create 画要什么不要；做完时画三块接口。同名静态 HTML。 `Playbook` `draft` `需求`
-
 # 已完成
 
+* [页内 Tab 显 On Off（需求稿）](页内Tab显OnOff.md) - 薄记录。用法篇才是接口总结。 `Playbook` `deprecated` `需求`
+* [创建 LoopList 标题栏（需求稿）](创建LoopList标题栏.md) - 薄记录。用法篇才是接口总结。 `Playbook` `deprecated` `需求`
+* [同名HTML说明页（需求稿）](同名HTML说明页.md) - 薄记录。用法篇才是接口总结。 `Playbook` `deprecated` `需求`
+* [页内 Tab 用 Toggle（需求稿）](页内Tab用Toggle.md) - 薄记录。用法篇才是接口总结。 `Playbook` `deprecated` `需求`
+* [页内 Tab 子页（需求稿）](页内Tab子页.md) - 薄记录。用法篇才是接口总结。 `Playbook` `deprecated` `需求`
 * [LoopList 点击（需求稿）](LoopList点击.md) - 薄记录。用法篇才是接口总结。 `Playbook` `deprecated` `需求`
 * [创建 LoopList（需求稿）](创建LoopList.md) - 薄记录。用法篇才是接口总结。 `Playbook` `deprecated` `需求`
 * [需求稿留下要什么不要（需求稿）](需求稿留下要什么不要.md) - 留下要什么、不要、评分和用法篇链接。 `Playbook` `deprecated` `需求`

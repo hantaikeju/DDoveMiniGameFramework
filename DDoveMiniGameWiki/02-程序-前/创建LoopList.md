@@ -5,11 +5,14 @@ description: HotBox「创建 LoopList」在制作场景的 UIRoot 下挂一条�
 tags: [程序-前, ddoveui]
 status: stable
 generated: { by: human:cjh, at: 2026-09-25T08:45:00Z }
-verified: { by: human:cjh, at: 2026-09-25T17:58:00Z }
+verified: { by: human:cjh, at: 2026-09-26T08:03:00Z }
 sources:
   - id: create
     resource: ../../DDoveMiniGameClient/Assets/Game/Editor/CreateLoopListWindow.cs
     title: CreateLoopListWindow.cs
+  - id: chrome
+    resource: /02-程序-前/创建LoopList标题栏.md
+    title: 创建 LoopList 标题栏
   - id: loop
     resource: /02-程序-前/LoopList.md
     title: LoopList
@@ -20,13 +23,13 @@ sources:
 
 # 创建 LoopList
 
-Concept ID：`/02-程序-前/创建LoopList`。清单：[index_cjh](/02-程序-前/index_cjh.md)。运行时列表看 [LoopList](/02-程序-前/LoopList.md)。
+Concept ID：`/02-程序-前/创建LoopList`。清单：[index_cjh](/02-程序-前/index_cjh.md)。运行时列表看 [LoopList](/02-程序-前/LoopList.md)。窗口怎么打开看 [创建 LoopList 标题栏](/02-程序-前/创建LoopList标题栏.md)。
 
 [三块](创建LoopList.html)
 
 ## 干什么
 
-HotBox「UI 制作」里的「创建 LoopList」在当前制作场景挂一条空 `LoopList`。点开小窗，选方向、`itemSize`、`spacing` 和一个 padding。确认后列表挂在 `UIRoot` 下并铺满它，然后选中这条新列表，自己再拖位置。
+HotBox「UI 制作」里的「创建 LoopList」在当前制作场景挂一条空 `LoopList`。窗口怎么打开看 [创建 LoopList 标题栏](/02-程序-前/创建LoopList标题栏.md)。选方向、`itemSize`、`spacing` 和一个 padding。确认后列表挂在 `UIRoot` 下并铺满它，然后选中这条新列表，自己再拖位置。
 
 不看当前选中了什么。场景里没有名为 `UIRoot` 的节点就停并提示。`previewCount` 保持组件默认 `6`。
 
@@ -37,7 +40,7 @@ HotBox「UI 制作」里的「创建 LoopList」在当前制作场景挂一条�
 
 ## 每个接口干什么
 
-`CreateLoopListWindow.Open` 挂着 `[DDoveHotboxEntry("创建 LoopList", "UI 制作", ...)]`。它打开小窗，不直接造物体。
+`CreateLoopListWindow.Open` 挂着 `[DDoveHotboxEntry("创建 LoopList", "UI 制作", ...)]`。打开方式看 [创建 LoopList 标题栏](/02-程序-前/创建LoopList标题栏.md)。它不直接造物体。
 
 方向是 `LoopDirection`。初值竖。竖只开垂直滚动，Content 顶对齐。横只开水平滚动，Content 左对齐。
 

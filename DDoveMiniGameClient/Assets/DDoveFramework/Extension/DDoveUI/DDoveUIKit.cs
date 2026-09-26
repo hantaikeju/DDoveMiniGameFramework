@@ -24,6 +24,9 @@ namespace DDoveFramework.Extension.DDoveUI
         private static readonly Dictionary<string, IDDoveUIPanel> ActivePanels = new Dictionary<string, IDDoveUIPanel>();
         private static readonly Stack<string> PanelStack = new Stack<string>();
         private static readonly HashSet<string> Opening = new HashSet<string>();
+        private static readonly Dictionary<string, List<string>> ChildPanels = new Dictionary<string, List<string>>();
+        private static readonly Dictionary<string, string> ChildOwners = new Dictionary<string, string>();
+        private static readonly HashSet<string> PanelsWithChildren = new HashSet<string>();
 
         public static GameObject UIRoot => _uiRoot;
 
@@ -145,6 +148,99 @@ namespace DDoveFramework.Extension.DDoveUI
             }
         }
 
+        public static async UniTask<TChild> OpenChildAsync<TChild>(Component parent, IDDoveUIPanelData data = null)
+            where TChild : DDoveUIPanelBase<TChild>
+        {
+            EnsureInitialized();
+            var childName = typeof(TChild).Name;
+            if (parent == null)
+            {
+                DDoveDebug.LogError(DDoveUIInitInfo.LogTitle, ("panel", childName), ("reason", "missing parent"));
+                return null;
+            }
+
+            var parentName = parent.GetType().Name;
+            if (IsChildOf(parentName, childName) && ActivePanels.TryGetValue(childName, out var opened))
+            {
+                HideSiblingChildren(parentName, childName);
+                opened.Show();
+                return opened as TChild;
+            }
+
+            if (ActivePanels.ContainsKey(childName))
+            {
+                DDoveDebug.LogError(DDoveUIInitInfo.LogTitle, ("panel", childName), ("reason", "already open"));
+                return null;
+            }
+
+            var content = FindDirectContent(parent.transform);
+            if (content == null)
+            {
+                DDoveDebug.LogError(DDoveUIInitInfo.LogTitle, ("panel", childName), ("parent", parentName), ("reason", "missing Content"));
+                return null;
+            }
+
+            if (!Opening.Add(childName))
+            {
+                DDoveDebug.LogWarning(DDoveUIInitInfo.LogTitle, ("panel", childName), ("reason", "already opening"));
+                return null;
+            }
+
+            GameObject instance = null;
+            var tracked = false;
+            try
+            {
+                if (TryPopFromCache<TChild>(childName, out var cached))
+                {
+                    cached.transform.SetParent(content, false);
+                    ActivePanels[childName] = cached;
+                    RegisterChild(parentName, childName);
+                    HideSiblingChildren(parentName, childName);
+                    cached.Show();
+                    return cached;
+                }
+
+                var prefab = await LoadPanelPrefabAsync(childName);
+                if (prefab == null)
+                {
+                    return null;
+                }
+
+                instance = UnityEngine.Object.Instantiate(prefab);
+                var panel = instance.GetComponent<TChild>() ?? instance.AddComponent<TChild>();
+                if (panel == null)
+                {
+                    DDoveDebug.LogError(DDoveUIInitInfo.LogTitle, ("panel", childName), ("reason", "cannot add panel component"));
+                    UnityEngine.Object.Destroy(instance);
+                    instance = null;
+                    return null;
+                }
+
+                instance.transform.SetParent(content, false);
+                instance.SetActive(true);
+                ActivePanels[childName] = panel;
+                tracked = true;
+                RegisterChild(parentName, childName);
+                HideSiblingChildren(parentName, childName);
+                await panel.OpenAsync(data);
+                return panel;
+            }
+            catch (Exception e)
+            {
+                if (!tracked && instance != null)
+                {
+                    UnityEngine.Object.Destroy(instance);
+                }
+
+                DDoveDebug.LogError(DDoveUIInitInfo.LogTitle, ("panel", childName), ("error", e.Message));
+                return null;
+            }
+            finally
+            {
+                Opening.Remove(childName);
+            }
+        }
+
         public static void Close<T>() where T : DDoveUIPanelBase<T>
         {
             Close(typeof(T));
@@ -159,10 +255,10 @@ namespace DDoveFramework.Extension.DDoveUI
                 return;
             }
 
+            CloseRegisteredChildren(panelName);
             ActivePanels.Remove(panelName);
             RemoveFromPanelStack(panelName);
-            panel.Close();
-            OnPanelClosed(panelName);
+            ReleasePanelInstance(panelName, panel);
         }
 
         public static T GetPanel<T>() where T : DDoveUIPanelBase<T>
@@ -208,11 +304,11 @@ namespace DDoveFramework.Extension.DDoveUI
                 top.Hide();
                 if (top.EnableClose)
                 {
+                    CloseRegisteredChildren(topName);
                     ActivePanels.Remove(topName);
                     if (!TryCachePanel(topName, top))
                     {
-                        top.Close();
-                        OnPanelClosed(topName);
+                        ReleasePanelInstance(topName, top);
                     }
                 }
             }
@@ -267,7 +363,7 @@ namespace DDoveFramework.Extension.DDoveUI
             ClearLRUCache();
             foreach (var name in ActivePanels.Keys.ToArray())
             {
-                if (name == keep)
+                if (name == keep || IsChildOf(keep, name))
                 {
                     continue;
                 }
@@ -283,9 +379,9 @@ namespace DDoveFramework.Extension.DDoveUI
                     continue;
                 }
 
-                panel.Close();
+                CloseRegisteredChildren(name);
                 ActivePanels.Remove(name);
-                OnPanelClosed(name);
+                ReleasePanelInstance(name, panel);
             }
 
             PanelStack.Clear();
@@ -307,9 +403,9 @@ namespace DDoveFramework.Extension.DDoveUI
                     continue;
                 }
 
-                panel.Close();
+                CloseRegisteredChildren(name);
                 ActivePanels.Remove(name);
-                OnPanelClosed(name);
+                ReleasePanelInstance(name, panel);
             }
 
             PanelStack.Clear();
@@ -494,6 +590,114 @@ namespace DDoveFramework.Extension.DDoveUI
             module.cancel = InputActionReference.Create(_uiActions.UI.Cancel);
             module.enabled = false;
             module.enabled = true;
+        }
+
+        private static bool IsChildOf(string parentName, string childName)
+        {
+            return ChildOwners.TryGetValue(childName, out var owner) && owner == parentName;
+        }
+
+        private static void RegisterChild(string parentName, string childName)
+        {
+            if (!ChildPanels.TryGetValue(parentName, out var children))
+            {
+                children = new List<string>();
+                ChildPanels[parentName] = children;
+            }
+
+            if (!children.Contains(childName))
+            {
+                children.Add(childName);
+            }
+
+            ChildOwners[childName] = parentName;
+            PanelsWithChildren.Add(parentName);
+        }
+
+        private static void UnregisterChild(string childName)
+        {
+            if (!ChildOwners.TryGetValue(childName, out var parentName))
+            {
+                return;
+            }
+
+            ChildOwners.Remove(childName);
+            if (ChildPanels.TryGetValue(parentName, out var children))
+            {
+                children.Remove(childName);
+            }
+        }
+
+        private static void HideSiblingChildren(string parentName, string exceptChild)
+        {
+            if (!ChildPanels.TryGetValue(parentName, out var children))
+            {
+                return;
+            }
+
+            foreach (var name in children)
+            {
+                if (name == exceptChild)
+                {
+                    continue;
+                }
+
+                if (ActivePanels.TryGetValue(name, out var sibling))
+                {
+                    sibling.Hide();
+                }
+            }
+        }
+
+        private static void CloseRegisteredChildren(string parentName)
+        {
+            if (!ChildPanels.TryGetValue(parentName, out var children))
+            {
+                return;
+            }
+
+            foreach (var childName in children.ToArray())
+            {
+                CloseRegisteredChildren(childName);
+                if (!ActivePanels.TryGetValue(childName, out var child))
+                {
+                    UnregisterChild(childName);
+                    continue;
+                }
+
+                child.Hide();
+                ActivePanels.Remove(childName);
+                RemoveFromPanelStack(childName);
+                ReleasePanelInstance(childName, child);
+            }
+        }
+
+        private static void ReleasePanelInstance(string panelName, IDDoveUIPanel panel)
+        {
+            UnregisterChild(panelName);
+            panel.Close();
+            OnPanelClosed(panelName);
+            ChildPanels.Remove(panelName);
+            PanelsWithChildren.Remove(panelName);
+        }
+
+        private static Transform FindDirectContent(Transform parent)
+        {
+            if (parent == null)
+            {
+                return null;
+            }
+
+            for (var i = 0; i < parent.childCount; i++)
+            {
+                var child = parent.GetChild(i);
+                if (child.name == "Content")
+                {
+                    return child;
+                }
+            }
+
+            return null;
         }
 
         private static void RemoveFromPanelStack(string panelName)

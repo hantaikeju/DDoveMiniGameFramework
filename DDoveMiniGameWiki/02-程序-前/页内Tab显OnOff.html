@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>页内 Tab 显 On Off</title>
+<style>
+  body { margin: 0; font: 16px/1.55 "Segoe UI", sans-serif; color: #1c1c1c; background: #f6f4ef; }
+  main { max-width: 760px; margin: 0 auto; padding: 28px 20px 48px; }
+  h1 { font-size: 28px; margin: 0 0 20px; }
+  section { background: #fff; border: 1px solid #e2ddd4; border-radius: 10px; padding: 16px 18px 8px; margin: 0 0 16px; }
+  h2 { margin: 0 0 12px; font-size: 18px; }
+  p { margin: 0 0 12px; }
+  ul { margin: 0 0 12px; padding-left: 1.2em; }
+  code { font-family: Consolas, monospace; font-size: 0.92em; background: #f3efe6; padding: 0 4px; border-radius: 3px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>页内 Tab 显 On Off</h1>
+  <section>
+    <h2>干什么</h2>
+    <p><code>Game.Mono.TabOnOff</code> 和 <code>Toggle</code> 挂在同一个按钮上。它引用子节点 <code>On</code>、<code>Off</code>。两个根各自有一张 <code>Image</code> 和一行字。<code>isOn</code> 为真时显示 <code>On</code>、藏起 <code>Off</code>。为假时反过来。图和字在场景里摆好，这个组件不改颜色，也不换 Sprite。</p>
+    <p>样例 <code>WndTabDemo</code> 的 <code>BtnTabA</code>、<code>BtnTabB</code> 挂着它。<code>On</code> 底图白、字 <code>0.15</code>；<code>Off</code> 底图灰 <code>0.55</code>、字白。Sprite 留空。打开时用 <code>SetIsOnWithoutNotify</code> 把 <code>BtnTabA</code> 设为真、<code>BtnTabB</code> 设为假，然后调用 <code>Refresh</code>，并只打开一次 <code>WndTabPageA</code>。点另一个会打开对应子页。再点已经是真的那个不再次打开。返回仍是 <code>Button</code>。</p>
+    <p>窗口只去掉自己的那一份回调，不清空 <code>Toggle</code> 上的全部监听。子场景 <code>Excluded_Top</code> 里的 Tab 拷贝同样有 <code>On</code> / <code>Off</code>，不进子页 Prefab。</p>
+  </section>
+  <section>
+    <h2>有哪些接口</h2>
+    <ul>
+      <li><code>Game.Mono.TabOnOff</code>（字段 <code>onRoot</code>、<code>offRoot</code>）</li>
+      <li><code>TabOnOff.Refresh()</code></li>
+      <li><code>DDoveUIKit.OpenChildAsync&lt;TChild&gt;(Component parent, IDDoveUIPanelData data = null)</code></li>
+    </ul>
+  </section>
+  <section>
+    <h2>每个接口干什么</h2>
+    <p><code>TabOnOff</code> 放在 <code>Assets/Game/Mono/Tab/</code>。<code>onRoot</code>、<code>offRoot</code> 拖到按钮下的 <code>On</code>、<code>Off</code>。启用时按当前 <code>Toggle.isOn</code> 刷一次显隐，并听 <code>onValueChanged</code>。关掉时去掉这份监听。</p>
+    <p><code>Refresh</code> 再按当前 <code>isOn</code> 刷一次。<code>SetIsOnWithoutNotify</code> 不会进 <code>onValueChanged</code>，所以静默改完选中之后要调用它。</p>
+    <p><code>OpenChildAsync</code> 只在当前子页换了的时候调用。<code>WndTabPageA</code> 记为 1，<code>WndTabPageB</code> 记为 2。已经是这个编号就返回。子页仍挂在父页的 <code>Content</code> 下。</p>
+  </section>
+</main>
+</body>
+</html>

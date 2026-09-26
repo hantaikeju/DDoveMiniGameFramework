@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>页内 Tab 用 Toggle</title>
+<style>
+  body { margin: 0; font: 16px/1.55 "Segoe UI", sans-serif; color: #1c1c1c; background: #f6f4ef; }
+  main { max-width: 760px; margin: 0 auto; padding: 28px 20px 48px; }
+  h1 { font-size: 28px; margin: 0 0 20px; }
+  section { background: #fff; border: 1px solid #e2ddd4; border-radius: 10px; padding: 16px 18px 8px; margin: 0 0 16px; }
+  h2 { margin: 0 0 12px; font-size: 18px; }
+  p { margin: 0 0 12px; }
+  ul { margin: 0 0 12px; padding-left: 1.2em; }
+  code { font-family: Consolas, monospace; font-size: 0.92em; background: #f3efe6; padding: 0 4px; border-radius: 3px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>页内 Tab 用 Toggle</h1>
+  <section>
+    <h2>干什么</h2>
+    <p><code>WndTabDemo</code> 的 <code>BtnTabA</code>、<code>BtnTabB</code> 是同一个 <code>ToggleGroup</code> 上的 <code>Toggle</code>，<code>allowSwitchOff</code> 关掉。<code>isOn</code> 为真是 1，为假是 0。组里始终只有一个是 1。</p>
+    <p>选中外观由 <code>TabOnOff</code> 显示 <code>On</code> 或 <code>Off</code>。本篇不再改 <code>Image.color</code>。返回仍是 <code>Button</code>，仍走 <code>BackAsync</code>。</p>
+    <p>打开时用 <code>SetIsOnWithoutNotify</code> 把 <code>BtnTabA</code> 设为 1、<code>BtnTabB</code> 设为 0，再 <code>Refresh</code>，并只打开一次 <code>WndTabPageA</code>。点另一个：它变成 1，原来的变成 0，并 <code>OpenChildAsync</code> 打开对应子页。再点已经是 1 的那个：保持 1，不再次打开。</p>
+  </section>
+  <section>
+    <h2>有哪些接口</h2>
+    <ul>
+      <li><code>WndTabDemo</code> 上的 <code>ToggleGroup</code>（<code>allowSwitchOff</code> 为关）</li>
+      <li><code>BtnTabA</code>、<code>BtnTabB</code> 的 <code>Toggle.isOn</code></li>
+      <li><code>TabOnOff.Refresh()</code></li>
+      <li><code>DDoveUIKit.OpenChildAsync&lt;TChild&gt;(Component parent, IDDoveUIPanelData data = null)</code></li>
+    </ul>
+  </section>
+  <section>
+    <h2>每个接口干什么</h2>
+    <p><code>ToggleGroup</code> 挂在 <code>WndTabDemo</code> 的根上。两个 Tab 都指向它。关掉 <code>allowSwitchOff</code> 之后，组里不能一个都不选。窗口只去掉自己的那一份回调，不清空 <code>Toggle</code> 上的全部监听。</p>
+    <p><code>Toggle.isOn</code> 为真是当前子页。打开父页时用 <code>SetIsOnWithoutNotify</code> 写入这对值，避免回调把 <code>WndTabPageA</code> 再打开一次。某个 Tab 变成真时，另一个若仍为真就 <code>SetIsOnWithoutNotify(false)</code>。静默改完之后调用 <code>Refresh</code>。<code>On</code> / <code>Off</code> 怎么显示见页内 Tab 显 On Off。</p>
+    <p><code>OpenChildAsync</code> 只在当前子页换了的时候调用。<code>WndTabPageA</code> 记为 1，<code>WndTabPageB</code> 记为 2。已经是这个编号就返回。子页仍挂在父页的 <code>Content</code> 下。</p>
+  </section>
+</main>
+</body>
+</html>

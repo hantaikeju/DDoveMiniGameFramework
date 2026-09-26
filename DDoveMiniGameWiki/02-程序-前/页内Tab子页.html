@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>页内 Tab 子页</title>
+<style>
+  body { margin: 0; font: 16px/1.55 "Segoe UI", sans-serif; color: #1c1c1c; background: #f6f4ef; }
+  main { max-width: 760px; margin: 0 auto; padding: 28px 20px 48px; }
+  h1 { font-size: 28px; margin: 0 0 20px; }
+  section { background: #fff; border: 1px solid #e2ddd4; border-radius: 10px; padding: 16px 18px 8px; margin: 0 0 16px; }
+  h2 { margin: 0 0 12px; font-size: 18px; }
+  p { margin: 0 0 12px; }
+  ul { margin: 0 0 12px; padding-left: 1.2em; }
+  code { font-family: Consolas, monospace; font-size: 0.92em; background: #f3efe6; padding: 0 4px; border-radius: 3px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>页内 Tab 子页</h1>
+  <section>
+    <h2>干什么</h2>
+    <p><code>DDoveUIKit.OpenChildAsync</code> 打开一扇子页面板，挂到父页组件根下名为 <code>Content</code> 的直接子节点。子页有自己的类、Prefab 和 Yoo 地址，登记在 Kit 里，不进导航栈，也不使用 <code>DefaultLayer</code>。</p>
+    <p><code>parent</code> 传父页面板自己。父页为空、没有这个 <code>Content</code>，或该类型已经作为别的窗打开：打开失败并打日志，不挂到 <code>DDoveUIRoot</code> 的层上。该类型已是这个父页的子页：改为 <code>Show</code>。显示出一个子页时，同父的其余子页 <code>Hide</code>，实例留着，不重新 Load。</p>
+    <p><code>NavigateToAsync</code> 离开父页只 <code>Hide</code> 父页，子页留在 <code>Content</code> 里，回来仍是刚才那一页。父页 <code>Close</code>、<code>CloseAll</code>，以及 <code>BackAsync</code> 走到关闭时，先 <code>Close</code> 全部子页并 <code>Release</code>，含已经 <code>Hide</code> 的。登记过子页的父页不进 LRU。下次再打开父页会重新 <code>OnOpen</code>。</p>
+    <p>样板在 <code>Start</code>。<code>WndHome</code> 第四行标题 <code>Tab</code>，<code>NavigateToAsync&lt;WndTabDemo&gt;</code>。<code>WndTabDemo.OnOpen</code> 打开 <code>WndTabPageA</code>。两个 Tab 分别 <code>OpenChildAsync</code> 打开 <code>WndTabPageA</code>、<code>WndTabPageB</code>。返回走 <code>BackAsync</code>。</p>
+  </section>
+  <section>
+    <h2>有哪些接口</h2>
+    <ul>
+      <li><code>DDoveUIKit.OpenChildAsync&lt;TChild&gt;(Component parent, IDDoveUIPanelData data = null)</code></li>
+      <li>父页上的 <code>Close</code>、<code>CloseAll</code>、<code>BackAsync</code></li>
+      <li><code>DDoveUIKit.NavigateToAsync&lt;T&gt;</code></li>
+    </ul>
+  </section>
+  <section>
+    <h2>每个接口干什么</h2>
+    <p><code>OpenChildAsync</code> 用 <code>parent.GetType().Name</code> 记下父子关系。<code>Content</code> 只找该组件的直接子节点。已是这个父页的子页就 <code>Show</code>，并 <code>Hide</code> 其余子页。类型已在别处打开则失败，日志原因是 <code>already open</code>。没有 <code>Content</code> 的原因是 <code>missing Content</code>。父页为空的原因是 <code>missing parent</code>。缓存里已有该子页时，把它挂到 <code>Content</code> 再 <code>Show</code>，不重新 Load。</p>
+    <p>父页 <code>Close</code>、<code>CloseAll</code>，以及 <code>BackAsync</code> 在 <code>EnableClose</code> 时，先关掉登记在该父页下的全部子页并 <code>Release</code> handle，再处理父页自己。<code>TryCachePanel</code> 见到登记过子页的父页直接返回，父页不进 LRU。</p>
+    <p><code>NavigateToAsync</code> 离开当前页时只 <code>Hide</code> 栈顶。子页不被 <code>Close</code>，仍挂在父页的 <code>Content</code> 下。再回到这扇父页时，离开前显示的那个子页还在。</p>
+  </section>
+</main>
+</body>
+</html>

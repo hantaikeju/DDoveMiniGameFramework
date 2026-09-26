@@ -53,6 +53,11 @@ namespace Game.UI
                 {
                     Title = "LoopH",
                     Open = () => DDoveUIKit.NavigateToAsync<WndLoopHDemo>().Forget()
+                },
+                new HomeEntryRowData
+                {
+                    Title = "Tab",
+                    Open = () => DDoveUIKit.NavigateToAsync<WndTabDemo>().Forget()
                 }
             };
             _list.Create(entries);

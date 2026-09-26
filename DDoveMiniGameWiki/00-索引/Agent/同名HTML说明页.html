@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>同名HTML说明页</title>
+<style>
+  body { margin: 0; font: 16px/1.55 "Segoe UI", sans-serif; color: #1c1c1c; background: #f6f4ef; }
+  main { max-width: 760px; margin: 0 auto; padding: 28px 20px 48px; }
+  h1 { font-size: 28px; margin: 0 0 20px; }
+  section { background: #fff; border: 1px solid #e2ddd4; border-radius: 10px; padding: 16px 18px 8px; margin: 0 0 16px; }
+  h2 { margin: 0 0 12px; font-size: 18px; }
+  p { margin: 0 0 12px; }
+  ul { margin: 0 0 12px; padding-left: 1.2em; }
+  code { font-family: Consolas, monospace; font-size: 0.92em; background: #f3efe6; padding: 0 4px; border-radius: 3px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>同名HTML说明页</h1>
+  <section>
+    <h2>干什么</h2>
+    <p><code>ddove-show-me</code> 在一篇 <code>.md</code> 旁边写一张静态 HTML，主文件名与该 <code>.md</code> 相同。HTML 不是概念，<code>check_wiki.py</code> 不扫它。</p>
+    <p><code>/ddove-wiki-create</code> 落 <code>05-需求</code> 时调用它，画「要什么 / 不要」，并在需求稿正文加链接。<code>/ddove-wiki-change-state</code> 把 <code>05-需求</code> 一篇整份做完时调用它两次：用法篇旁画三块并加链接；再按最终「要什么 / 不要」重画需求稿那一份。</p>
+    <p><code>ddove-work</code> 过线不调用。本机 <code>/show-me</code> 不改、不进仓库。已有篇不补 HTML。技能在 <code>.agents/skills/ddove-show-me/</code> 与 <code>.cursor/skills/ddove-show-me/</code>。</p>
+  </section>
+  <section>
+    <h2>有哪些接口</h2>
+    <ul>
+      <li><code>ddove-show-me</code>（种类「要什么不要」或「三块」）</li>
+      <li><code>/ddove-wiki-create</code>（落 <code>05-需求</code>）</li>
+      <li><code>/ddove-wiki-change-state</code>（<code>05-需求</code> 整份做完）</li>
+    </ul>
+  </section>
+  <section>
+    <h2>每个接口干什么</h2>
+    <p><code>ddove-show-me</code> 一次写一张。HTML 与目标 <code>.md</code> 同目录、同主文件名。<code>title</code> 含「需求稿」时，文件名仍用 <code>.md</code> 主文件名。种类「要什么不要」取 <code>## 要什么</code>、<code>## 不要</code>，左「要什么」、右「不要」，窄屏上下排。种类「三块」取 <code>## 干什么</code>、<code>## 有哪些接口</code>、<code>## 每个接口干什么</code>，三节顺排。页是静态 HTML，无 frontmatter，无脚本，无分步按钮。它不改目标 <code>.md</code>。</p>
+    <p><code>/ddove-wiki-create</code> 落在 <code>05-需求</code> 时传入该需求稿，种类「要什么不要」，并在开篇加上打开这份 HTML 的链接。其它目录不画。</p>
+    <p><code>/ddove-wiki-change-state</code> 把一篇 <code>05-需求</code> 整份做完时先对用法篇传入种类「三块」，再对该需求稿传入种类「要什么不要」重画。不扫描仓库去给其它已有篇补 HTML。</p>
+  </section>
+</main>
+</body>
+</html>

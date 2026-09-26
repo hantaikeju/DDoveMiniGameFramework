@@ -32,7 +32,11 @@ Concept ID：`/02-程序-前/index_cjh`。本目录里 cjh 整理的篇。别人
 * [LoopList](LoopList.md) - 竖、横样板格子进视口翻平、离开翻走，视口内拖动不再按整格改转角。Home 不挂。 `Playbook`
 * [LoopList 点击](LoopList点击.md) - AddClick 把格子根点击交到外部，下标在点击当时读。非空声音名经 ClickSound.SetSoundName。 `Playbook`
 * [创建 LoopList](创建LoopList.md) - HotBox「创建 LoopList」挂在 UIRoot 下。窗口选横竖、itemSize、spacing 和一个 padding。创建后自己拖位置。 `Playbook`
+* [创建 LoopList 标题栏](创建LoopList标题栏.md) - CreateLoopListWindow.Open 用 GetWindow 留一扇。尺寸锁 420×268，打开时居中。 `Playbook`
 * [WndHome Sample入口](WndHomeSample入口.md) - WndHome 三行入口。Title/Open、Bind/Recycle；NavigateToAsync 开三页；BtnBack 走 BackAsync；Launch 为 NavigateToAsync<WndHome>。 `Playbook`
+* [页内 Tab 子页](页内Tab子页.md) - OpenChildAsync 把子页挂到父页 Content。切 Tab 只隐藏。关父页先 Release 子页，该父页不进 LRU。 `Playbook`
+* [页内 Tab 用 Toggle](页内Tab用Toggle.md) - WndTabDemo 两个 Tab 同一 ToggleGroup。选中外观由 TabOnOff 显示 On 或 Off。再点已选中的不再次打开子页。 `Playbook`
+* [页内 Tab 显 On Off](页内Tab显OnOff.md) - TabOnOff 按 isOn 显示 On 或 Off。On 底白字 0.15，Off 底灰 0.55 字白。 `Playbook`
 * [DDoveAtlas](DDoveAtlas.md) - 散图在 Excluded，Yoo 只收图集产物。Sprite Atlas V2 - Enabled。独立 Kit late-bind 与按名取图。 `Playbook`
 * [Sprite Atlas V1 与 V2](SpriteAtlasV1与V2.md) - 一代/二代运行时相同，只换 Pack 管线。Mode、Include in Build、第三方图集与代数正交。落地见 DDoveAtlas。 `Reference`
 * [PrimeTween](PrimeTween.md) - 接入免费 PrimeTween 1.4.x。只装包；Game 业务引用。DDoveUI Base 本刀不引用。 `Playbook`

@@ -1,23 +1,17 @@
 ---
 type: Playbook
-title: 同名HTML说明页
-description: 已落地。ddove-show-me 写同名静态 HTML。create 画要什么不要；整份做完画三块并重画需求稿那一份。
+title: 同名HTML说明页（需求稿）
+description: 薄记录。用法篇才是接口总结。得分留在本篇。
 tags: [索引, agent, 需求]
-status: draft
+status: deprecated
 generated: { by: human:cjh, at: 2026-09-25T06:06:00Z }
 sources:
+  - id: use
+    resource: /00-索引/Agent/同名HTML说明页.md
+    title: 同名HTML说明页
   - id: show
-    resource: /00-索引/Agent/show-me安装.md
-    title: show-me 安装
-  - id: flow
-    resource: /00-索引/Agent/需求稿工作流.md
-    title: 需求稿工作流
-  - id: map
-    resource: /00-索引/Agent/Agent总览.md
-    title: Agent 总览
-  - id: keep
-    resource: /00-索引/Agent/需求稿留下要什么不要.md
-    title: 需求稿留下要什么不要
+    resource: ../../../.agents/skills/ddove-show-me/SKILL.md
+    title: ddove-show-me
   - id: create
     resource: ../../../.agents/skills/ddove-wiki-create/SKILL.md
     title: ddove-wiki-create
@@ -26,11 +20,11 @@ sources:
     title: ddove-wiki-change-state
 ---
 
-# 同名HTML说明页
+# 同名HTML说明页（需求稿）
 
-Concept ID：`/05-需求/同名HTML说明页`。清单：[index_cjh](/05-需求/index_cjh.md)。地图：[Agent 总览](/00-索引/Agent/Agent总览.md)。个人技能仍是 [show-me 安装](/00-索引/Agent/show-me安装.md)。
+用法篇：[同名HTML说明页](/00-索引/Agent/同名HTML说明页.md)。
 
-需求稿和用法篇各有一张跟 `.md` 同名的静态 HTML。篇里有链接打开它。三票技能与两篇流程已按当前技能落地。需求稿工作流与 Agent 总览已回 draft。
+[要什么不要](同名HTML说明页.html)
 
 ## 要什么
 
@@ -60,15 +54,6 @@ Concept ID：`/05-需求/同名HTML说明页`。清单：[index_cjh](/05-需求/
 - HTML 带上概念 frontmatter
 - 文件名用带「需求稿」的标题
 
-## 落点
-
-| 路径 | 本刀 |
-|------|------|
-| `.agents/skills/ddove-show-me/` 与 `.cursor/skills/` 同步份 | 写同名静态 HTML |
-| `.agents/skills/ddove-wiki-create/` 与同步份 | 落需求稿时画要什么 / 不要，并在稿内加链接 |
-| `.agents/skills/ddove-wiki-change-state/` 与同步份 | 用法篇旁画三块；重画需求稿 HTML |
-| [需求稿工作流](/00-索引/Agent/需求稿工作流.md)、[Agent 总览](/00-索引/Agent/Agent总览.md) | 写上这两步 |
-
 ## 评分
 
 分数记在本节，不另开文件。尺子：开工评分 v11。
@@ -76,10 +61,4 @@ Concept ID：`/05-需求/同名HTML说明页`。清单：[index_cjh](/05-需求/
 | 轮 | 总分 | 过线 | 记录 |
 |----|------|------|------|
 | 1 | 100 | 是 | 审查 PASS。需求验收 20、Wiki 同步 20、职责边界 20、范围 15、信任表述 15、规格增量 10。条文不变。 |
-
-## 验收
-
-1. 之后新建的 `05-需求` 篇旁边有同名 `.html`，内容是该篇「要什么 / 不要」，稿内有链接。HTML 无 frontmatter。
-2. 之后整份做完时，用法篇旁边有同名 `.html`，内容是三块，篇内有链接；`05-需求` 那份 HTML 与最终「要什么 / 不要」一致。
-3. `ddove-work` 过线不产生 HTML。本机 `show-me` 目录未被这刀修改。已有篇没有被补上 HTML。
-4. 两份 `ddove-show-me`、两份 create、两份 change-state 说法一致。需求稿工作流与 Agent 总览写了这两步。
+| 2 | 100 | 是 | 对照验收，改动路径无。审查 PASS。需求验收 20、Wiki 同步 20、职责边界 20、范围 15、信任表述 15、规格增量 10。条文不变。 |

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>页内 Tab 子页（需求稿）</title>
+<style>
+  body { margin: 0; font: 16px/1.55 "Segoe UI", sans-serif; color: #1c1c1c; background: #f6f4ef; }
+  main { max-width: 960px; margin: 0 auto; padding: 28px 20px 48px; }
+  h1 { font-size: 28px; margin: 0 0 20px; }
+  .cols { display: flex; gap: 16px; align-items: flex-start; }
+  section { flex: 1; background: #fff; border: 1px solid #e2ddd4; border-radius: 10px; padding: 16px 18px 8px; }
+  h2 { margin: 0 0 12px; font-size: 18px; }
+  p { margin: 0 0 12px; }
+  ul { margin: 0 0 12px; padding-left: 1.2em; }
+  code { font-family: Consolas, monospace; font-size: 0.92em; background: #f3efe6; padding: 0 4px; border-radius: 3px; }
+  @media (max-width: 720px) {
+    .cols { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>页内 Tab 子页（需求稿）</h1>
+  <div class="cols">
+    <section>
+      <h2>要什么</h2>
+      <p><code>DDoveUIKit.OpenChildAsync&lt;TChild&gt;(Component parent, IDDoveUIPanelData data = null)</code>：子页仍是独立面板，有自己的类、Prefab、Yoo 地址和 <code>OnOpen</code> / <code>OnClose</code>，登记在 Kit 里。不进导航栈。<code>parent</code> 用面板组件自己。实例挂到该组件根下的直接子节点 <code>Content</code>。这条路径不使用子页的 <code>DefaultLayer</code>。父页为空时打开失败并打日志。</p>
+      <p>没有 <code>Content</code>，或该类型已经作为别的窗打开着：打开失败，打日志，不挂到 <code>DDoveUIRoot</code> 的层上。该类型已是这个父页的子页：改为 <code>Show</code>。显示出一个子页时，这个父页下其余子页 <code>Hide</code>，实例留着，不重新 Load。</p>
+      <p>父页 <code>OnOpen</code> 里打开并显示约定的第一个子页。<code>Navigate</code> 离开父页只 <code>Hide</code> 父页，子页留在 <code>Content</code> 里，回来仍是刚才那一页。父页真正关闭时（返回、<code>Close</code>、<code>CloseAll</code>）先 <code>Close</code> 全部子页并 <code>Release</code>，含已经 <code>Hide</code> 的。登记过子页的父页不进 LRU。下次从 <code>WndHome</code> 进来会重新 <code>OnOpen</code>，再打开第一个子页。</p>
+      <p>样板在 <code>Start</code>。<code>WndHome</code> 在现有三行后再加一行，标题 <code>Tab</code>，<code>NavigateToAsync&lt;WndTabDemo&gt;</code>。<code>WndTabDemo</code> 上有返回、两个 Tab，以及直接子节点 <code>Content</code>。返回走 <code>BackAsync</code>。两个 Tab 分别打开 <code>WndTabPageA</code>、<code>WndTabPageB</code>。<code>OnOpen</code> 打开 <code>WndTabPageA</code>。</p>
+      <p>两个子页各自场景、各自 Prefab。<code>UIRoot</code> 里只放自己的标题，文案分别是 <code>Tab A</code>、<code>Tab B</code>。父级 Tab 的拷贝放在子场景的 <code>Excluded_Top</code>，只用于对齐，不进子页 Prefab。<code>GameLaunch</code> 不改。业务继续直接调 Kit。</p>
+    </section>
+    <section>
+      <h2>不要</h2>
+      <ul>
+        <li>用 <code>NavigateToAsync</code> 切换 Tab</li>
+        <li>子页挂到 <code>DDoveUIRoot</code> 的层上，或写进导航栈</li>
+        <li>把父级可点按钮放进子页 <code>UIRoot</code></li>
+        <li>切 Tab 时 <code>Close</code> 并 <code>Release</code></li>
+        <li><code>Navigate</code> 离开父页时关掉子页</li>
+        <li>父页进入 LRU 后带着空的 <code>Content</code> 再 <code>Show</code></li>
+        <li>只销毁父物体来收子页，不走 Kit 的 <code>Close</code> / <code>Release</code></li>
+        <li>改 <code>GameLaunch</code></li>
+        <li>为开子页加只转发 Kit 的 System</li>
+      </ul>
+    </section>
+  </div>
+</main>
+</body>
+</html>
