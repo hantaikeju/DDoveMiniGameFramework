@@ -1,11 +1,11 @@
 ---
 type: Playbook
 title: DDoveUI 切 Input System
-description: 第二刀已落地：UI EventSystem 只开 Input System Package，文本只留 TMP。不用 Both，不搬 Probe。
+description: 第二刀已落地：UI EventSystem 只开 Input System Package，文本只留 TMP。默认字体仍是 LiberationSans，缺的汉字走 Noto Fallback。不用 Both，不搬 Probe。
 tags: [程序-前, ddoveui]
 status: stable
 generated: { by: human:cjh, at: 2026-09-17T08:17:00Z }
-verified: { by: human:cjh, at: 2026-09-17T10:25:00Z }
+verified: { by: human:cjh, at: 2026-09-26T22:58:00Z }
 sources:
   - id: grill
     resource: /00-索引/Agent/需求稿工作流.md
@@ -49,6 +49,15 @@ sources:
   - id: player-settings
     resource: ../../DDoveMiniGameClient/ProjectSettings/ProjectSettings.asset
     title: ProjectSettings.asset
+  - id: tmp-fallback
+    resource: /05-需求/TMP中文Fallback.md
+    title: TMP 中文 Fallback（需求稿）
+  - id: noto
+    resource: ../../DDoveMiniGameClient/Assets/TextMesh Pro/Resources/Fonts & Materials/NotoSerifCJKsc-Medium SDF.asset
+    title: NotoSerifCJKsc-Medium SDF.asset
+  - id: tmp-settings
+    resource: ../../DDoveMiniGameClient/Assets/TextMesh Pro/Resources/TMP Settings.asset
+    title: TMP Settings.asset
 ---
 
 # DDoveUI 切 Input System
@@ -68,9 +77,9 @@ Concept ID：`/02-程序-前/DDoveUI切InputSystem`。清单：[index_cjh](/02-�
 | EventSystem | `InputSystemUIInputModule` + 默认 UI Actions 并 `Enable()`。拆掉 `StandaloneInputModule` |
 | 程序集 | `DDoveUI` / `DDoveUI.Editor` 引 `Unity.InputSystem`；`Game` 不引 |
 | Canvas | 制作场景 Overlay；运行时 `ScreenSpaceCamera` + UI 相机 |
-| 文本 | 只 `TextMeshProUGUI`；默认 LiberationSans SDF。无 `DDoveUINodeBindType.Text` / `SetText(Text)` |
+| 文本 | 只 `TextMeshProUGUI`；默认 LiberationSans SDF。缺的汉字走该字体和 TMP Settings 的 Fallback：动态 `NotoSerifCJKsc-Medium SDF`。无 `DDoveUINodeBindType.Text` / `SetText(Text)` |
 
-`AddComponent` 的 `OnEnable` 已赋默认 Actions，不要马上 `AssignDefaultActions()`。Debugger 里 `UI/Click` 可能出现两份，不要为此禁用模块。`ClickSound` / `AddClick` / 导航仍走 EventSystem 指针，见 [UI 业务封装](/02-程序-前/UI业务封装.md)。
+`AddComponent` 的 `OnEnable` 已赋默认 Actions，不要马上 `AssignDefaultActions()`。Debugger 里 `UI/Click` 可能出现两份，不要为此禁用模块。`ClickSound` / `AddClick` / 导航仍走 EventSystem 指针，见 [UI 业务封装](/02-程序-前/UI业务封装.md)。中文 Fallback 的文件和挂法见 [TMP 中文 Fallback](/05-需求/TMP中文Fallback.md)。
 
 ## 不要
 
@@ -79,7 +88,8 @@ Concept ID：`/02-程序-前/DDoveUI切InputSystem`。清单：[index_cjh](/02-�
 - 禁用 `InputSystemUIInputModule`
 - 运行时改 Overlay、删 UI 相机
 - `Game` 引 `Unity.InputSystem`；玩法键盘 / 手柄 Actions
-- 拷 Input System 进 `Packages/`、拷 MeowPantry 字体
+- 拷 Input System 进 `Packages/`
+- 再拷像素字，或把默认字体改成 Noto
 - 改 `ClickSound` / `AddClick` / 导航 API
 
 ## 验收
@@ -90,6 +100,6 @@ Concept ID：`/02-程序-前/DDoveUI切InputSystem`。清单：[index_cjh](/02-�
 4. 运行时与新建制作场景是 `InputSystemUIInputModule`，没有 `StandaloneInputModule`，没有 `DDoveUIPointerProbe`。
 5. 运行时 Canvas 仍是 `ScreenSpaceCamera` + UI 相机。
 6. 绑定 / `SetText` / 导出不再认 `UnityEngine.UI.Text`；`Detect` 先认 TMP。
-7. 样板、运行时新建、`WndHome` 用 TMP + LiberationSans SDF。
+7. 样板、运行时新建、`WndHome` 的文本仍是 TMP + LiberationSans SDF。缺的汉字由 Fallback 上的 `NotoSerifCJKsc-Medium SDF` 补。
 8. Play：看见 `WndHome`，只开新包时能点领取。
 9. `ClickSound` / `AddClick` / 导航与切包前相同。

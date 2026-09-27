@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>TMP 中文 Fallback（需求稿）</title>
+<style>
+  body { margin: 0; font: 16px/1.55 "Segoe UI", sans-serif; color: #1c1c1c; background: #f6f4ef; }
+  main { max-width: 960px; margin: 0 auto; padding: 28px 20px 48px; }
+  h1 { font-size: 28px; margin: 0 0 20px; }
+  .cols { display: flex; gap: 16px; align-items: flex-start; }
+  section { flex: 1; background: #fff; border: 1px solid #e2ddd4; border-radius: 10px; padding: 16px 18px 8px; }
+  h2 { margin: 0 0 12px; font-size: 18px; }
+  p { margin: 0 0 12px; }
+  ul { margin: 0 0 12px; padding-left: 1.2em; }
+  code { font-family: Consolas, monospace; font-size: 0.92em; background: #f3efe6; padding: 0 4px; border-radius: 3px; }
+  @media (max-width: 720px) {
+    .cols { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>TMP 中文 Fallback（需求稿）</h1>
+  <div class="cols">
+    <section>
+      <h2>要什么</h2>
+      <p><code>LiberationSans SDF</code> 只收拉丁字母和少量标点。中文由动态字体 <code>NotoSerifCJKsc-Medium SDF</code> 从 Fallback 补上。文件已在 <code>Assets/TextMesh Pro/Resources/Fonts &amp; Materials/</code>：otf 与 SDF 的 guid 分别是 <code>d7708880da592f44a9fbede871ccc681</code>、<code>5542ae728e650cb4baf2bcf707f4d9d4</code>。SDF 为动态图集，采样 <code>90</code>，边距 <code>9</code>，<code>1024</code>，多图集开着，Clear Dynamic Data On Build 开着。</p>
+      <p>从同级工程 MeowPantry 的 <code>MeowPantryClient/Assets/GameRes/Fonts/</code> 拷四份进本库 <code>Assets/TextMesh Pro/Resources/Fonts &amp; Materials/</code>：</p>
+      <ul>
+        <li><code>NotoSerifCJKsc-Medium.otf</code> 与它的 <code>.meta</code>（guid <code>d7708880da592f44a9fbede871ccc681</code>）</li>
+        <li><code>NotoSerifCJKsc-Medium SDF.asset</code> 与它的 <code>.meta</code>（guid <code>5542ae728e650cb4baf2bcf707f4d9d4</code>）</li>
+      </ul>
+      <p>带 <code>.meta</code> 拷，SDF 里的源字库引用保持指向这份 otf。字面是 Noto Serif CJK SC Medium。</p>
+      <p>拷入后改这份 SDF：图集保持动态，采样 <code>90</code>，边距 <code>9</code>，宽高 <code>1024</code>。打开多图集，一页满了再开下一页。打开 Clear Dynamic Data On Build，打包时清掉已经写进图集的字形，运行时按用到的字生成。</p>
+      <p>挂两处，都是追加，留下 LiberationSans 自己那条西文 Fallback：</p>
+      <ul>
+        <li><code>LiberationSans SDF</code> 的 Fallback Font Assets 加上这份 Noto</li>
+        <li><code>TMP Settings</code> 的 Fallback Font Assets 加上同一份</li>
+      </ul>
+      <p><code>TMP Settings</code> 的默认字体仍是 <code>LiberationSans SDF</code>。已经摆好的文本保持现在的字体引用。<code>WndHome</code> 上的「领取/换图」靠这条 Fallback 显示出四个汉字。</p>
+      <p>当前收集路径是场景、<code>UI/Start</code>、图集和配表。这份字放在 TextMesh Pro 的 Resources 里，由上述引用带进播放器包，不另做收集项。</p>
+    </section>
+    <section>
+      <h2>不要</h2>
+      <ul>
+        <li>把 <code>TMP Settings</code> 的默认字体改成这份 Noto</li>
+        <li>逐个改 Prefab、场景里 TextMesh Pro 的字体引用</li>
+        <li>拷 <code>fusion-pixel-12px-proportional</code></li>
+        <li>放进 <code>Assets/GameRes</code>，或加进 BundleCollector 收集路径</li>
+        <li>做成静态图集，或关掉多图集</li>
+        <li>改样板 Builder、<code>WndHome</code>、<code>LoopList</code></li>
+        <li>运行时用 DDoveRes 或 YooAsset 按名 Load 这份字体</li>
+      </ul>
+    </section>
+  </div>
+</main>
+</body>
+</html>

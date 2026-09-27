@@ -28,6 +28,7 @@ Concept ID：`/02-程序-前/index_cjh`。本目录里 cjh 整理的篇。别人
 * [DDoveAudio](DDoveAudio.md) - 独立音频根。对外只碰 Kit；通道 / 设置 / 播放池不进 GameArchitecture。按名走 Res，播放器走 Pool。 `Reference`
 * [DDoveUI](DDoveUI.md) - 制作场景导出 Prefab，Launch 打开 WndHome。第二刀只开 Input System Package，文本只留 TMP。 `Playbook`
 * [DDoveUI 切 Input System](DDoveUI切InputSystem.md) - 第二刀：只开 Input System Package，文本只留 TMP。不用 Both，不搬 Probe。 `Playbook`
+* [TMP 中文 Fallback](TMP中文Fallback.md) - 默认字体仍是 LiberationSans。缺的汉字从动态 Noto Serif CJK SC 的 Fallback 里补。 `Playbook`
 * [UI 业务封装](UI业务封装.md) - 做窗到写业务的步骤，以及开窗 / 读写 / Tween 门槛。业务直调 DDoveUIKit。 `Playbook`
 * [LoopList](LoopList.md) - 竖、横样板格子进视口翻平、离开翻走，视口内拖动不再按整格改转角。Home 不挂。 `Playbook`
 * [LoopList 点击](LoopList点击.md) - AddClick 把格子根点击交到外部，下标在点击当时读。非空声音名经 ClickSound.SetSoundName。 `Playbook`

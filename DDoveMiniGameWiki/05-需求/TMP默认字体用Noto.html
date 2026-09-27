@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>TMP 默认字体用 Noto（需求稿）</title>
+<style>
+  body { margin: 0; font: 16px/1.55 "Segoe UI", sans-serif; color: #1c1c1c; background: #f6f4ef; }
+  main { max-width: 960px; margin: 0 auto; padding: 28px 20px 48px; }
+  h1 { font-size: 28px; margin: 0 0 20px; }
+  .cols { display: flex; gap: 16px; align-items: flex-start; }
+  section { flex: 1; background: #fff; border: 1px solid #e2ddd4; border-radius: 10px; padding: 16px 18px 8px; }
+  h2 { margin: 0 0 12px; font-size: 18px; }
+  p { margin: 0 0 12px; }
+  ul { margin: 0 0 12px; padding-left: 1.2em; }
+  code { font-family: Consolas, monospace; font-size: 0.92em; background: #f3efe6; padding: 0 4px; border-radius: 3px; }
+  @media (max-width: 720px) {
+    .cols { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>TMP 默认字体用 Noto（需求稿）</h1>
+  <div class="cols">
+    <section>
+      <h2>要什么</h2>
+      <p><code>TMP Settings</code> 的默认字体改为 <code>NotoSerifCJKsc-Medium SDF</code>（guid <code>5542ae728e650cb4baf2bcf707f4d9d4</code>）。新建文本走这份默认字体。</p>
+      <p>下面这些文件里，凡是 <code>m_fontAsset</code> 指向 LiberationSans SDF（guid <code>8f586378b4e144a9851e7b34d9b748ee</code>）的，字体改挂 Noto，<code>m_sharedMaterial</code> 改挂同一份资源里的 Atlas Material（fileID <code>-2056736997786491373</code>）。</p>
+      <p>Prefab：<code>WndHome</code>、<code>WndLoopDemo</code>、<code>WndLoopHDemo</code>、<code>WndCollectDemo</code>、<code>WndTabDemo</code>、<code>WndTabPageA</code>、<code>WndTabPageB</code>，都在 <code>Assets/GameRes/UI/Start/</code>。</p>
+      <p>制作场景：同名 <code>.unity</code>，都在 <code>Assets/GameResExcluded/CreateUIScenes/Start/</code>。</p>
+      <p><code>LiberationSans SDF</code> 的 Fallback 继续留着这份 Noto。<code>TMP Settings</code> 的 Fallback Font Assets 也继续留着它。动态图集、采样 <code>90</code>、边距 <code>9</code>、<code>1024</code>、多图集、Clear Dynamic Data On Build 都不改。</p>
+    </section>
+    <section>
+      <h2>不要</h2>
+      <ul>
+        <li>只改 <code>TMP Settings</code>，Prefab 和制作场景继续挂 LiberationSans</li>
+        <li>拿掉 LiberationSans 或 <code>TMP Settings</code> 上的 Noto Fallback</li>
+        <li>改 <code>LoopList</code> 里格子的 <code>SetActive</code></li>
+        <li>改样板 Builder、<code>WndHome.cs</code></li>
+        <li>再拷像素字，或把图集改成静态</li>
+      </ul>
+    </section>
+  </div>
+</main>
+</body>
+</html>
