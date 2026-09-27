@@ -50,6 +50,7 @@ namespace DDoveFramework.Extension.DDoveUI
 
         public static void Initialize()
         {
+            EnsureDynamicFontAtlases();
             if (_initialized)
             {
                 DDoveDebug.LogWarning(DDoveUIInitInfo.LogTitle, ("reason", "already initialized"));
@@ -123,6 +124,7 @@ namespace DDoveFramework.Extension.DDoveUI
                 }
 
                 var instance = UnityEngine.Object.Instantiate(prefab);
+                EnsureDynamicFontAtlases();
                 var panel = instance.GetComponent<T>() ?? instance.AddComponent<T>();
                 if (panel == null)
                 {
@@ -436,7 +438,10 @@ namespace DDoveFramework.Extension.DDoveUI
             if (!_initialized)
             {
                 Initialize();
+                return;
             }
+
+            EnsureDynamicFontAtlases();
         }
 
         private static void InitCamera()

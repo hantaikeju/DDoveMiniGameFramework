@@ -19,7 +19,7 @@
   <h1>TMP 中文 Fallback</h1>
   <section>
     <h2>干什么</h2>
-    <p><code>LiberationSans SDF</code> 只收拉丁字母和少量标点。缺的汉字从 Fallback 里的动态字体 <code>NotoSerifCJKsc-Medium SDF</code> 补上。<code>TMP Settings</code> 的默认字体仍是 LiberationSans。已经摆好的文本保持现在的字体引用。<code>WndHome</code> 上的「领取/换图」靠这条 Fallback 显示四个汉字。</p>
+    <p><code>LiberationSans SDF</code> 只收拉丁字母和少量标点。缺的汉字从 Fallback 里的动态字体 <code>NotoSerifCJKsc-Medium SDF</code> 补上。组件上仍指定 LiberationSans 时，缺字走这条表。</p>
     <p>字库和 SDF 在 <code>Assets/TextMesh Pro/Resources/Fonts &amp; Materials/</code>。图集是动态的，采样 <code>90</code>，边距 <code>9</code>，宽高 <code>1024</code>，多图集开着。打包时清掉已经写进图集的字形，运行时按用到的字生成。</p>
   </section>
   <section>
@@ -27,15 +27,13 @@
     <ul>
       <li><code>NotoSerifCJKsc-Medium SDF</code>（源字库 <code>NotoSerifCJKsc-Medium.otf</code>）</li>
       <li><code>LiberationSans SDF</code> 的 Fallback Font Assets</li>
-      <li><code>TMP Settings</code> 的默认字体</li>
       <li><code>TMP Settings</code> 的 Fallback Font Assets</li>
     </ul>
   </section>
   <section>
     <h2>每个接口干什么</h2>
     <p><code>NotoSerifCJKsc-Medium SDF</code> 的字面是 Noto Serif CJK SC Medium。源字库 guid 是 <code>d7708880da592f44a9fbede871ccc681</code>，SDF guid 是 <code>5542ae728e650cb4baf2bcf707f4d9d4</code>。用到的字写入图集，一页满了再开下一页。</p>
-    <p><code>LiberationSans SDF</code> 的 Fallback 先保留原来的西文 <code>LiberationSans SDF - Fallback</code>，再追加这份 Noto。组件上指定的仍是 LiberationSans 时，缺字走这条表。</p>
-    <p><code>TMP Settings</code> 的默认字体仍指向 <code>LiberationSans SDF</code>（guid <code>8f586378b4e144a9851e7b34d9b748ee</code>）。新建文本继续用它。</p>
+    <p><code>LiberationSans SDF</code> 的 Fallback 先保留原来的西文 <code>LiberationSans SDF - Fallback</code>，再追加这份 Noto。</p>
     <p><code>TMP Settings</code> 的 Fallback Font Assets 也追加同一份 Noto。当前字体自己的 Fallback 里没有这个字时，再查这份全局表。</p>
   </section>
 </main>

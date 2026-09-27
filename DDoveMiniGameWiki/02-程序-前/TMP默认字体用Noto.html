@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>TMP 默认字体用 Noto</title>
+<style>
+  body { margin: 0; font: 16px/1.55 "Segoe UI", sans-serif; color: #1c1c1c; background: #f6f4ef; }
+  main { max-width: 760px; margin: 0 auto; padding: 28px 20px 48px; }
+  h1 { font-size: 28px; margin: 0 0 20px; }
+  section { background: #fff; border: 1px solid #e2ddd4; border-radius: 10px; padding: 16px 18px 8px; margin: 0 0 16px; }
+  h2 { margin: 0 0 12px; font-size: 18px; }
+  p { margin: 0 0 12px; }
+  ul { margin: 0 0 12px; padding-left: 1.2em; }
+  code { font-family: Consolas, monospace; font-size: 0.92em; background: #f3efe6; padding: 0 4px; border-radius: 3px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>TMP 默认字体用 Noto</h1>
+  <section>
+    <h2>干什么</h2>
+    <p><code>TMP Settings</code> 的默认字体是 <code>NotoSerifCJKsc-Medium SDF</code>（guid <code>5542ae728e650cb4baf2bcf707f4d9d4</code>）。新建文本走这份字体。<code>Assets/GameRes/UI/Start/</code> 里的 <code>WndHome</code>、<code>WndLoopDemo</code>、<code>WndLoopHDemo</code>、<code>WndCollectDemo</code>、<code>WndTabDemo</code>、<code>WndTabPageA</code>、<code>WndTabPageB</code>，以及 <code>Assets/GameResExcluded/CreateUIScenes/Start/</code> 下同名场景，文本的字体和材质都指向这份 Noto。汉字写进这份字体自己的动态图集。</p>
+    <p><code>LiberationSans SDF</code> 的 Fallback 和 <code>TMP Settings</code> 的 Fallback Font Assets 仍留着这份 Noto。动态图集、采样 <code>90</code>、边距 <code>9</code>、<code>1024</code>、多图集、Clear Dynamic Data On Build 保持原样。</p>
+  </section>
+  <section>
+    <h2>有哪些接口</h2>
+    <ul>
+      <li><code>NotoSerifCJKsc-Medium SDF</code></li>
+      <li><code>TMP Settings</code> 的默认字体</li>
+      <li>已有文本的字体和材质</li>
+      <li><code>LiberationSans SDF</code> 的 Fallback Font Assets</li>
+      <li><code>TMP Settings</code> 的 Fallback Font Assets</li>
+    </ul>
+  </section>
+  <section>
+    <h2>每个接口干什么</h2>
+    <p><code>NotoSerifCJKsc-Medium SDF</code> 的字面是 Noto Serif CJK SC Medium。SDF guid 是 <code>5542ae728e650cb4baf2bcf707f4d9d4</code>。图集是动态的。用到的字在这次生成文字时写入图集，一页满了再开下一页。Atlas Material 的 fileID 是 <code>-2056736997786491373</code>。</p>
+    <p><code>TMP Settings</code> 的默认字体指向这份 Noto。没有单独指定字体的新建文本用它。</p>
+    <p>已有文本：上面列出的 Prefab 和制作场景里，字体指向这份 Noto，材质指向同一份资源里的 Atlas Material。这些文本不再引用 LiberationSans SDF（guid <code>8f586378b4e144a9851e7b34d9b748ee</code>）。</p>
+    <p><code>LiberationSans SDF</code> 的 Fallback 仍先是西文 <code>LiberationSans SDF - Fallback</code>，再是这份 Noto。组件上仍指定 LiberationSans 时，缺字走这条表。</p>
+    <p><code>TMP Settings</code> 的 Fallback Font Assets 也仍有这份 Noto。当前字体自己的 Fallback 里没有这个字时，再查这份全局表。</p>
+  </section>
+</main>
+</body>
+</html>

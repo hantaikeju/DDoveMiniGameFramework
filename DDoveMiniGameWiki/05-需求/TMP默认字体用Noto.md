@@ -1,23 +1,20 @@
 ---
 type: Playbook
 title: TMP 默认字体用 Noto（需求稿）
-description: 已落地。TMP Settings 默认字体和已有文本都挂动态 Noto，两处 Fallback 留着。
+description: 薄记录。用法篇才是接口总结。得分留在本篇。
 tags: [程序-前, ddoveui, 需求]
-status: draft
+status: deprecated
 generated: { by: human:cjh, at: 2026-09-27T07:28:00Z }
 sources:
-  - id: fallback
-    resource: /02-程序-前/TMP中文Fallback.md
-    title: TMP 中文 Fallback
-  - id: input
-    resource: /02-程序-前/DDoveUI切InputSystem.md
-    title: DDoveUI 切 Input System
-  - id: tmp
-    resource: ../../DDoveMiniGameClient/Assets/TextMesh Pro/Resources/TMP Settings.asset
-    title: TMP Settings.asset
+  - id: use
+    resource: /02-程序-前/TMP默认字体用Noto.md
+    title: TMP 默认字体用 Noto
   - id: noto
     resource: ../../DDoveMiniGameClient/Assets/TextMesh Pro/Resources/Fonts & Materials/NotoSerifCJKsc-Medium SDF.asset
     title: NotoSerifCJKsc-Medium SDF.asset
+  - id: tmp
+    resource: ../../DDoveMiniGameClient/Assets/TextMesh Pro/Resources/TMP Settings.asset
+    title: TMP Settings.asset
   - id: font
     resource: ../../DDoveMiniGameClient/Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF.asset
     title: LiberationSans SDF.asset
@@ -28,9 +25,7 @@ sources:
 
 # TMP 默认字体用 Noto（需求稿）
 
-Concept ID：`/05-需求/TMP默认字体用Noto`。清单：[index_cjh](/05-需求/index_cjh.md)。
-
-对照：[TMP 中文 Fallback](/02-程序-前/TMP中文Fallback.md) 过期、[DDoveUI 切 Input System](/02-程序-前/DDoveUI切InputSystem.md) 过期。两篇仍写默认字体是 LiberationSans。现稿已把默认字体和已有文本改挂 Noto。汉字在这份字体自己的网格里写入图集。
+用法篇：[TMP 默认字体用 Noto](/02-程序-前/TMP默认字体用Noto.md)。
 
 [要什么不要](TMP默认字体用Noto.html)
 
@@ -53,21 +48,6 @@ Prefab：`WndHome`、`WndLoopDemo`、`WndLoopHDemo`、`WndCollectDemo`、`WndTab
 - 改 `LoopList` 里格子的 `SetActive`
 - 改样板 Builder、`WndHome.cs`
 - 再拷像素字，或把图集改成静态
-
-## 验收
-
-1. `TMP Settings` 的默认字体是 `NotoSerifCJKsc-Medium SDF`。
-2. 上面列出的 Prefab 和制作场景里，不再有文本挂 LiberationSans SDF。这些文本的字体和材质都指向 Noto 那份资源。
-3. LiberationSans 与 `TMP Settings` 的 Fallback 仍有这份 Noto。
-4. Play 打开 `WndHome`，「领取/换图」第一次就显示，不用再把物体关开。
-
-## 落点
-
-| | 放哪 |
-|--|------|
-| 默认字体 | `Assets/TextMesh Pro/Resources/TMP Settings.asset` |
-| 已有文本 | `Assets/GameRes/UI/Start/` 下列出的 Prefab，以及 `Assets/GameResExcluded/CreateUIScenes/Start/` 下同名场景 |
-| 留下的 Fallback | `LiberationSans SDF.asset` 与 `TMP Settings.asset` |
 
 ## 评分
 

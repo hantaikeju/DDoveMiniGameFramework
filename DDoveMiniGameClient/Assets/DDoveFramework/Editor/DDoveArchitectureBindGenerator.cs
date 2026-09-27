@@ -269,7 +269,7 @@ namespace DDoveFramework.Editor
             {
                 if (assemblies[i].name == assemblyName)
                 {
-                    return (assemblies[i].flags & AssemblyFlags.EditorAssembly) != 0;
+                    return (assemblies[i].flags & UnityEditor.Compilation.AssemblyFlags.EditorAssembly) != 0;
                 }
             }
 

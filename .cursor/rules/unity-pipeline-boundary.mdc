@@ -1,0 +1,11 @@
+---
+description: Unity 资源与脚本改动的硬边界
+alwaysApply: true
+---
+
+# Unity 改动硬边界
+
+- 场景、Prefab、材质、ScriptableObject、动画、工程设置，以及移动或删除 `Assets` 里已有资源，走 Pipeline。
+- `.meta` 和序列化文件不手改。
+- `.cs` 等纯文本直接改，改完用 CLI 重编译确认：`set_autotick`、`recompile`、`recompile_status`。
+- 编辑器没开或 CLI 连不上时，纯文本仍可改，并写明还没做编译或场景验证。

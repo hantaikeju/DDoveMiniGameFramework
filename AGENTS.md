@@ -13,3 +13,4 @@
 7. 写或改 skill：`ddove-writing-for-agents`。
 8. 改 / 加配表、导表失败：`ddove-config`（对照 [luban/ai](https://github.com/focus-creative-games/luban/tree/main/ai)，本库改编）。
 9. fork / 拷走开新游戏、改四件套目录名：`/ddove-rename-workspace`。权威：`DDoveMiniGameWiki/00-索引/Agent/改工作区前缀.md`。本框架仓不跑。
+10. 场景 / Prefab / 资源 / 重编译：走 `ddove-unity-pipeline`。

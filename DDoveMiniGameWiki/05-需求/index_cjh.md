@@ -14,9 +14,11 @@ Concept ID：`/05-需求/index_cjh`。本目录里 cjh 整理的需求稿。别�
 
 # 处理中
 
-* [TMP 默认字体用 Noto（需求稿）](TMP默认字体用Noto.md) - TMP Settings 的默认字体改成动态 Noto，已有文本的字体和材质一起改挂。两处 Fallback 留着。 `Playbook` `draft` `需求`
+* [Unity CLI Pipeline 接入（需求稿）](UnityCLIPipeline接入.md) - 把 2022.3 魔改的 com.unity.pipeline 嵌进客户端，本机装 CLI，Cursor 用硬边界和 ddove-unity-pipeline。 `Playbook` `draft` `需求`
 
 # 已完成
+
+* [TMP 默认字体用 Noto（需求稿）](TMP默认字体用Noto.md) - TMP Settings 的默认字体改成动态 Noto，已有文本的字体和材质一起改挂。两处 Fallback 留着。 `Playbook` `deprecated` `需求`
 
 * [TMP 中文 Fallback（需求稿）](TMP中文Fallback.md) - 动态 Noto Serif CJK SC 挂到 LiberationSans 和 TMP Settings 的 Fallback，已有文本补上汉字。 `Playbook` `deprecated` `需求`
 
