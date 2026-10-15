@@ -28,7 +28,7 @@ sources:
 
 Concept ID：`/02-程序-前/页内Tab子页`。清单：[index_cjh](/02-程序-前/index_cjh.md)。整页打开仍看 [DDoveUI](/02-程序-前/DDoveUI.md)。入口列表仍看 [WndHome Sample入口](/02-程序-前/WndHomeSample入口.md)。
 
-[三块](页内Tab子页.html)
+[打开说明](页内Tab子页.html)
 
 ## 干什么
 

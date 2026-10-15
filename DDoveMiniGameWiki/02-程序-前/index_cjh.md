@@ -44,6 +44,7 @@ Concept ID：`/02-程序-前/index_cjh`。本目录里 cjh 整理的篇。别人
 * [PrimeTween](PrimeTween.md) - 接入免费 PrimeTween 1.4.x。只装包；Game 业务引用。DDoveUI Base 本刀不引用。 `Playbook`
 * [异步用 UniTask](UniTask异步.md) - 客户端异步统一 UniTask。Core 零引用。 `Playbook`* [NuGet 与 Scriban](NuGet与Scriban.md) - nuget 源装 Scriban。UnityTls / 梯子代理。与 manifest（UPM）无关。 `Playbook`
 * [UPM 落地](UPM落地.md) - GitHub URL 装完后拷一份到 `Packages/`，无科学上网不再 download err。 `Playbook`
+* [Unity CLI Pipeline 接入](UnityCLIPipeline接入.md) - 把 2022.3 魔改的 com.unity.pipeline 嵌进客户端，本机装 CLI，Cursor 用硬边界和 ddove-unity-pipeline。当前编辑器是团结 2022.3.61t14。 `Playbook`
 * [IOC 容器](IOC容器.md) - 按注册泛型类型存一份实例；找不到抛错。不是构造注入框架。 `Reference`
 * [IOC 容器使用规范](IOC容器使用规范.md) - 一条闭环链路配一套 Architecture（一份 IOC）。不要 new 容器当全局定位器。 `Playbook`
 * [Architecture 与角色](Architecture与角色.md) - GameArchitecture 注册 Model/System/Utility。读写与开窗门槛见 UI 业务封装。 `Reference`* [Architecture 自动注册](Architecture自动注册.md) - 三类特性收集并生成 GameArchitecture；总窗 Architecture 页配路径、Hotbox 创建三类。 `Playbook`

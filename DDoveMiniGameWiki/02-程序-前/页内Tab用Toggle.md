@@ -28,7 +28,7 @@ sources:
 
 Concept ID：`/02-程序-前/页内Tab用Toggle`。清单：[index_cjh](/02-程序-前/index_cjh.md)。子页挂载仍看 [页内 Tab 子页](/02-程序-前/页内Tab子页.md)。选中外观看 [页内 Tab 显 On Off](/02-程序-前/页内Tab显OnOff.md)。
 
-[三块](页内Tab用Toggle.html)
+[打开说明](页内Tab用Toggle.html)
 
 ## 干什么
 

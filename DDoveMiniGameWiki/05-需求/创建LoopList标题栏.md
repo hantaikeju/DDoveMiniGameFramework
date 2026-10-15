@@ -21,7 +21,7 @@ sources:
 
 用法篇：[创建 LoopList 标题栏](/02-程序-前/创建LoopList标题栏.md)。
 
-[要什么不要](创建LoopList标题栏.html)
+[打开说明](创建LoopList标题栏.html)
 
 ## 要什么
 

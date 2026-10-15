@@ -2,40 +2,61 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>LoopList 点击</title>
 <style>
-  body { margin: 0; font: 16px/1.55 "Segoe UI", sans-serif; color: #1c1c1c; background: #f6f4ef; }
-  main { max-width: 760px; margin: 0 auto; padding: 28px 20px 48px; }
-  h1 { font-size: 28px; margin: 0 0 20px; }
-  section { background: #fff; border: 1px solid #e2ddd4; border-radius: 10px; padding: 16px 18px 8px; margin: 0 0 16px; }
-  h2 { margin: 0 0 12px; font-size: 18px; }
-  p { margin: 0 0 12px; }
-  ul { margin: 0 0 12px; padding-left: 1.2em; }
-  code { font-family: Consolas, monospace; font-size: 0.92em; background: #f3efe6; padding: 0 4px; border-radius: 3px; }
+  :root { --paper:#f3efe6; --card:#fffcf7; --ink:#1c1915; --muted:#6f675e; --rule:#e3dcd0; --in:#3f6212; --in-soft:#f1f6e8; --out:#9a3412; --out-soft:#f8ebe3; --node:#1e3a5f; --node-soft:#e8eef5; --line:#b8ae9f; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.45 "Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 28px 16px 48px; }
+  h1 { margin: 0 0 6px; font-size: 26px; font-weight: 650; }
+  .sub { margin: 0 0 22px; color: var(--muted); font-size: 13px; }
+  .band { margin: 0 0 20px; }
+  .band h2 { margin: 0 0 10px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .node { background: var(--card); border: 1px solid var(--rule); border-radius: 10px; padding: 8px 12px; }
+  .node b { display: block; font-size: 13px; }
+  .node span { display: block; color: var(--muted); font-size: 12px; }
+  .node.call { background: var(--node-soft); border-color: #c9d6e6; }
+  svg.diag { width: 100%; height: auto; display: block; background: var(--card); border: 1px solid var(--rule); border-radius: 12px; }
 </style>
 </head>
 <body>
 <main>
   <h1>LoopList 点击</h1>
-  <section>
-    <h2>干什么</h2>
-    <p><code>LoopList.AddClick</code> 把格子根上 <code>Button</code> 的点击交到外部，回调收到这次 <code>Bind</code> 写下的下标。下标在点击当时读。再调一次替掉上一次的动作和记下的声音名。</p>
-    <p>传入非空声音名时，露出的格子保证有一份 <code>ClickSound</code>，名字用 <code>SetSoundName</code> 写入。已经有一份就改名字。播放仍由 <code>ClickSound</code> 调 <code>PlaySound</code>。<code>LoopList</code> 不调用 <code>PlaySound</code>。声音名为空时不加 <code>ClickSound</code>，也不改格子上已有的那份。没有根上 <code>Button</code> 的格子不挂这次点击。横竖共用这一套。</p>
-    <p><code>DemoRow</code> 的 <code>Awake</code> 只缓存文本，不再自己挂 <code>onClick</code>。竖样板 <code>WndLoopDemo</code> 在 <code>Create</code> 之后调用 <code>AddClick</code>，打出 <code>[WndLoopDemo] row </code> 加下标，不传声音名。面板 <code>AddClick</code> 的签名不变。</p>
+  <p class="sub">用法 · 下标当时读 · 声音只改名</p>
+
+  <section class="band">
+    <h2>职责</h2>
+    <div class="flow">
+      <div class="node call"><b>LoopList.AddClick</b><span>记下动作和声音名</span></div>
+      <div class="node call"><b>ClickSound.SetSoundName</b><span>左键仍自己 PlaySound</span></div>
+    </div>
   </section>
-  <section>
-    <h2>有哪些接口</h2>
-    <ul>
-      <li><code>LoopList.AddClick(Action&lt;int&gt; onClick, string soundName = null)</code></li>
-      <li><code>ClickSound.SetSoundName(string value)</code></li>
-    </ul>
-  </section>
-  <section>
-    <h2>每个接口干什么</h2>
-    <p><code>LoopList.AddClick</code> 记下这一次的动作和声音名。格子根 <code>Button</code> 只挂一次监听。点击时读该格子当前的下标（<code>ShowCell</code> 在 <code>Bind</code> 之后写入）。再调一次只留新动作和新的声音名，同一次点击只跑一次。</p>
-    <p><code>soundName</code> 非空时，对当前露出的格子取一份 <code>ClickSound</code>，没有才挂上，然后 <code>SetSoundName</code>。之后新露出的格子按当前声音名同样处理。<code>soundName</code> 为空则这两步都不做。</p>
-    <p><code>ClickSound.SetSoundName</code> 写入这一份组件的声音名。左键点击时仍由 <code>ClickSound</code> 自己调用 <code>PlaySound</code>。名字为空则不播。</p>
-    <p>竖样板不传声音名：<code>_list.AddClick(index =&gt; Debug.Log("[WndLoopDemo] row " + index))</code>。</p>
+
+  <section class="band">
+    <h2>谁调谁</h2>
+    <svg class="diag" viewBox="0 0 980 220" role="img" aria-label="Button 只挂一次，ClickSound 自己播">
+      <rect x="24" y="60" width="220" height="100" rx="12" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="134" y="100" text-anchor="middle" font-size="14" font-weight="650">AddClick</text>
+      <text x="134" y="124" text-anchor="middle" font-size="12" fill="#6f675e">根 Button 只挂一次监听</text>
+      <path d="M244 110 H300" stroke="#b8ae9f" stroke-width="2"/>
+      <rect x="300" y="30" width="220" height="70" rx="10" fill="#f1f6e8" stroke="#c9d6a8"/>
+      <text x="410" y="60" text-anchor="middle" font-size="13" font-weight="650">点击</text>
+      <text x="410" y="80" text-anchor="middle" font-size="12" fill="#6f675e">读 ShowCell 写入的下标</text>
+      <rect x="300" y="120" width="220" height="70" rx="10" fill="#fffcf7" stroke="#e3dcd0"/>
+      <text x="410" y="150" text-anchor="middle" font-size="13" font-weight="650">再调一次</text>
+      <text x="410" y="170" text-anchor="middle" font-size="12" fill="#6f675e">只留新动作和新名</text>
+      <rect x="560" y="30" width="190" height="70" rx="10" fill="#f1f6e8" stroke="#c9d6a8"/>
+      <text x="655" y="60" text-anchor="middle" font-size="13" font-weight="650">非空名</text>
+      <text x="655" y="80" text-anchor="middle" font-size="12" fill="#6f675e">没有才挂 · SetSoundName</text>
+      <rect x="560" y="120" width="190" height="70" rx="10" fill="#f8ebe3" stroke="#e8c4b4"/>
+      <text x="655" y="150" text-anchor="middle" font-size="13" font-weight="650" fill="#9a3412">空名</text>
+      <text x="655" y="170" text-anchor="middle" font-size="12" fill="#6f675e">两步都不做</text>
+      <rect x="780" y="70" width="170" height="80" rx="12" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="865" y="104" text-anchor="middle" font-size="13" font-weight="650">WndLoopDemo</text>
+      <text x="865" y="126" text-anchor="middle" font-size="12" fill="#6f675e">不传声音名</text>
+    </svg>
   </section>
 </main>
 </body>

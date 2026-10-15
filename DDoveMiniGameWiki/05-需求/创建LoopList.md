@@ -18,7 +18,7 @@ sources:
 
 用法篇：[创建 LoopList](/02-程序-前/创建LoopList.md)。
 
-[要什么不要](创建LoopList.html)
+[打开说明](创建LoopList.html)
 
 ## 要什么
 

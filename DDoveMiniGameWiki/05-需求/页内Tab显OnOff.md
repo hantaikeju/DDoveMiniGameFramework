@@ -18,7 +18,7 @@ sources:
 
 用法篇：[页内 Tab 显 On Off](/02-程序-前/页内Tab显OnOff.md)。
 
-[要什么不要](页内Tab显OnOff.html)
+[打开说明](页内Tab显OnOff.html)
 
 ## 要什么
 

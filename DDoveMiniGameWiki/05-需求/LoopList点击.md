@@ -21,7 +21,7 @@ sources:
 
 用法篇：[LoopList 点击](/02-程序-前/LoopList点击.md)。
 
-[要什么不要](LoopList点击.html)
+[打开说明](LoopList点击.html)
 
 ## 要什么
 

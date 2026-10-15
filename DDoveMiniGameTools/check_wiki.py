@@ -6,7 +6,7 @@ import sys
 from pathlib import Path
 
 ALLOWED_STATUS = {"draft", "stable", "deprecated"}
-SKIP_DIR_NAMES = {"_log", "_tools", "_spec", ".obsidian"}
+SKIP_DIR_NAMES = {"_log", "_tools", "_spec", "_archive", ".obsidian"}
 
 
 def repo_root() -> Path:

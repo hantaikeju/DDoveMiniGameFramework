@@ -2,47 +2,87 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>页内 Tab 显 On Off（需求稿）</title>
 <style>
-  body { margin: 0; font: 16px/1.55 "Segoe UI", sans-serif; color: #1c1c1c; background: #f6f4ef; }
-  main { max-width: 960px; margin: 0 auto; padding: 28px 20px 48px; }
-  h1 { font-size: 28px; margin: 0 0 20px; }
-  .cols { display: flex; gap: 16px; align-items: flex-start; }
-  section { flex: 1; background: #fff; border: 1px solid #e2ddd4; border-radius: 10px; padding: 16px 18px 8px; }
-  h2 { margin: 0 0 12px; font-size: 18px; }
-  p { margin: 0 0 12px; }
-  ul { margin: 0 0 12px; padding-left: 1.2em; }
-  code { font-family: Consolas, monospace; font-size: 0.92em; background: #f3efe6; padding: 0 4px; border-radius: 3px; }
-  @media (max-width: 720px) {
-    .cols { flex-direction: column; }
-  }
+  :root { --paper:#f3efe6; --card:#fffcf7; --ink:#1c1915; --muted:#6f675e; --rule:#e3dcd0; --in:#3f6212; --in-soft:#f1f6e8; --out:#9a3412; --out-soft:#f8ebe3; --node:#1e3a5f; --node-soft:#e8eef5; --line:#b8ae9f; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.45 "Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 28px 16px 48px; }
+  h1 { margin: 0 0 6px; font-size: 26px; font-weight: 650; }
+  .sub { margin: 0 0 22px; color: var(--muted); font-size: 13px; }
+  .band { margin: 0 0 20px; }
+  .band h2 { margin: 0 0 10px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .zone { background: var(--card); border: 1px solid var(--rule); border-radius: 12px; padding: 12px; }
+  .zone.in { border-color: #c9d6a8; }
+  .zone.out { border-color: #e8c4b4; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { background: var(--in-soft); border-radius: 8px; padding: 6px 10px; font-size: 13px; }
+  .zone.out .chip { background: var(--out-soft); text-decoration: line-through; text-decoration-color: #c2410c; }
+  svg.diag { width: 100%; height: auto; display: block; background: var(--card); border: 1px solid var(--rule); border-radius: 12px; }
+  @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
 <main>
   <h1>页内 Tab 显 On Off（需求稿）</h1>
-  <div class="cols">
-    <section>
-      <h2>要什么</h2>
-      <p>每个 Tab 按钮挂一个 Mono，放在 <code>Assets/Game/Mono/</code> 下、与 <code>Scroll</code> 并列的目录里，命名空间 <code>Game.Mono</code>。不进 DDoveUI。它和 <code>Toggle</code> 挂在同一个物体上，引用该按钮下的 <code>On</code>、<code>Off</code> 两个根。两个根各自有一张 <code>Image</code> 和一行字。</p>
-      <p><code>Toggle.isOn</code> 为真时显示 <code>On</code>、藏起 <code>Off</code>。为假时显示 <code>Off</code>、藏起 <code>On</code>。图和字在场景里摆好。Mono 只切换这两套的显示，不改它们的颜色，也不换 Sprite。启用时按当前 <code>isOn</code> 刷一次，这样 <code>SetIsOnWithoutNotify</code> 之后外观也是对的。</p>
-      <p>样例 <code>WndTabDemo</code> 的 <code>BtnTabA</code>、<code>BtnTabB</code> 挂上它。<code>On</code> 底图白、字深色 <code>0.15</code>；<code>Off</code> 底图灰 <code>0.55</code>、字白。两套字都是该 Tab 的名字。两张 <code>Image</code> 的 Sprite 留空，以后在 <code>Image</code> 上换图。<code>WndTabDemo</code> 不再写 <code>Image.color</code>。打开时仍用 <code>SetIsOnWithoutNotify</code> 把 <code>BtnTabA</code> 设为真、<code>BtnTabB</code> 设为假，并只打开一次 <code>WndTabPageA</code>。</p>
-      <p><code>ToggleGroup</code> 仍在父页上，<code>allowSwitchOff</code> 仍关掉。子页仍走 <code>OpenChildAsync</code>。点另一个：它变成真并显示 <code>On</code>，原来的变成假并显示 <code>Off</code>，并打开对应子页。再点已经是真的那个：保持，不再次打开。返回仍是 <code>Button</code>，仍走 <code>BackAsync</code>。</p>
-      <p>子场景 <code>Excluded_Top</code> 里的 Tab 拷贝同样摆 <code>On</code> / <code>Off</code>，仍不进子页 Prefab。</p>
-    </section>
-    <section>
-      <h2>不要</h2>
-      <ul>
-        <li>继续用 <code>ApplyTabColor</code> 改底图颜色来表示选中</li>
-        <li>用 <code>Toggle</code> 的变色或 Sprite Swap 表示选中</li>
-        <li>把这个 Mono 放进 DDoveUI</li>
-        <li>给样例另做 Sprite 文件</li>
-        <li><code>On</code> 和 <code>Off</code> 同时显示，或同时藏起</li>
-        <li>再点已经是真的 Tab 时再次 <code>OpenChildAsync</code></li>
-        <li>改 <code>OpenChildAsync</code>、<code>GameLaunch</code>，或其它窗</li>
-      </ul>
-    </section>
-  </div>
+  <p class="sub">Game.Mono.TabOnOff · 只切两套显隐</p>
+
+  <section class="band">
+    <h2>结构</h2>
+    <svg class="diag" viewBox="0 0 980 230" role="img" aria-label="Toggle 与 TabOnOff 同物体，isOn 切 On Off">
+      <rect x="24" y="36" width="260" height="160" rx="12" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="154" y="66" text-anchor="middle" font-size="14" font-weight="650">按钮物体</text>
+      <text x="154" y="86" text-anchor="middle" font-size="12" fill="#6f675e">Toggle + TabOnOff</text>
+      <rect x="44" y="108" width="100" height="64" rx="10" fill="#f1f6e8" stroke="#c9d6a8"/>
+      <text x="94" y="136" text-anchor="middle" font-size="13" font-weight="650">On</text>
+      <text x="94" y="156" text-anchor="middle" font-size="11" fill="#6f675e">图 + 字</text>
+      <rect x="164" y="108" width="100" height="64" rx="10" fill="#fffcf7" stroke="#e3dcd0"/>
+      <text x="214" y="136" text-anchor="middle" font-size="13" font-weight="650">Off</text>
+      <text x="214" y="156" text-anchor="middle" font-size="11" fill="#6f675e">图 + 字</text>
+      <path d="M284 116 H340" stroke="#b8ae9f" stroke-width="2"/>
+      <rect x="350" y="40" width="200" height="70" rx="10" fill="#f1f6e8" stroke="#c9d6a8"/>
+      <text x="450" y="70" text-anchor="middle" font-size="13" font-weight="650">isOn 真</text>
+      <text x="450" y="90" text-anchor="middle" font-size="12" fill="#6f675e">显 On · 藏 Off</text>
+      <rect x="350" y="126" width="200" height="70" rx="10" fill="#fffcf7" stroke="#e3dcd0"/>
+      <text x="450" y="156" text-anchor="middle" font-size="13" font-weight="650">isOn 假</text>
+      <text x="450" y="176" text-anchor="middle" font-size="12" fill="#6f675e">显 Off · 藏 On</text>
+      <rect x="580" y="40" width="180" height="70" rx="10" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="670" y="70" text-anchor="middle" font-size="13" font-weight="650">Assets/Game/Mono</text>
+      <text x="670" y="90" text-anchor="middle" font-size="12" fill="#6f675e">并列 Scroll · 不进 DDoveUI</text>
+      <rect x="580" y="126" width="180" height="70" rx="10" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="670" y="156" text-anchor="middle" font-size="13" font-weight="650">WndTabDemo</text>
+      <text x="670" y="176" text-anchor="middle" font-size="12" fill="#6f675e">挂上 · 不再写 Image.color</text>
+      <rect x="790" y="70" width="170" height="90" rx="10" fill="#f8ebe3" stroke="#e8c4b4"/>
+      <text x="875" y="106" text-anchor="middle" font-size="13" font-weight="650" fill="#9a3412">不改颜色</text>
+      <text x="875" y="128" text-anchor="middle" font-size="12" fill="#6f675e">不换 Sprite</text>
+    </svg>
+  </section>
+
+  <section class="band">
+    <h2>纳入 · 排除</h2>
+    <div class="grid">
+      <div class="zone in">
+        <div class="chips">
+          <span class="chip">On 白底深字 · Off 灰底白字</span>
+          <span class="chip">启用 / 静默改 isOn 后 Refresh</span>
+          <span class="chip">Excluded_Top 同样摆两套</span>
+          <span class="chip">返回仍 Button · BackAsync</span>
+        </div>
+      </div>
+      <div class="zone out">
+        <div class="chips">
+          <span class="chip">ApplyTabColor</span>
+          <span class="chip">Toggle 变色 / Sprite Swap</span>
+          <span class="chip">Mono 放进 DDoveUI</span>
+          <span class="chip">另做 Sprite 文件</span>
+          <span class="chip">On Off 同时显或同时藏</span>
+          <span class="chip">再点已真再次 OpenChild</span>
+        </div>
+      </div>
+    </div>
+  </section>
 </main>
 </body>
 </html>

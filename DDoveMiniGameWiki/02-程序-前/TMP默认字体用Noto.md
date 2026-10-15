@@ -28,7 +28,7 @@ sources:
 
 Concept ID：`/02-程序-前/TMP默认字体用Noto`。清单：[index_cjh](/02-程序-前/index_cjh.md)。
 
-[三块](TMP默认字体用Noto.html)
+[打开说明](TMP默认字体用Noto.html)
 
 ## 干什么
 

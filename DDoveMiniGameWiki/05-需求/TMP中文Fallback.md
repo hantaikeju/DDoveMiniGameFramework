@@ -24,7 +24,7 @@ sources:
 
 用法篇：[TMP 中文 Fallback](/02-程序-前/TMP中文Fallback.md)。
 
-[要什么不要](TMP中文Fallback.html)
+[打开说明](TMP中文Fallback.html)
 
 ## 要什么
 

@@ -34,7 +34,7 @@ sources:
 
 Concept ID：`/02-程序-前/LoopList点击`。清单：[index_cjh](/02-程序-前/index_cjh.md)。列表其余行为看 [LoopList](/02-程序-前/LoopList.md)。点击音门槛看 [UI 业务封装](/02-程序-前/UI业务封装.md)。
 
-[三块](LoopList点击.html)
+[打开说明](LoopList点击.html)
 
 ## 干什么
 

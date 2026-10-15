@@ -2,45 +2,87 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>页内 Tab 用 Toggle（需求稿）</title>
 <style>
-  body { margin: 0; font: 16px/1.55 "Segoe UI", sans-serif; color: #1c1c1c; background: #f6f4ef; }
-  main { max-width: 960px; margin: 0 auto; padding: 28px 20px 48px; }
-  h1 { font-size: 28px; margin: 0 0 20px; }
-  .cols { display: flex; gap: 16px; align-items: flex-start; }
-  section { flex: 1; background: #fff; border: 1px solid #e2ddd4; border-radius: 10px; padding: 16px 18px 8px; }
-  h2 { margin: 0 0 12px; font-size: 18px; }
-  p { margin: 0 0 12px; }
-  ul { margin: 0 0 12px; padding-left: 1.2em; }
-  code { font-family: Consolas, monospace; font-size: 0.92em; background: #f3efe6; padding: 0 4px; border-radius: 3px; }
-  @media (max-width: 720px) {
-    .cols { flex-direction: column; }
-  }
+  :root { --paper:#f3efe6; --card:#fffcf7; --ink:#1c1915; --muted:#6f675e; --rule:#e3dcd0; --in:#3f6212; --in-soft:#f1f6e8; --out:#9a3412; --out-soft:#f8ebe3; --node:#1e3a5f; --node-soft:#e8eef5; --line:#b8ae9f; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.45 "Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 28px 16px 48px; }
+  h1 { margin: 0 0 6px; font-size: 26px; font-weight: 650; }
+  .sub { margin: 0 0 22px; color: var(--muted); font-size: 13px; }
+  .band { margin: 0 0 20px; }
+  .band h2 { margin: 0 0 10px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .zone { background: var(--card); border: 1px solid var(--rule); border-radius: 12px; padding: 12px; }
+  .zone.in { border-color: #c9d6a8; }
+  .zone.out { border-color: #e8c4b4; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { background: var(--in-soft); border-radius: 8px; padding: 6px 10px; font-size: 13px; }
+  .zone.out .chip { background: var(--out-soft); text-decoration: line-through; text-decoration-color: #c2410c; }
+  svg.diag { width: 100%; height: auto; display: block; background: var(--card); border: 1px solid var(--rule); border-radius: 12px; }
+  @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
 <main>
   <h1>页内 Tab 用 Toggle（需求稿）</h1>
-  <div class="cols">
-    <section>
-      <h2>要什么</h2>
-      <p><code>BtnTabA</code>、<code>BtnTabB</code> 换成 Unity <code>Toggle</code>，挂在同一个 <code>ToggleGroup</code> 上，<code>allowSwitchOff</code> 关掉。节点名不变。<code>isOn</code> 为真是 1，为假是 0。组里始终只有一个是 1。</p>
-      <p>高亮用底图颜色：1 是白色，0 是灰色 <code>0.55</code>。不靠勾选标记。两个 Tab 的过渡是 <code>None</code>，底图颜色不被自带变色盖掉。返回仍是 <code>Button</code>，仍走 <code>BackAsync</code>，仍用原来的变色。子页仍走 <code>OpenChildAsync</code>。打开时用 <code>SetIsOnWithoutNotify</code> 设好 0 / 1，记下当前子页，已经是这一页就不再次打开。</p>
-      <p>父页打开时 <code>BtnTabA</code> 是 1，并打开 <code>WndTabPageA</code>，这一次只打开一回。点另一个：它变成 1，原来的变成 0，并打开对应子页。再点已经是 1 的那个：保持 1，不再次打开子页。</p>
-      <p>子场景 <code>Excluded_Top</code> 里的 Tab 拷贝改成同样的底色对照，仍不进子页 Prefab。</p>
-    </section>
-    <section>
-      <h2>不要</h2>
-      <ul>
-        <li>两个 Tab 继续用 <code>Button</code></li>
-        <li>两个都是 1，或两个都是 0</li>
-        <li>用勾选标记表示选中</li>
-        <li>再点已经是 1 的 Tab 时再次 <code>OpenChildAsync</code></li>
-        <li>改 <code>OpenChildAsync</code>、<code>GameLaunch</code>，或其它窗</li>
-        <li>另做一套可复用的 Tab 组件</li>
-      </ul>
-    </section>
-  </div>
+  <p class="sub">WndTabDemo · ToggleGroup 里始终一个 1</p>
+
+  <section class="band">
+    <h2>结构</h2>
+    <svg class="diag" viewBox="0 0 980 230" role="img" aria-label="两个 Toggle 同一组，点另一个才 OpenChild">
+      <rect x="24" y="30" width="280" height="170" rx="12" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="164" y="58" text-anchor="middle" font-size="14" font-weight="650">ToggleGroup</text>
+      <text x="164" y="78" text-anchor="middle" font-size="12" fill="#6f675e">allowSwitchOff 关</text>
+      <rect x="44" y="96" width="110" height="80" rx="10" fill="#f1f6e8" stroke="#c9d6a8"/>
+      <text x="99" y="128" text-anchor="middle" font-size="13" font-weight="650">BtnTabA</text>
+      <text x="99" y="150" text-anchor="middle" font-size="12" fill="#3f6212">isOn = 1 · 白</text>
+      <rect x="174" y="96" width="110" height="80" rx="10" fill="#fffcf7" stroke="#e3dcd0"/>
+      <text x="229" y="128" text-anchor="middle" font-size="13" font-weight="650">BtnTabB</text>
+      <text x="229" y="150" text-anchor="middle" font-size="12" fill="#6f675e">isOn = 0 · 灰 0.55</text>
+      <path d="M304 115 H360" stroke="#b8ae9f" stroke-width="2"/>
+      <polygon points="360,111 370,115 360,119" fill="#b8ae9f"/>
+      <rect x="380" y="50" width="200" height="60" rx="10" fill="#f1f6e8" stroke="#c9d6a8"/>
+      <text x="480" y="74" text-anchor="middle" font-size="13" font-weight="650">打开父页</text>
+      <text x="480" y="94" text-anchor="middle" font-size="12" fill="#6f675e">SetIsOnWithoutNotify · 只开 A</text>
+      <rect x="380" y="130" width="200" height="60" rx="10" fill="#fffcf7" stroke="#e3dcd0"/>
+      <text x="480" y="154" text-anchor="middle" font-size="13" font-weight="650">点另一个</text>
+      <text x="480" y="174" text-anchor="middle" font-size="12" fill="#6f675e">换 1/0 · OpenChildAsync</text>
+      <rect x="620" y="50" width="160" height="60" rx="10" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="700" y="74" text-anchor="middle" font-size="13" font-weight="650">WndTabPageA</text>
+      <text x="700" y="94" text-anchor="middle" font-size="12" fill="#6f675e">已是这页则停</text>
+      <rect x="620" y="130" width="160" height="60" rx="10" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="700" y="154" text-anchor="middle" font-size="13" font-weight="650">返回 Button</text>
+      <text x="700" y="174" text-anchor="middle" font-size="12" fill="#6f675e">BackAsync · 原变色</text>
+      <rect x="800" y="80" width="160" height="70" rx="10" fill="#f8ebe3" stroke="#e8c4b4"/>
+      <text x="880" y="110" text-anchor="middle" font-size="13" font-weight="650" fill="#9a3412">再点已是 1</text>
+      <text x="880" y="130" text-anchor="middle" font-size="12" fill="#6f675e">不二次打开</text>
+    </svg>
+  </section>
+
+  <section class="band">
+    <h2>纳入 · 排除</h2>
+    <div class="grid">
+      <div class="zone in">
+        <div class="chips">
+          <span class="chip">Toggle + 同一 ToggleGroup</span>
+          <span class="chip">过渡 None · 底色对照</span>
+          <span class="chip">Excluded_Top 同样底色</span>
+          <span class="chip">子页仍 OpenChildAsync</span>
+        </div>
+      </div>
+      <div class="zone out">
+        <div class="chips">
+          <span class="chip">Tab 继续用 Button</span>
+          <span class="chip">两个都是 1 或都是 0</span>
+          <span class="chip">勾选标记</span>
+          <span class="chip">改 OpenChildAsync / GameLaunch</span>
+          <span class="chip">可复用 Tab 组件</span>
+        </div>
+      </div>
+    </div>
+  </section>
 </main>
 </body>
 </html>

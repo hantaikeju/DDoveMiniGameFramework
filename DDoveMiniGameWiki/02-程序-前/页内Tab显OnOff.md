@@ -28,7 +28,7 @@ sources:
 
 Concept ID：`/02-程序-前/页内Tab显OnOff`。清单：[index_cjh](/02-程序-前/index_cjh.md)。子页挂载仍看 [页内 Tab 子页](/02-程序-前/页内Tab子页.md)。
 
-[三块](页内Tab显OnOff.html)
+[打开说明](页内Tab显OnOff.html)
 
 ## 干什么
 

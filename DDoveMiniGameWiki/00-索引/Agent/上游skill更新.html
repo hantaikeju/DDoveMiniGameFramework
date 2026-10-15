@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>上游 skill 更新</title>
+<style>
+  :root { --paper:#f3efe6; --card:#fffcf7; --ink:#1c1915; --muted:#6f675e; --rule:#e3dcd0; --in:#3f6212; --in-soft:#f1f6e8; --out:#9a3412; --line:#b8ae9f; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.45 "Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 28px 16px 48px; }
+  h1 { margin: 0 0 6px; font-size: 26px; font-weight: 650; }
+  .sub { margin: 0 0 22px; color: var(--muted); font-size: 13px; }
+  .band { margin: 0 0 20px; }
+  .band h2 { margin: 0 0 10px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  svg.diag { width: 100%; height: auto; display: block; background: var(--card); border: 1px solid var(--rule); border-radius: 12px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>上游 skill 更新</h1>
+  <p class="sub">人看到两个远程的更新后，再决定跟哪一条</p>
+
+  <section class="band">
+    <h2>谁调谁</h2>
+    <svg class="diag" viewBox="0 0 980 280" role="img" aria-label="三个上游由人看到更新后进入 grill，值得跟才改 ddove">
+      <rect x="20" y="24" width="200" height="56" rx="10" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="120" y="48" text-anchor="middle" font-size="13" font-weight="650">mattpocock/skills</text>
+      <text x="120" y="66" text-anchor="middle" font-size="11" fill="#6f675e">对照表现有跟不跟</text>
+      <rect x="20" y="112" width="200" height="56" rx="10" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="120" y="136" text-anchor="middle" font-size="13" font-weight="650">pstack</text>
+      <text x="120" y="154" text-anchor="middle" font-size="11" fill="#6f675e">整包不装</text>
+      <rect x="20" y="200" width="200" height="56" rx="10" fill="#fffcf7" stroke="#e3dcd0"/>
+      <text x="120" y="224" text-anchor="middle" font-size="13" font-weight="650">luban/ai</text>
+      <text x="120" y="242" text-anchor="middle" font-size="11" fill="#6f675e">只补 ddove-config</text>
+      <path d="M220 52 H300" stroke="#b8ae9f" stroke-width="2"/>
+      <path d="M220 140 H300" stroke="#b8ae9f" stroke-width="2"/>
+      <path d="M220 228 H300" stroke="#b8ae9f" stroke-width="2"/>
+      <rect x="300" y="96" width="180" height="72" rx="12" fill="#f1f6e8" stroke="#c9d6a8"/>
+      <text x="390" y="126" text-anchor="middle" font-size="14" font-weight="650" fill="#3f6212">人看到更新</text>
+      <text x="390" y="148" text-anchor="middle" font-size="12" fill="#3f6212">/ddove-grill</text>
+      <path d="M480 132 H560" stroke="#b8ae9f" stroke-width="2"/>
+      <rect x="560" y="36" width="390" height="64" rx="12" fill="#f1f6e8" stroke="#c9d6a8"/>
+      <text x="755" y="64" text-anchor="middle" font-size="14" font-weight="650" fill="#3f6212">值得跟</text>
+      <text x="755" y="84" text-anchor="middle" font-size="12" fill="#3f6212">ddove-writing-for-agents 改对应 ddove-*</text>
+      <rect x="560" y="164" width="390" height="64" rx="12" fill="#f8ebe3" stroke="#e8c4b4"/>
+      <text x="755" y="192" text-anchor="middle" font-size="14" font-weight="650" fill="#9a3412">不跟</text>
+      <text x="755" y="212" text-anchor="middle" font-size="12" fill="#9a3412">不自动拉取 · 不整包 · 不写 CONTEXT.md</text>
+    </svg>
+  </section>
+</main>
+</body>
+</html>

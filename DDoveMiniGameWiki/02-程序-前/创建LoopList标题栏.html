@@ -2,41 +2,58 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>创建 LoopList 标题栏</title>
 <style>
-  body { margin: 0; font: 16px/1.55 "Segoe UI", sans-serif; color: #1c1c1c; background: #f6f4ef; }
-  main { max-width: 760px; margin: 0 auto; padding: 28px 20px 48px; }
-  h1 { font-size: 28px; margin: 0 0 20px; }
-  section { background: #fff; border: 1px solid #e2ddd4; border-radius: 10px; padding: 16px 18px 8px; margin: 0 0 16px; }
-  h2 { margin: 0 0 12px; font-size: 18px; }
-  p { margin: 0 0 12px; }
-  ul { margin: 0 0 12px; padding-left: 1.2em; }
-  code { font-family: Consolas, monospace; font-size: 0.92em; background: #f3efe6; padding: 0 4px; border-radius: 3px; }
+  :root { --paper:#f3efe6; --card:#fffcf7; --ink:#1c1915; --muted:#6f675e; --rule:#e3dcd0; --in:#3f6212; --in-soft:#f1f6e8; --out:#9a3412; --out-soft:#f8ebe3; --node:#1e3a5f; --node-soft:#e8eef5; --line:#b8ae9f; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.45 "Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 28px 16px 48px; }
+  h1 { margin: 0 0 6px; font-size: 26px; font-weight: 650; }
+  .sub { margin: 0 0 22px; color: var(--muted); font-size: 13px; }
+  .band { margin: 0 0 20px; }
+  .band h2 { margin: 0 0 10px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .node { background: var(--card); border: 1px solid var(--rule); border-radius: 10px; padding: 8px 12px; }
+  .node b { display: block; font-size: 13px; }
+  .node span { display: block; color: var(--muted); font-size: 12px; }
+  .node.call { background: var(--node-soft); border-color: #c9d6e6; }
+  svg.diag { width: 100%; height: auto; display: block; background: var(--card); border: 1px solid var(--rule); border-radius: 12px; }
 </style>
 </head>
 <body>
 <main>
   <h1>创建 LoopList 标题栏</h1>
-  <section>
-    <h2>干什么</h2>
-    <p>「创建 LoopList」是一扇普通编辑器窗口。<code>CreateLoopListWindow.Open</code> 用 <code>GetWindow</code> 留一扇：已有就聚焦，不另开第二扇。标题是「创建 LoopList」。<code>minSize</code> 与 <code>maxSize</code> 都是 <code>420×268</code>，打开时 <code>DDoveEditorUi.Centered</code>。<code>CreateGUI</code> 走 <code>DDoveEditorUi.ApplySheet</code>，标题栏与 <code>DDove/Editor</code> 同一类深色栏。</p>
-    <p>窗里的方向、条尺寸、间距、边距和「创建」不变。列表仍挂在 <code>UIRoot</code> 下。「创建 UI 场景」仍是 <code>ShowUtility</code>。</p>
+  <p class="sub">用法 · GetWindow 留一扇</p>
+
+  <section class="band">
+    <h2>职责</h2>
+    <div class="flow">
+      <div class="node call"><b>CreateLoopListWindow.Open</b><span>写标题 · 锁尺寸 · 居中</span></div>
+      <div class="node call"><b>GetWindow</b><span>只留一扇</span></div>
+      <div class="node call"><b>DDoveEditorUi.Centered</b><span>420×268</span></div>
+      <div class="node call"><b>ApplySheet</b><span>CreateGUI 套深色</span></div>
+    </div>
   </section>
-  <section>
-    <h2>有哪些接口</h2>
-    <ul>
-      <li><code>CreateLoopListWindow.Open</code></li>
-      <li><code>GetWindow&lt;CreateLoopListWindow&gt;</code></li>
-      <li><code>DDoveEditorUi.Centered</code></li>
-      <li><code>DDoveEditorUi.ApplySheet</code></li>
-    </ul>
-  </section>
-  <section>
-    <h2>每个接口干什么</h2>
-    <p><code>Open</code> 挂着 HotBox「创建 LoopList」。它取出窗口、写上标题「创建 LoopList」、把最小和最大尺寸都锁成 <code>420×268</code>，再把 <code>position</code> 设成居中。不调用 <code>ShowUtility</code>。</p>
-    <p><code>GetWindow&lt;CreateLoopListWindow&gt;</code> 只留一扇。再次从 HotBox 打开时聚焦已有那一扇。</p>
-    <p><code>DDoveEditorUi.Centered</code> 按 <code>420×268</code> 算出打开时的居中位置。</p>
-    <p><code>ApplySheet</code> 在 <code>CreateGUI</code> 里套到根节点，窗体用与 <code>DDove/Editor</code> 同一套深色样式。「创建 UI 场景」不走这条打开方式。</p>
+
+  <section class="band">
+    <h2>谁调谁</h2>
+    <svg class="diag" viewBox="0 0 980 200" role="img" aria-label="Open 不走 ShowUtility，创建 UI 场景仍 ShowUtility">
+      <rect x="30" y="60" width="200" height="80" rx="12" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="130" y="96" text-anchor="middle" font-size="14" font-weight="650">Open</text>
+      <text x="130" y="118" text-anchor="middle" font-size="12" fill="#6f675e">不调用 ShowUtility</text>
+      <path d="M230 100 H290" stroke="#b8ae9f" stroke-width="2"/>
+      <rect x="290" y="60" width="220" height="80" rx="12" fill="#1e3a5f"/>
+      <text x="400" y="96" text-anchor="middle" font-size="14" fill="#f3efe6" font-weight="650">GetWindow</text>
+      <text x="400" y="118" text-anchor="middle" font-size="12" fill="#c9d6e6">再开则聚焦</text>
+      <path d="M510 100 H570" stroke="#b8ae9f" stroke-width="2"/>
+      <rect x="570" y="60" width="180" height="80" rx="12" fill="#f1f6e8" stroke="#c9d6a8"/>
+      <text x="660" y="96" text-anchor="middle" font-size="13" font-weight="650">Centered + ApplySheet</text>
+      <text x="660" y="118" text-anchor="middle" font-size="12" fill="#6f675e">与 DDove/Editor 同类</text>
+      <rect x="780" y="60" width="170" height="80" rx="12" fill="#f8ebe3" stroke="#e8c4b4"/>
+      <text x="865" y="96" text-anchor="middle" font-size="13" font-weight="650" fill="#9a3412">创建 UI 场景</text>
+      <text x="865" y="118" text-anchor="middle" font-size="12" fill="#6f675e">仍 ShowUtility</text>
+    </svg>
   </section>
 </main>
 </body>

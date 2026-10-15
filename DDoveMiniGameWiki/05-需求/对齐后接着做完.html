@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>对齐后接着做完（需求稿）</title>
+<style>
+  :root { --paper:#f3efe6; --card:#fffcf7; --ink:#1c1915; --muted:#6f675e; --rule:#e3dcd0; --in:#3f6212; --in-soft:#f1f6e8; --out:#9a3412; --out-soft:#f8ebe3; --line:#b8ae9f; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.45 "Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 28px 16px 48px; }
+  h1 { margin: 0 0 6px; font-size: 26px; font-weight: 650; }
+  .sub { margin: 0 0 22px; color: var(--muted); font-size: 13px; }
+  .band { margin: 0 0 20px; }
+  .band h2 { margin: 0 0 10px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .zone { background: var(--card); border: 1px solid var(--rule); border-radius: 12px; padding: 12px; }
+  .zone.in { border-color: #c9d6a8; }
+  .zone.out { border-color: #e8c4b4; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { background: var(--in-soft); border-radius: 8px; padding: 6px 10px; font-size: 13px; }
+  .zone.out .chip { background: var(--out-soft); text-decoration: line-through; text-decoration-color: #c2410c; }
+  svg.diag { width: 100%; height: auto; display: block; background: var(--card); border: 1px solid var(--rule); border-radius: 12px; }
+  @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>对齐后接着做完（需求稿）</h1>
+  <p class="sub">人只对接需求、确认产品 · 状态由代理写</p>
+  <section class="band">
+    <h2>对齐之后</h2>
+    <svg class="diag" viewBox="0 0 980 220" role="img" aria-label="grill 确认后代理落稿、改文件、写正式与废弃，再给人看产品；不对则回到处理中再做完">
+      <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#b8ae9f"/></marker></defs>
+      <rect x="20" y="70" width="140" height="56" rx="10" fill="#f1f6e8" stroke="#c9d6a8"/>
+      <text x="90" y="94" text-anchor="middle" font-size="13" font-weight="650" fill="#3f6212">人 · grill</text>
+      <text x="90" y="112" text-anchor="middle" font-size="11" fill="#6f675e">对接需求</text>
+      <rect x="210" y="70" width="160" height="56" rx="10" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="290" y="94" text-anchor="middle" font-size="13" font-weight="650">代理落稿并改文件</text>
+      <text x="290" y="112" text-anchor="middle" font-size="11" fill="#6f675e">同一条对话</text>
+      <rect x="420" y="70" width="170" height="56" rx="10" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="505" y="94" text-anchor="middle" font-size="13" font-weight="650">立刻写正式 / 废弃</text>
+      <text x="505" y="112" text-anchor="middle" font-size="11" fill="#6f675e">不等人先点头</text>
+      <rect x="640" y="70" width="150" height="56" rx="10" fill="#f1f6e8" stroke="#c9d6a8"/>
+      <text x="715" y="94" text-anchor="middle" font-size="13" font-weight="650" fill="#3f6212">人看产品</text>
+      <text x="715" y="112" text-anchor="middle" font-size="11" fill="#6f675e">用法篇 · 说明页 · 改了什么</text>
+      <rect x="830" y="150" width="130" height="52" rx="10" fill="#f8ebe3" stroke="#e8c4b4"/>
+      <text x="895" y="172" text-anchor="middle" font-size="12" font-weight="650" fill="#9a3412">不对</text>
+      <text x="895" y="190" text-anchor="middle" font-size="11" fill="#6f675e">回到处理中再做完</text>
+      <path d="M160 98 H208" stroke="#b8ae9f" stroke-width="2" marker-end="url(#a)"/>
+      <path d="M370 98 H418" stroke="#b8ae9f" stroke-width="2" marker-end="url(#a)"/>
+      <path d="M590 98 H638" stroke="#b8ae9f" stroke-width="2" marker-end="url(#a)"/>
+      <path d="M715 126 V176 H832" stroke="#e8c4b4" stroke-width="2" fill="none" marker-end="url(#a)"/>
+      <path d="M830 176 H290 V128" stroke="#b8ae9f" stroke-width="2" fill="none" marker-end="url(#a)"/>
+    </svg>
+  </section>
+  <section class="band">
+    <h2>纳入 · 排除</h2>
+    <div class="grid">
+      <div class="zone in"><div class="chips">
+        <span class="chip">对齐后代理落稿</span>
+        <span class="chip">做完即写正式 / 废弃</span>
+        <span class="chip">给人看用法篇和说明页</span>
+        <span class="chip">不对则两篇回到处理中</span>
+      </div></div>
+      <div class="zone out"><div class="chips">
+        <span class="chip">人改 YAML 状态</span>
+        <span class="chip">等人敲 create / fix-up / change-state</span>
+        <span class="chip">问答排障走这套收口</span>
+        <span class="chip">顺手升开工班组与开工评分</span>
+      </div></div>
+    </div>
+  </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>对齐开工展示（需求稿）</title>
+<style>
+  :root { --paper:#f3efe6; --card:#fffcf7; --ink:#1c1915; --muted:#6f675e; --rule:#e3dcd0; --in:#3f6212; --in-soft:#f1f6e8; --out:#9a3412; --out-soft:#f8ebe3; --line:#b8ae9f; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.45 "Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 28px 16px 48px; }
+  h1 { margin: 0 0 6px; font-size: 26px; font-weight: 650; }
+  .sub { margin: 0 0 22px; color: var(--muted); font-size: 13px; }
+  .band { margin: 0 0 20px; }
+  .band h2 { margin: 0 0 10px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .zone { background: var(--card); border: 1px solid var(--rule); border-radius: 12px; padding: 12px; }
+  .zone.in { border-color: #c9d6a8; }
+  .zone.out { border-color: #e8c4b4; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { background: var(--in-soft); border-radius: 8px; padding: 6px 10px; font-size: 13px; }
+  .zone.out .chip { background: var(--out-soft); text-decoration: line-through; text-decoration-color: #c2410c; }
+  svg.diag { width: 100%; height: auto; display: block; background: var(--card); border: 1px solid var(--rule); border-radius: 12px; }
+  @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>对齐开工展示（需求稿）</h1>
+  <p class="sub">三步：对齐 · 开工 · 展示 · 篇按路径和标题区分</p>
+  <section class="band">
+    <h2>三步</h2>
+    <svg class="diag" viewBox="0 0 980 250" role="img" aria-label="grill 对齐后 work 开工，收口展示用法篇和说明页；废弃稿进归档夹，超过 90 天由 archive 删除">
+      <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#b8ae9f"/></marker></defs>
+      <rect x="24" y="28" width="150" height="58" rx="10" fill="#f1f6e8" stroke="#c9d6a8"/>
+      <text x="99" y="52" text-anchor="middle" font-size="14" font-weight="650" fill="#3f6212">grill</text>
+      <text x="99" y="70" text-anchor="middle" font-size="11" fill="#6f675e">对齐</text>
+      <rect x="230" y="28" width="150" height="58" rx="10" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="305" y="52" text-anchor="middle" font-size="14" font-weight="650">work</text>
+      <text x="305" y="70" text-anchor="middle" font-size="11" fill="#6f675e">开工</text>
+      <rect x="436" y="28" width="170" height="58" rx="10" fill="#f1f6e8" stroke="#c9d6a8"/>
+      <text x="521" y="52" text-anchor="middle" font-size="14" font-weight="650" fill="#3f6212">展示</text>
+      <text x="521" y="70" text-anchor="middle" font-size="11" fill="#6f675e">用法篇 · 说明页</text>
+      <rect x="670" y="28" width="180" height="58" rx="10" fill="#fffcf7" stroke="#e3dcd0"/>
+      <text x="760" y="52" text-anchor="middle" font-size="13" font-weight="650">_archive/需求</text>
+      <text x="760" y="70" text-anchor="middle" font-size="11" fill="#6f675e">标废弃就搬入</text>
+      <rect x="720" y="150" width="200" height="52" rx="10" fill="#f8ebe3" stroke="#e8c4b4"/>
+      <text x="820" y="172" text-anchor="middle" font-size="13" font-weight="650" fill="#9a3412">/ddove-archive</text>
+      <text x="820" y="190" text-anchor="middle" font-size="11" fill="#6f675e">超过 90 天再删</text>
+      <path d="M174 57 H228" stroke="#b8ae9f" stroke-width="2" marker-end="url(#a)"/>
+      <path d="M380 57 H434" stroke="#b8ae9f" stroke-width="2" marker-end="url(#a)"/>
+      <path d="M606 57 H668" stroke="#b8ae9f" stroke-width="2" marker-end="url(#a)"/>
+      <path d="M760 86 V148" stroke="#e8c4b4" stroke-width="2" marker-end="url(#a)"/>
+    </svg>
+  </section>
+  <section class="band">
+    <h2>纳入 · 排除</h2>
+    <div class="grid">
+      <div class="zone in"><div class="chips">
+        <span class="chip">grill → work → 展示</span>
+        <span class="chip">验收写证明方式</span>
+        <span class="chip">两份接口冻结一份</span>
+        <span class="chip">审查分验收和设计</span>
+        <span class="chip">废弃稿进 _archive</span>
+        <span class="chip">按路径和标题区分</span>
+        <span class="chip">验收通过即写成正式</span>
+      </div></div>
+      <div class="zone out"><div class="chips">
+        <span class="chip">第四条必经命令</span>
+        <span class="chip">询问短号</span>
+        <span class="chip">新篇挂个人清单</span>
+        <span class="chip">标废弃当场删除</span>
+        <span class="chip">设计轴改分数</span>
+        <span class="chip">验收后留下 draft 给人处理</span>
+      </div></div>
+    </div>
+  </section>
+</main>
+</body>
+</html>

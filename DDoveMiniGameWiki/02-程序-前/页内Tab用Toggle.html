@@ -2,41 +2,63 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>页内 Tab 用 Toggle</title>
 <style>
-  body { margin: 0; font: 16px/1.55 "Segoe UI", sans-serif; color: #1c1c1c; background: #f6f4ef; }
-  main { max-width: 760px; margin: 0 auto; padding: 28px 20px 48px; }
-  h1 { font-size: 28px; margin: 0 0 20px; }
-  section { background: #fff; border: 1px solid #e2ddd4; border-radius: 10px; padding: 16px 18px 8px; margin: 0 0 16px; }
-  h2 { margin: 0 0 12px; font-size: 18px; }
-  p { margin: 0 0 12px; }
-  ul { margin: 0 0 12px; padding-left: 1.2em; }
-  code { font-family: Consolas, monospace; font-size: 0.92em; background: #f3efe6; padding: 0 4px; border-radius: 3px; }
+  :root { --paper:#f3efe6; --card:#fffcf7; --ink:#1c1915; --muted:#6f675e; --rule:#e3dcd0; --in:#3f6212; --in-soft:#f1f6e8; --out:#9a3412; --out-soft:#f8ebe3; --node:#1e3a5f; --node-soft:#e8eef5; --line:#b8ae9f; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.45 "Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 28px 16px 48px; }
+  h1 { margin: 0 0 6px; font-size: 26px; font-weight: 650; }
+  .sub { margin: 0 0 22px; color: var(--muted); font-size: 13px; }
+  .band { margin: 0 0 20px; }
+  .band h2 { margin: 0 0 10px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .node { background: var(--card); border: 1px solid var(--rule); border-radius: 10px; padding: 8px 12px; }
+  .node b { display: block; font-size: 13px; }
+  .node span { display: block; color: var(--muted); font-size: 12px; }
+  .node.call { background: var(--node-soft); border-color: #c9d6e6; }
+  svg.diag { width: 100%; height: auto; display: block; background: var(--card); border: 1px solid var(--rule); border-radius: 12px; }
 </style>
 </head>
 <body>
 <main>
   <h1>页内 Tab 用 Toggle</h1>
-  <section>
-    <h2>干什么</h2>
-    <p><code>WndTabDemo</code> 的 <code>BtnTabA</code>、<code>BtnTabB</code> 是同一个 <code>ToggleGroup</code> 上的 <code>Toggle</code>，<code>allowSwitchOff</code> 关掉。<code>isOn</code> 为真是 1，为假是 0。组里始终只有一个是 1。</p>
-    <p>选中外观由 <code>TabOnOff</code> 显示 <code>On</code> 或 <code>Off</code>。本篇不再改 <code>Image.color</code>。返回仍是 <code>Button</code>，仍走 <code>BackAsync</code>。</p>
-    <p>打开时用 <code>SetIsOnWithoutNotify</code> 把 <code>BtnTabA</code> 设为 1、<code>BtnTabB</code> 设为 0，再 <code>Refresh</code>，并只打开一次 <code>WndTabPageA</code>。点另一个：它变成 1，原来的变成 0，并 <code>OpenChildAsync</code> 打开对应子页。再点已经是 1 的那个：保持 1，不再次打开。</p>
+  <p class="sub">用法 · 组约束与换页时机</p>
+
+  <section class="band">
+    <h2>职责</h2>
+    <div class="flow">
+      <div class="node"><b>WndTabDemo</b><span>ToggleGroup 根上</span></div>
+      <div class="node"><b>BtnTabA / BtnTabB</b><span>isOn 1 或 0</span></div>
+      <div class="node call"><b>TabOnOff.Refresh</b><span>外观不改 Image.color</span></div>
+      <div class="node call"><b>OpenChildAsync</b><span>换页才调</span></div>
+    </div>
   </section>
-  <section>
-    <h2>有哪些接口</h2>
-    <ul>
-      <li><code>WndTabDemo</code> 上的 <code>ToggleGroup</code>（<code>allowSwitchOff</code> 为关）</li>
-      <li><code>BtnTabA</code>、<code>BtnTabB</code> 的 <code>Toggle.isOn</code></li>
-      <li><code>TabOnOff.Refresh()</code></li>
-      <li><code>DDoveUIKit.OpenChildAsync&lt;TChild&gt;(Component parent, IDDoveUIPanelData data = null)</code></li>
-    </ul>
-  </section>
-  <section>
-    <h2>每个接口干什么</h2>
-    <p><code>ToggleGroup</code> 挂在 <code>WndTabDemo</code> 的根上。两个 Tab 都指向它。关掉 <code>allowSwitchOff</code> 之后，组里不能一个都不选。窗口只去掉自己的那一份回调，不清空 <code>Toggle</code> 上的全部监听。</p>
-    <p><code>Toggle.isOn</code> 为真是当前子页。打开父页时用 <code>SetIsOnWithoutNotify</code> 写入这对值，避免回调把 <code>WndTabPageA</code> 再打开一次。某个 Tab 变成真时，另一个若仍为真就 <code>SetIsOnWithoutNotify(false)</code>。静默改完之后调用 <code>Refresh</code>。<code>On</code> / <code>Off</code> 怎么显示见页内 Tab 显 On Off。</p>
-    <p><code>OpenChildAsync</code> 只在当前子页换了的时候调用。<code>WndTabPageA</code> 记为 1，<code>WndTabPageB</code> 记为 2。已经是这个编号就返回。子页仍挂在父页的 <code>Content</code> 下。</p>
+
+  <section class="band">
+    <h2>谁调谁</h2>
+    <svg class="diag" viewBox="0 0 980 220" role="img" aria-label="静默写 isOn 后 Refresh，换编号才 OpenChild">
+      <rect x="30" y="70" width="200" height="80" rx="12" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="130" y="104" text-anchor="middle" font-size="14" font-weight="650">SetIsOnWithoutNotify</text>
+      <text x="130" y="126" text-anchor="middle" font-size="12" fill="#6f675e">A=1 · B=0 · 不去掉全部监听</text>
+      <path d="M230 110 H290" stroke="#b8ae9f" stroke-width="2"/>
+      <polygon points="290,106 300,110 290,114" fill="#b8ae9f"/>
+      <rect x="300" y="70" width="180" height="80" rx="12" fill="#f1f6e8" stroke="#c9d6a8"/>
+      <text x="390" y="104" text-anchor="middle" font-size="14" font-weight="650">Refresh</text>
+      <text x="390" y="126" text-anchor="middle" font-size="12" fill="#6f675e">On / Off 见显 On Off</text>
+      <path d="M480 110 H540" stroke="#b8ae9f" stroke-width="2"/>
+      <polygon points="540,106 550,110 540,114" fill="#b8ae9f"/>
+      <rect x="550" y="30" width="190" height="70" rx="12" fill="#fffcf7" stroke="#e3dcd0"/>
+      <text x="645" y="60" text-anchor="middle" font-size="13" font-weight="650">编号换了</text>
+      <text x="645" y="80" text-anchor="middle" font-size="12" fill="#6f675e">OpenChildAsync · Content</text>
+      <rect x="550" y="120" width="190" height="70" rx="12" fill="#f8ebe3" stroke="#e8c4b4"/>
+      <text x="645" y="150" text-anchor="middle" font-size="13" font-weight="650" fill="#9a3412">已是这编号</text>
+      <text x="645" y="170" text-anchor="middle" font-size="12" fill="#6f675e">返回 · 不再开</text>
+      <rect x="770" y="70" width="180" height="80" rx="12" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="860" y="104" text-anchor="middle" font-size="13" font-weight="650">A=1 · B=2</text>
+      <text x="860" y="126" text-anchor="middle" font-size="12" fill="#6f675e">另一真则静默 false</text>
+    </svg>
   </section>
 </main>
 </body>

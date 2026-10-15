@@ -14,9 +14,17 @@ Concept ID：`/05-需求/index_cjh`。本目录里 cjh 整理的需求稿。别�
 
 # 处理中
 
-* [Unity CLI Pipeline 接入（需求稿）](UnityCLIPipeline接入.md) - 把 2022.3 魔改的 com.unity.pipeline 嵌进客户端，本机装 CLI，Cursor 用硬边界和 ddove-unity-pipeline。 `Playbook` `draft` `需求`
+* [对齐后接着做完（需求稿）](对齐后接着做完.md) - grill 对齐后代理落稿、改文件，并写上正式与废弃。人只对接需求、确认产品。 `Playbook` `deprecated` `需求`
+* [开工评分收口与编译验证（需求稿）](开工评分收口与编译验证.md) - 过线 = 总分 ≥ 70 且审查 PASS；父会话每批回收后串行 recompile，离线停下记「未验证」。 `Playbook` `deprecated` `需求`
+* [Unity CLI Pipeline 接入（需求稿）](UnityCLIPipeline接入.md) - 把 2022.3 魔改的 com.unity.pipeline 嵌进客户端，本机装 CLI，Cursor 用硬边界和 ddove-unity-pipeline。 `Playbook` `deprecated` `需求`
 
 # 已完成
+
+* [说明页按show-me画（需求稿）](说明页按show-me画.md) - 薄记录。用法篇才是接口总结。 `Playbook` `deprecated` `需求`
+
+* [一拍只处理一篇（需求稿）](一拍只处理一篇.md) - grill、create、work、fix-up、change-state 每一拍只碰一篇。多于一篇时只做点名的那篇。 `Playbook` `deprecated` `需求`
+
+* [开工后选下一步（需求稿）](开工后选下一步.md) - 开工结束直接二选一：/ddove-fix-up 或 /ddove-wiki-change-state。 `Playbook` `deprecated` `需求`
 
 * [TMP 默认字体用 Noto（需求稿）](TMP默认字体用Noto.md) - TMP Settings 的默认字体改成动态 Noto，已有文本的字体和材质一起改挂。两处 Fallback 留着。 `Playbook` `deprecated` `需求`
 

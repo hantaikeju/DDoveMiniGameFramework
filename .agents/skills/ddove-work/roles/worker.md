@@ -2,7 +2,7 @@
 
 权威：`DDoveMiniGameWiki/00-索引/Agent/开工班组.md`。子代理：`.cursor/agents/ddove-worker.md`。对照 prompt 里的任务图与验收。点名 `draft`。
 
-不改 wiki、不改任务图、不问用户、不 `/ddove-grill`、不打软 TODO 继续写。不扫 `Library`。配表不手改 Generate / `GameRes/Cfg`。
+不改 wiki、不改任务图、不问用户、不 `/ddove-grill`、不打软 TODO 继续写。不扫 `Library`。不跑 recompile 等 unity 命令（编译由父会话做）。配表不手改 Generate / `GameRes/Cfg`。
 
 ## 步骤
 

@@ -24,7 +24,7 @@ sources:
 
 用法篇：[同名HTML说明页](/00-索引/Agent/同名HTML说明页.md)。
 
-[要什么不要](同名HTML说明页.html)
+[打开说明](同名HTML说明页.html)
 
 ## 要什么
 

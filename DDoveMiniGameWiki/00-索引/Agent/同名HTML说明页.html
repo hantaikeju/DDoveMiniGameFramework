@@ -2,40 +2,77 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>同名HTML说明页</title>
 <style>
-  body { margin: 0; font: 16px/1.55 "Segoe UI", sans-serif; color: #1c1c1c; background: #f6f4ef; }
-  main { max-width: 760px; margin: 0 auto; padding: 28px 20px 48px; }
-  h1 { font-size: 28px; margin: 0 0 20px; }
-  section { background: #fff; border: 1px solid #e2ddd4; border-radius: 10px; padding: 16px 18px 8px; margin: 0 0 16px; }
-  h2 { margin: 0 0 12px; font-size: 18px; }
-  p { margin: 0 0 12px; }
-  ul { margin: 0 0 12px; padding-left: 1.2em; }
-  code { font-family: Consolas, monospace; font-size: 0.92em; background: #f3efe6; padding: 0 4px; border-radius: 3px; }
+  :root { --paper:#f3efe6; --card:#fffcf7; --ink:#1c1915; --muted:#6f675e; --rule:#e3dcd0; --in:#3f6212; --in-soft:#f1f6e8; --out:#9a3412; --out-soft:#f8ebe3; --node:#1e3a5f; --node-soft:#e8eef5; --line:#b8ae9f; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.45 "Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 28px 16px 48px; }
+  h1 { margin: 0 0 6px; font-size: 26px; font-weight: 650; }
+  .sub { margin: 0 0 22px; color: var(--muted); font-size: 13px; }
+  .band { margin: 0 0 20px; }
+  .band h2 { margin: 0 0 10px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .node { background: var(--card); border: 1px solid var(--rule); border-radius: 10px; padding: 8px 12px; }
+  .node b { display: block; font-size: 13px; }
+  .node span { display: block; color: var(--muted); font-size: 12px; }
+  .node.call { background: var(--node-soft); border-color: #c9d6e6; }
+  .arrow { color: var(--line); font-size: 20px; }
+  svg.diag { width: 100%; height: auto; display: block; background: var(--card); border: 1px solid var(--rule); border-radius: 12px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .chip { background: var(--out-soft); border-radius: 8px; padding: 6px 10px; font-size: 13px; text-decoration: line-through; text-decoration-color: #c2410c; }
 </style>
 </head>
 <body>
 <main>
   <h1>同名HTML说明页</h1>
-  <section>
-    <h2>干什么</h2>
-    <p><code>ddove-show-me</code> 在一篇 <code>.md</code> 旁边写一张静态 HTML，主文件名与该 <code>.md</code> 相同。HTML 不是概念，<code>check_wiki.py</code> 不扫它。</p>
-    <p><code>/ddove-wiki-create</code> 落 <code>05-需求</code> 时调用它，画「要什么 / 不要」，并在需求稿正文加链接。<code>/ddove-wiki-change-state</code> 把 <code>05-需求</code> 一篇整份做完时调用它两次：用法篇旁画三块并加链接；再按最终「要什么 / 不要」重画需求稿那一份。</p>
-    <p><code>ddove-work</code> 过线不调用。本机 <code>/show-me</code> 不改、不进仓库。已有篇不补 HTML。技能在 <code>.agents/skills/ddove-show-me/</code> 与 <code>.cursor/skills/ddove-show-me/</code>。</p>
+  <p class="sub">用法 · 旧两种种类的调用图 · 不改写成新用法</p>
+
+  <section class="band">
+    <h2>职责</h2>
+    <div class="flow">
+      <div class="node"><b>ddove-show-me</b><span>同目录同主文件名 HTML</span></div>
+      <span class="arrow">←</span>
+      <div class="node call"><b>/ddove-wiki-create</b><span>种类「要什么不要」</span></div>
+      <span class="arrow">←</span>
+      <div class="node call"><b>/ddove-wiki-change-state</b><span>先「三块」再「要什么不要」</span></div>
+    </div>
   </section>
-  <section>
-    <h2>有哪些接口</h2>
-    <ul>
-      <li><code>ddove-show-me</code>（种类「要什么不要」或「三块」）</li>
-      <li><code>/ddove-wiki-create</code>（落 <code>05-需求</code>）</li>
-      <li><code>/ddove-wiki-change-state</code>（<code>05-需求</code> 整份做完）</li>
-    </ul>
-  </section>
-  <section>
-    <h2>每个接口干什么</h2>
-    <p><code>ddove-show-me</code> 一次写一张。HTML 与目标 <code>.md</code> 同目录、同主文件名。<code>title</code> 含「需求稿」时，文件名仍用 <code>.md</code> 主文件名。种类「要什么不要」取 <code>## 要什么</code>、<code>## 不要</code>，左「要什么」、右「不要」，窄屏上下排。种类「三块」取 <code>## 干什么</code>、<code>## 有哪些接口</code>、<code>## 每个接口干什么</code>，三节顺排。页是静态 HTML，无 frontmatter，无脚本，无分步按钮。它不改目标 <code>.md</code>。</p>
-    <p><code>/ddove-wiki-create</code> 落在 <code>05-需求</code> 时传入该需求稿，种类「要什么不要」，并在开篇加上打开这份 HTML 的链接。其它目录不画。</p>
-    <p><code>/ddove-wiki-change-state</code> 把一篇 <code>05-需求</code> 整份做完时先对用法篇传入种类「三块」，再对该需求稿传入种类「要什么不要」重画。不扫描仓库去给其它已有篇补 HTML。</p>
+
+  <section class="band">
+    <h2>谁调谁</h2>
+    <svg class="diag" viewBox="0 0 980 260" role="img" aria-label="create 画要什么不要，change-state 画三块并重画需求稿">
+      <rect x="30" y="30" width="200" height="70" rx="10" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="130" y="60" text-anchor="middle" font-size="14" font-weight="650">/ddove-wiki-create</text>
+      <text x="130" y="80" text-anchor="middle" font-size="12" fill="#6f675e">落 05-需求</text>
+      <rect x="30" y="140" width="200" height="90" rx="10" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="130" y="176" text-anchor="middle" font-size="14" font-weight="650">/ddove-wiki-change-state</text>
+      <text x="130" y="198" text-anchor="middle" font-size="12" fill="#6f675e">05-需求 整份做完</text>
+      <path d="M230 65 H310" stroke="#b8ae9f" stroke-width="2"/>
+      <path d="M230 185 H310" stroke="#b8ae9f" stroke-width="2"/>
+      <polygon points="310,61 320,65 310,69" fill="#b8ae9f"/>
+      <polygon points="310,181 320,185 310,189" fill="#b8ae9f"/>
+      <rect x="330" y="80" width="240" height="100" rx="12" fill="#fffcf7" stroke="#e3dcd0"/>
+      <text x="450" y="124" text-anchor="middle" font-size="16" font-weight="650">ddove-show-me</text>
+      <text x="450" y="146" text-anchor="middle" font-size="12" fill="#6f675e">一次一张 · 不改目标 .md</text>
+      <path d="M570 100 H650" stroke="#b8ae9f" stroke-width="2"/>
+      <path d="M570 160 H650" stroke="#b8ae9f" stroke-width="2"/>
+      <polygon points="650,96 660,100 650,104" fill="#b8ae9f"/>
+      <polygon points="650,156 660,160 650,164" fill="#b8ae9f"/>
+      <rect x="670" y="36" width="280" height="80" rx="10" fill="#f1f6e8" stroke="#c9d6a8"/>
+      <text x="810" y="70" text-anchor="middle" font-size="14" font-weight="650" fill="#3f6212">要什么不要</text>
+      <text x="810" y="92" text-anchor="middle" font-size="12" fill="#6f675e">左纳入 · 右排除 · 窄屏上下</text>
+      <rect x="670" y="140" width="280" height="80" rx="10" fill="#f1f6e8" stroke="#c9d6a8"/>
+      <text x="810" y="174" text-anchor="middle" font-size="14" font-weight="650" fill="#3f6212">三块</text>
+      <text x="810" y="196" text-anchor="middle" font-size="12" fill="#6f675e">干什么 · 有哪些接口 · 每个接口</text>
+    </svg>
+    <div class="chips">
+      <span class="chip">ddove-work 过线</span>
+      <span class="chip">改本机 /show-me</span>
+      <span class="chip">已有篇补 HTML</span>
+      <span class="chip">frontmatter / 脚本 / 分步按钮</span>
+    </div>
   </section>
 </main>
 </body>

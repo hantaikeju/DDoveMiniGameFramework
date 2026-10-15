@@ -3,7 +3,7 @@ type: Playbook
 title: 同名HTML说明页
 description: ddove-show-me 写同名静态 HTML。create 画要什么不要；整份做完画三块并重画需求稿那一份。
 tags: [索引, agent]
-status: stable
+status: deprecated
 generated: { by: human:cjh, at: 2026-09-26T06:18:00Z }
 verified: { by: human:cjh, at: 2026-09-26T06:18:00Z }
 sources:
@@ -23,9 +23,9 @@ sources:
 
 # 同名HTML说明页
 
-Concept ID：`/00-索引/Agent/同名HTML说明页`。地图：[Agent 总览](/00-索引/Agent/Agent总览.md)。步骤见 [需求稿工作流](/00-索引/Agent/需求稿工作流.md)。个人技能仍是 [show-me 安装](/00-索引/Agent/show-me安装.md)。
+Concept ID：`/00-索引/Agent/同名HTML说明页`。现行用法：[说明页按show-me画](/00-索引/Agent/说明页按show-me画.md)。地图：[Agent 总览](/00-索引/Agent/Agent总览.md)。步骤见 [需求稿工作流](/00-索引/Agent/需求稿工作流.md)。个人技能仍是 [show-me 安装](/00-索引/Agent/show-me安装.md)。
 
-[三块](同名HTML说明页.html)
+[打开说明](同名HTML说明页.html)
 
 ## 干什么
 

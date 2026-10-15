@@ -1,18 +1,24 @@
 ---
 type: Playbook
 title: 上游 skill 更新
-description: 对照 mattpocock/skills 的 Release 改编本库 ddove-*。不订阅读包、不 npx update 进本仓。
+description: 长期对照 mattpocock/skills 与 pstack。人看到更新后再 grill。不自动拉远程，不整包装进。
 tags: [索引, agent]
 status: stable
 generated: { by: human:cjh, at: 2026-09-09T08:52:00Z }
-verified: { by: human:cjh, at: 2026-09-15T03:20:00Z }
+verified: { at: 2026-10-15T07:50:00Z }
 sources:
-  - id: upstream
+  - id: matt
     resource: https://github.com/mattpocock/skills
     title: mattpocock/skills
-  - id: releases
-    resource: https://github.com/mattpocock/skills/releases
-    title: Releases
+  - id: pstack
+    resource: https://github.com/cursor/plugins/tree/main/pstack
+    title: pstack
+  - id: luban
+    resource: https://github.com/focus-creative-games/luban/tree/main/ai
+    title: luban/ai
+  - id: req
+    resource: /_archive/需求/上游skill更新.md
+    title: 上游 skill 更新（需求稿）
   - id: wfa
     resource: ../../../.agents/skills/ddove-writing-for-agents/SKILL.md
     title: ddove-writing-for-agents
@@ -23,31 +29,44 @@ sources:
 
 # 上游 skill 更新
 
-Concept ID：`/00-索引/Agent/上游skill更新`。上游：[mattpocock/skills](https://github.com/mattpocock/skills)。改本库 skill 用 `ddove-writing-for-agents`。
+Concept ID：`/00-索引/Agent/上游skill更新`。改本库 skill 用 `ddove-writing-for-agents`。
 
-本库 **不**装 Claude 插件，**不**对这个仓库跑 `npx skills add` / `npx skills update`。那些会写入 `CONTEXT.md` / `docs/agents/`，和 wiki 抢权威。
+[打开说明](上游skill更新.html)
 
-## 对照
+## 干什么
+
+长期对照两个远程。人看到更新之后，再用 `/ddove-grill` 决定跟哪一条。不自动拉远程，不整包装进，不写 `CONTEXT.md`。
+
+- [mattpocock/skills](https://github.com/mattpocock/skills)
+- [pstack](https://github.com/cursor/plugins/tree/main/pstack)
+
+[luban/ai](https://github.com/focus-creative-games/luban/tree/main/ai) 仍是配表上游：六个 `luban-*` 合成 `ddove-config`，不整包拷进 `.agents/skills/`，不引进 `Luban.Agent` / MCP。官方 skill 有问法增量时，用 `ddove-writing-for-agents` 补 `ddove-config`。
+
+一次一个需求、篇内按任务图并行，仍以 [开工班组](/00-索引/Agent/开工班组.md) 为准。
+
+## 有哪些接口
+
+- 对照 mattpocock/skills
+- 对照 pstack
+- 对照 luban/ai
+- 引进一条
+
+## 每个接口干什么
+
+对照 mattpocock/skills：人看到 [Release](https://github.com/mattpocock/skills/releases) 或本机已有下载里的更新。不跑 `npx skills add` / `npx skills update`，那些会写入 `CONTEXT.md` / `docs/agents/`。当前跟不跟：
 
 | 上游 | 本库 | 跟不跟 |
 |------|------|--------|
 | `grilling` / `grill-me` | `/ddove-grill` | 跟问法（frontier 轮次）；出口改 wiki |
-| `grill-with-docs` / `domain-modeling` | `DDoveMiniGameWiki/` + create | **不跟**落盘（禁止 `CONTEXT.md` / ADR） |
+| `grill-with-docs` / `domain-modeling` | `DDoveMiniGameWiki/` + create | 不跟落盘（禁止 `CONTEXT.md` / ADR） |
 | `writing-for-agents` | `ddove-writing-for-agents` | 跟写法杠杆；共享语言改 wiki |
-| `ask-matt` | `/ddove-help` | 跟「路由器」角色；路由本库命令 |
-| `setup` / `to-spec` / `tickets` / `implement` / `wayfinder` / `triage` | — | **不引进** |
+| `ask-matt` | `/ddove-help` | 跟路由器角色；路由本库命令 |
+| `to-tickets` / `implement-spec` | 开工班组 | 目标相同：一次一个需求，需求内按任务图并行。不引进 tracker |
+| `setup` / `to-spec` / `tickets` / `implement` / `wayfinder` / `triage` | — | 不引进 |
 | 其余 engineering | — | 默认不跟；要引进先 `/ddove-grill` |
 
-钉一次 commit：本机 `~\.cursor\vendor\mattpocock-skills`（或任意仓外 clone），记下 `PINNED_SHA`。不要进本 Git。
+对照 pstack：人看到 [pstack](https://github.com/cursor/plugins/tree/main/pstack) 有更新。整包不装进本仓。要跟着一条，先 `/ddove-grill`。
 
-第二上游：[luban/ai](https://github.com/focus-creative-games/luban/tree/main/ai)。六个 `luban-*` **合成**本库 `ddove-config`，不整包拷进 `.agents/skills/`，不引进 `Luban.Agent` / MCP。官方 skill 有问法增量时，用 `ddove-writing-for-agents` 补 `ddove-config`。
+对照 luban/ai：只补 `ddove-config` 的问法。不改合成方式。
 
-## 步骤
-
-1. 看 [Releases](https://github.com/mattpocock/skills/releases)（或 `git fetch` 后 `git log PINNED_SHA..origin/main -- skills/productivity/grill-me skills/productivity/grilling skills/productivity/writing-for-agents`）。
-2. 分类：问法 / 完成条件 → 值得跟；写 `CONTEXT.md` / tracker → 不跟；更名 → 只改对照表，本库 `name:` 不改。
-3. 值得跟：`@ddove-writing-for-agents` 改对应 `ddove-*`，同步 `.cursor/skills/`。过改写过滤器：`CONTEXT.md`→`DDoveMiniGameWiki/`；issue tracker 删；`ddove-` 前缀保留。
-4. 更新本机钉 SHA。本篇对照表若变了，改本篇并记 `_log`。
-5. `/ddove-help` 走一遍，确认整图仍对。
-
-完成：本库 skill 已按选定机制补丁；无 `CONTEXT.md`；无整包覆盖。
+引进一条：问法或完成条件值得跟，才用 `ddove-writing-for-agents` 改对应 `ddove-*`，并同步 `.cursor/skills/`。`CONTEXT.md` 改写到 `DDoveMiniGameWiki/`，issue tracker 删掉，`ddove-` 前缀保留。更名只改本篇对照表，本库 `name:` 不改。对照表变了就改本篇并记 `_log`。然后走一遍 `/ddove-help`，确认整图仍对。本机若在仓外留了 clone，可记下 `PINNED_SHA`，不要进本 Git。

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>上游 skill 更新（需求稿）</title>
+<style>
+  :root { --paper:#f3efe6; --card:#fffcf7; --ink:#1c1915; --muted:#6f675e; --rule:#e3dcd0; --in:#3f6212; --in-soft:#f1f6e8; --out:#9a3412; --out-soft:#f8ebe3; --node-soft:#e8eef5; --line:#b8ae9f; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.45 "Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 28px 16px 48px; }
+  h1 { margin: 0 0 6px; font-size: 26px; font-weight: 650; }
+  .sub { margin: 0 0 22px; color: var(--muted); font-size: 13px; }
+  .band { margin: 0 0 20px; }
+  .band h2 { margin: 0 0 10px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
+  .card { background: var(--card); border: 1px solid var(--rule); border-radius: 12px; padding: 14px 16px; }
+  .card.in { background: var(--in-soft); }
+  .card.out { background: var(--out-soft); }
+  .card h3 { margin: 0 0 8px; font-size: 14px; }
+  .card.in h3 { color: var(--in); }
+  .card.out h3 { color: var(--out); }
+  ul { margin: 0; padding-left: 18px; }
+  li { margin: 4px 0; }
+  svg.diag { width: 100%; height: auto; display: block; background: var(--card); border: 1px solid var(--rule); border-radius: 12px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>上游 skill 更新（需求稿）</h1>
+  <p class="sub">纳入两个远程的长期对照，排除自动拉取和整包装进</p>
+
+  <section class="band">
+    <h2>落点</h2>
+    <svg class="diag" viewBox="0 0 980 220" role="img" aria-label="两个远程汇入现有篇，人看到更新后再 grill">
+      <rect x="24" y="28" width="220" height="64" rx="10" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="134" y="54" text-anchor="middle" font-size="14" font-weight="650">mattpocock/skills</text>
+      <text x="134" y="74" text-anchor="middle" font-size="12" fill="#6f675e">长期对照</text>
+      <rect x="24" y="120" width="220" height="64" rx="10" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="134" y="146" text-anchor="middle" font-size="14" font-weight="650">pstack</text>
+      <text x="134" y="166" text-anchor="middle" font-size="12" fill="#6f675e">长期对照</text>
+      <path d="M244 60 H340" stroke="#b8ae9f" stroke-width="2"/>
+      <path d="M244 152 H340" stroke="#b8ae9f" stroke-width="2"/>
+      <rect x="340" y="70" width="250" height="72" rx="12" fill="#fffcf7" stroke="#e3dcd0"/>
+      <text x="465" y="100" text-anchor="middle" font-size="14" font-weight="650">上游 skill 更新</text>
+      <text x="465" y="122" text-anchor="middle" font-size="12" fill="#6f675e">现有篇，不另开</text>
+      <path d="M590 106 H670" stroke="#b8ae9f" stroke-width="2"/>
+      <rect x="670" y="70" width="280" height="72" rx="12" fill="#f1f6e8" stroke="#c9d6a8"/>
+      <text x="810" y="100" text-anchor="middle" font-size="14" font-weight="650" fill="#3f6212">人看到更新</text>
+      <text x="810" y="122" text-anchor="middle" font-size="12" fill="#3f6212">再 /ddove-grill</text>
+    </svg>
+  </section>
+
+  <section class="band">
+    <div class="grid">
+      <div class="card in">
+        <h3>纳入</h3>
+        <ul>
+          <li>两个链接写进现有篇</li>
+          <li>人看到更新后再决定跟哪一条</li>
+          <li>luban 规则保持原样</li>
+          <li>一次一个需求仍看开工班组</li>
+        </ul>
+      </div>
+      <div class="card out">
+        <h3>排除</h3>
+        <ul>
+          <li>自动拉取、npx update 进本仓</li>
+          <li>整包拷进技能目录</li>
+          <li>CONTEXT.md</li>
+          <li>这次引进 tdd、过夜合并、擂台</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>开工评分收口与编译验证</title>
+<style>
+  :root { --paper:#f3efe6; --card:#fffcf7; --ink:#1c1915; --muted:#6f675e; --rule:#e3dcd0; --in:#3f6212; --node-soft:#e8eef5; --line:#b8ae9f; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.45 "Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 28px 16px 48px; }
+  h1 { margin: 0 0 6px; font-size: 26px; font-weight: 650; }
+  .sub { margin: 0 0 22px; color: var(--muted); font-size: 13px; }
+  .band { margin: 0 0 20px; }
+  .band h2 { margin: 0 0 10px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  svg.diag { width: 100%; height: auto; display: block; background: var(--card); border: 1px solid var(--rule); border-radius: 12px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>开工评分收口与编译验证</h1>
+  <p class="sub">用法 · 父会话编译，审查收结果，过线要 PASS</p>
+
+  <section class="band">
+    <h2>谁调谁</h2>
+    <svg class="diag" viewBox="0 0 980 360" role="img" aria-label="父会话在工人回收后编译，结果交给审查和评分；离线记未验证后重跑只补验证">
+      <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#b8ae9f"/></marker></defs>
+      <rect x="30" y="40" width="150" height="52" rx="10" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="105" y="62" text-anchor="middle" font-size="13" font-weight="650">ddove-worker</text>
+      <text x="105" y="80" text-anchor="middle" font-size="11" fill="#6f675e">不跑 unity 命令</text>
+      <rect x="250" y="40" width="160" height="52" rx="10" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="330" y="62" text-anchor="middle" font-size="13" font-weight="650">父会话 · 编译</text>
+      <text x="330" y="80" text-anchor="middle" font-size="11" fill="#6f675e">有客户端改动才跑</text>
+      <rect x="480" y="40" width="160" height="52" rx="10" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="560" y="62" text-anchor="middle" font-size="13" font-weight="650">ddove-review</text>
+      <text x="560" y="80" text-anchor="middle" font-size="11" fill="#6f675e">收结果 · 不跑命令</text>
+      <rect x="710" y="40" width="160" height="52" rx="10" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="790" y="62" text-anchor="middle" font-size="13" font-weight="650">ddove-score</text>
+      <text x="790" y="80" text-anchor="middle" font-size="11" fill="#6f675e">vN+1 可空</text>
+      <path d="M180 66 H248" stroke="#b8ae9f" stroke-width="2" marker-end="url(#a)"/>
+      <path d="M410 66 H478" stroke="#b8ae9f" stroke-width="2" marker-end="url(#a)"/>
+      <path d="M640 66 H708" stroke="#b8ae9f" stroke-width="2" marker-end="url(#a)"/>
+
+      <rect x="250" y="150" width="390" height="70" rx="10" fill="#f1f6e8" stroke="#c9d6a8"/>
+      <text x="445" y="176" text-anchor="middle" font-size="13" font-weight="650" fill="#3f6212">过线 = 总分 ≥ 70 且审查 PASS</text>
+      <text x="445" y="198" text-anchor="middle" font-size="12" fill="#6f675e">FAIL 不过线 · 未重做过则重做一次（补丁图带 errors）</text>
+      <path d="M560 92 V148" stroke="#b8ae9f" stroke-width="2" marker-end="url(#a)"/>
+      <path d="M790 92 V185 H642" stroke="#b8ae9f" stroke-width="2" fill="none" marker-end="url(#a)"/>
+
+      <rect x="30" y="260" width="280" height="70" rx="10" fill="#f8ebe3" stroke="#e8c4b4"/>
+      <text x="170" y="286" text-anchor="middle" font-size="13" font-weight="650" fill="#9a3412">未验证</text>
+      <text x="170" y="308" text-anchor="middle" font-size="12" fill="#6f675e">editor_status 无应答 · 停下 · 不弹二选一</text>
+      <path d="M330 92 V220 H170 V258" stroke="#e8c4b4" stroke-width="2" fill="none" marker-end="url(#a)"/>
+
+      <rect x="360" y="260" width="280" height="70" rx="10" fill="#fffcf7" stroke="#b8ae9f"/>
+      <text x="500" y="286" text-anchor="middle" font-size="13" font-weight="650">重跑 /ddove-work</text>
+      <text x="500" y="308" text-anchor="middle" font-size="12" fill="#6f675e">跳过拆图派工 · rework_used 从 0</text>
+      <path d="M310 295 H358" stroke="#b8ae9f" stroke-width="2" marker-end="url(#a)"/>
+      <path d="M500 260 V94" stroke="#b8ae9f" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#a)"/>
+
+      <rect x="690" y="260" width="260" height="70" rx="10" fill="#fffcf7" stroke="#b8ae9f"/>
+      <text x="820" y="286" text-anchor="middle" font-size="13" font-weight="650">规格增量</text>
+      <text x="820" y="308" text-anchor="middle" font-size="12" fill="#6f675e">没改尺也满分 · 人指出判错才改尺</text>
+      <path d="M790 92 V220 H820 V258" stroke="#b8ae9f" stroke-width="2" fill="none" marker-end="url(#a)"/>
+    </svg>
+  </section>
+</main>
+</body>
+</html>

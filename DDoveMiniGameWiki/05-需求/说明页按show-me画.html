@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>说明页按show-me画（需求稿）</title>
+<style>
+  :root { --paper:#f3efe6; --card:#fffcf7; --ink:#1c1915; --muted:#6f675e; --rule:#e3dcd0; --in:#3f6212; --in-soft:#f1f6e8; --out:#9a3412; --out-soft:#f8ebe3; --node:#1e3a5f; --node-soft:#e8eef5; --line:#b8ae9f; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.45 "Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 28px 16px 48px; }
+  h1 { margin: 0 0 6px; font-size: 26px; font-weight: 650; }
+  .sub { margin: 0 0 22px; color: var(--muted); font-size: 13px; }
+  .band { margin: 0 0 20px; }
+  .band h2 { margin: 0 0 10px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .node { background: var(--card); border: 1px solid var(--rule); border-radius: 10px; padding: 8px 12px; }
+  .node b { display: block; font-size: 13px; }
+  .node span { display: block; color: var(--muted); font-size: 12px; }
+  .node.call { background: var(--node-soft); border-color: #c9d6e6; }
+  .arrow { color: var(--line); font-size: 20px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .zone { background: var(--card); border: 1px solid var(--rule); border-radius: 12px; padding: 12px; }
+  .zone.in { border-color: #c9d6a8; }
+  .zone.out { border-color: #e8c4b4; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { background: var(--in-soft); border-radius: 8px; padding: 6px 10px; font-size: 13px; }
+  .zone.out .chip { background: var(--out-soft); text-decoration: line-through; text-decoration-color: #c2410c; }
+  svg.diag { width: 100%; height: auto; display: block; background: var(--card); border: 1px solid var(--rule); border-radius: 12px; }
+  @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>说明页按show-me画（需求稿）</h1>
+  <p class="sub">一种「说明页」· 结构图 · 开篇「打开说明」</p>
+
+  <section class="band">
+    <h2>谁来调</h2>
+    <div class="flow">
+      <div class="node call"><b>/ddove-wiki-create</b><span>落 05-需求</span></div>
+      <span class="arrow">→</span>
+      <div class="node call"><b>/ddove-wiki-change-state</b><span>用法篇 + 需求稿各一次</span></div>
+      <span class="arrow">→</span>
+      <div class="node call"><b>/ddove-wiki-update</b><span>已有同名 HTML 才重画</span></div>
+      <span class="arrow">→</span>
+      <div class="node"><b>ddove-show-me</b><span>种类只剩「说明页」</span></div>
+    </div>
+  </section>
+
+  <section class="band">
+    <h2>取块 → 一页结构图</h2>
+    <svg class="diag" viewBox="0 0 980 220" role="img" aria-label="需求稿取要什么不要，用法篇取三节，都画成说明页">
+      <rect x="20" y="36" width="200" height="70" rx="10" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="120" y="66" text-anchor="middle" font-size="14" font-weight="650" fill="#1c1915">需求稿</text>
+      <text x="120" y="88" text-anchor="middle" font-size="12" fill="#6f675e">要什么 / 不要</text>
+      <rect x="20" y="124" width="200" height="70" rx="10" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="120" y="154" text-anchor="middle" font-size="14" font-weight="650" fill="#1c1915">用法篇</text>
+      <text x="120" y="176" text-anchor="middle" font-size="12" fill="#6f675e">干什么 / 接口三节</text>
+      <path d="M220 71 H300" stroke="#b8ae9f" stroke-width="2" fill="none"/>
+      <path d="M220 159 H300" stroke="#b8ae9f" stroke-width="2" fill="none"/>
+      <polygon points="300,67 310,71 300,75" fill="#b8ae9f"/>
+      <polygon points="300,155 310,159 300,163" fill="#b8ae9f"/>
+      <rect x="320" y="70" width="220" height="90" rx="12" fill="#fffcf7" stroke="#e3dcd0"/>
+      <text x="430" y="108" text-anchor="middle" font-size="15" font-weight="650" fill="#1c1915">同名 .html</text>
+      <text x="430" y="130" text-anchor="middle" font-size="12" fill="#6f675e">HTML / CSS / SVG 结构</text>
+      <path d="M540 115 H620" stroke="#b8ae9f" stroke-width="2" fill="none"/>
+      <polygon points="620,111 630,115 620,119" fill="#b8ae9f"/>
+      <rect x="640" y="36" width="160" height="64" rx="10" fill="#f1f6e8" stroke="#c9d6a8"/>
+      <text x="720" y="62" text-anchor="middle" font-size="13" font-weight="650" fill="#3f6212">纳入 / 排除</text>
+      <text x="720" y="82" text-anchor="middle" font-size="12" fill="#6f675e">需求稿一页分区</text>
+      <rect x="640" y="120" width="160" height="64" rx="10" fill="#f1f6e8" stroke="#c9d6a8"/>
+      <text x="720" y="146" text-anchor="middle" font-size="13" font-weight="650" fill="#3f6212">职责 / 谁调谁</text>
+      <text x="720" y="166" text-anchor="middle" font-size="12" fill="#6f675e">用法篇一页调用图</text>
+      <rect x="820" y="70" width="140" height="90" rx="12" fill="#f8ebe3" stroke="#e8c4b4"/>
+      <text x="890" y="108" text-anchor="middle" font-size="13" font-weight="650" fill="#9a3412">不是原文</text>
+      <text x="890" y="130" text-anchor="middle" font-size="12" fill="#6f675e">两栏 / 三张卡片</text>
+    </svg>
+  </section>
+
+  <section class="band">
+    <h2>纳入 · 排除</h2>
+    <div class="grid">
+      <div class="zone in">
+        <div class="chips">
+          <span class="chip">一种「说明页」</span>
+          <span class="chip">一次一张 · 同主文件名</span>
+          <span class="chip">无 frontmatter / script / 分步</span>
+          <span class="chip">开篇 [打开说明](主文件名.html)</span>
+          <span class="chip">create / change-state / wiki-update</span>
+          <span class="chip">05-需求或 title 含需求稿 → 需求稿</span>
+          <span class="chip">本刀已扫已有同名 HTML</span>
+          <span class="chip">.agents + .cursor 各一份</span>
+          <span class="chip">需求稿工作流 · Agent 总览</span>
+          <span class="chip">做完新开 /00-索引/Agent/说明页按show-me画</span>
+        </div>
+      </div>
+      <div class="zone out">
+        <div class="chips">
+          <span class="chip">~\.cursor\skills\show-me\</span>
+          <span class="chip">/show-me 进仓库</span>
+          <span class="chip">查看 HTML 指令</span>
+          <span class="chip">「三块」「要什么不要」字面</span>
+          <span class="chip">两种种类</span>
+          <span class="chip">逐字贴正文</span>
+          <span class="chip">Mermaid 脚本</span>
+          <span class="chip">ddove-work 过线画页</span>
+          <span class="chip">没有 HTML 的篇补一张</span>
+          <span class="chip">改写 同名HTML说明页 当新用法</span>
+          <span class="chip">自动升 stable</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+</body>
+</html>

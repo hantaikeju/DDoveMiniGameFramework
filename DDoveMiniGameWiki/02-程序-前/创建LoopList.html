@@ -2,40 +2,59 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>创建 LoopList</title>
 <style>
-  body { margin: 0; font: 16px/1.55 "Segoe UI", sans-serif; color: #1c1c1c; background: #f6f4ef; }
-  main { max-width: 760px; margin: 0 auto; padding: 28px 20px 48px; }
-  h1 { font-size: 28px; margin: 0 0 20px; }
-  section { background: #fff; border: 1px solid #e2ddd4; border-radius: 10px; padding: 16px 18px 8px; margin: 0 0 16px; }
-  h2 { margin: 0 0 12px; font-size: 18px; }
-  p { margin: 0 0 12px; }
-  ul { margin: 0 0 12px; padding-left: 1.2em; }
-  code { font-family: Consolas, monospace; font-size: 0.92em; background: #f3efe6; padding: 0 4px; border-radius: 3px; }
+  :root { --paper:#f3efe6; --card:#fffcf7; --ink:#1c1915; --muted:#6f675e; --rule:#e3dcd0; --in:#3f6212; --in-soft:#f1f6e8; --out:#9a3412; --out-soft:#f8ebe3; --node:#1e3a5f; --node-soft:#e8eef5; --line:#b8ae9f; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.45 "Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 28px 16px 48px; }
+  h1 { margin: 0 0 6px; font-size: 26px; font-weight: 650; }
+  .sub { margin: 0 0 22px; color: var(--muted); font-size: 13px; }
+  .band { margin: 0 0 20px; }
+  .band h2 { margin: 0 0 10px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .node { background: var(--card); border: 1px solid var(--rule); border-radius: 10px; padding: 8px 12px; }
+  .node b { display: block; font-size: 13px; }
+  .node span { display: block; color: var(--muted); font-size: 12px; }
+  .node.call { background: var(--node-soft); border-color: #c9d6e6; }
+  svg.diag { width: 100%; height: auto; display: block; background: var(--card); border: 1px solid var(--rule); border-radius: 12px; }
 </style>
 </head>
 <body>
 <main>
   <h1>创建 LoopList</h1>
-  <section>
-    <h2>干什么</h2>
-    <p>HotBox「UI 制作」里的「创建 LoopList」在当前制作场景挂一条空 <code>LoopList</code>。点开小窗，选方向、<code>itemSize</code>、<code>spacing</code> 和一个 padding。确认后列表挂在 <code>UIRoot</code> 下并铺满它，然后选中这条新列表，自己再拖位置。</p>
-    <p>不看当前选中了什么。场景里没有名为 <code>UIRoot</code> 的节点就停并提示。<code>previewCount</code> 保持组件默认 <code>6</code>。</p>
+  <p class="sub">用法 · 空列表挂到 UIRoot</p>
+
+  <section class="band">
+    <h2>职责</h2>
+    <div class="flow">
+      <div class="node call"><b>CreateLoopListWindow.Open</b><span>HotBox 入口 · 不直接造物</span></div>
+      <div class="node"><b>方向 · itemSize · spacing · padding</b><span>确认后写入</span></div>
+    </div>
   </section>
-  <section>
-    <h2>有哪些接口</h2>
-    <ul>
-      <li><code>CreateLoopListWindow.Open</code></li>
-      <li>窗口字段：方向、<code>itemSize</code>、<code>spacing</code>、<code>padding</code></li>
-    </ul>
-  </section>
-  <section>
-    <h2>每个接口干什么</h2>
-    <p><code>CreateLoopListWindow.Open</code> 挂着 <code>[DDoveHotboxEntry("创建 LoopList", "UI 制作", ...)]</code>。它打开小窗，不直接造物体。</p>
-    <p>方向是 <code>LoopDirection</code>。初值竖。竖只开垂直滚动，Content 顶对齐。横只开水平滚动，Content 左对齐。</p>
-    <p><code>itemSize</code> 初值 <code>100</code>。竖是条高，横是条宽。<code>spacing</code> 初值 <code>8</code>。<code>padding</code> 是一个整数，初值 <code>8</code>，确认后写入四边。</p>
-    <p>没有 <code>UIRoot</code> 时不创建，并弹出提示。父节点下已有名为 <code>LoopList</code> 的子物体时，新物体名为 <code>LoopList (1)</code>，再重名继续加序号。创建成功后选中新列表。</p>
-    <p>造出的树是 <code>ScrollRect</code> + <code>Viewport</code> + <code>Content</code> + 一份失活的空 <code>itemTemplate</code>。列表铺满父节点。没有 <code>NodeBind</code>、样板格子、文字和入场 tween。</p>
+
+  <section class="band">
+    <h2>谁调谁</h2>
+    <svg class="diag" viewBox="0 0 980 220" role="img" aria-label="Open 开窗，确认后挂空树到 UIRoot">
+      <rect x="30" y="70" width="220" height="80" rx="12" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="140" y="104" text-anchor="middle" font-size="14" font-weight="650">DDoveHotboxEntry</text>
+      <text x="140" y="126" text-anchor="middle" font-size="12" fill="#6f675e">创建 LoopList · UI 制作</text>
+      <path d="M250 110 H310" stroke="#b8ae9f" stroke-width="2"/>
+      <rect x="310" y="70" width="200" height="80" rx="12" fill="#fffcf7" stroke="#e3dcd0"/>
+      <text x="410" y="104" text-anchor="middle" font-size="14" font-weight="650">窗口字段</text>
+      <text x="410" y="126" text-anchor="middle" font-size="12" fill="#6f675e">竖 100 / 8 / 8 · 不看选中</text>
+      <path d="M510 110 H570" stroke="#b8ae9f" stroke-width="2"/>
+      <rect x="570" y="30" width="180" height="70" rx="10" fill="#f1f6e8" stroke="#c9d6a8"/>
+      <text x="660" y="60" text-anchor="middle" font-size="13" font-weight="650">有 UIRoot</text>
+      <text x="660" y="80" text-anchor="middle" font-size="12" fill="#6f675e">挂空树并选中</text>
+      <rect x="570" y="120" width="180" height="70" rx="10" fill="#f8ebe3" stroke="#e8c4b4"/>
+      <text x="660" y="150" text-anchor="middle" font-size="13" font-weight="650" fill="#9a3412">没有 UIRoot</text>
+      <text x="660" y="170" text-anchor="middle" font-size="12" fill="#6f675e">停并提示</text>
+      <rect x="780" y="70" width="170" height="80" rx="12" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="865" y="104" text-anchor="middle" font-size="13" font-weight="650">空树</text>
+      <text x="865" y="126" text-anchor="middle" font-size="12" fill="#6f675e">无 NodeBind / 文字</text>
+    </svg>
   </section>
 </main>
 </body>

@@ -27,7 +27,7 @@ sources:
 
 用法篇：[TMP 默认字体用 Noto](/02-程序-前/TMP默认字体用Noto.md)。
 
-[要什么不要](TMP默认字体用Noto.html)
+[打开说明](TMP默认字体用Noto.html)
 
 ## 要什么
 

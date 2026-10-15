@@ -25,7 +25,7 @@ sources:
 
 Concept ID：`/02-程序-前/创建LoopList`。清单：[index_cjh](/02-程序-前/index_cjh.md)。运行时列表看 [LoopList](/02-程序-前/LoopList.md)。窗口怎么打开看 [创建 LoopList 标题栏](/02-程序-前/创建LoopList标题栏.md)。
 
-[三块](创建LoopList.html)
+[打开说明](创建LoopList.html)
 
 ## 干什么
 

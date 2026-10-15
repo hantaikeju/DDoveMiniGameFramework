@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>一拍只处理一篇（需求稿）</title>
+<style>
+  :root { --paper:#f3efe6; --card:#fffcf7; --ink:#1c1915; --muted:#6f675e; --rule:#e3dcd0; --in:#3f6212; --in-soft:#f1f6e8; --out:#9a3412; --out-soft:#f8ebe3; --node:#1e3a5f; --node-soft:#e8eef5; --line:#b8ae9f; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.45 "Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 28px 16px 48px; }
+  h1 { margin: 0 0 6px; font-size: 26px; font-weight: 650; }
+  .sub { margin: 0 0 22px; color: var(--muted); font-size: 13px; }
+  .band { margin: 0 0 20px; }
+  .band h2 { margin: 0 0 10px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .zone { background: var(--card); border: 1px solid var(--rule); border-radius: 12px; padding: 12px; }
+  .zone.in { border-color: #c9d6a8; }
+  .zone.out { border-color: #e8c4b4; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { background: var(--in-soft); border-radius: 8px; padding: 6px 10px; font-size: 13px; }
+  .zone.out .chip { background: var(--out-soft); text-decoration: line-through; text-decoration-color: #c2410c; }
+  svg.diag { width: 100%; height: auto; display: block; background: var(--card); border: 1px solid var(--rule); border-radius: 12px; }
+  @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>一拍只处理一篇（需求稿）</h1>
+  <p class="sub">处理中稿 · 一篇直接做 · 多篇只做点名</p>
+
+  <section class="band">
+    <h2>选篇闸门</h2>
+    <svg class="diag" viewBox="0 0 980 230" role="img" aria-label="一篇直接做，多篇点名才做，没点名只问">
+      <rect x="30" y="80" width="180" height="70" rx="12" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="120" y="110" text-anchor="middle" font-size="14" font-weight="650">处理中稿</text>
+      <text x="120" y="130" text-anchor="middle" font-size="12" fill="#6f675e">draft + 需求</text>
+      <path d="M210 100 H270" stroke="#b8ae9f" stroke-width="2"/>
+      <path d="M210 130 H270" stroke="#b8ae9f" stroke-width="2"/>
+      <rect x="270" y="30" width="200" height="70" rx="12" fill="#f1f6e8" stroke="#c9d6a8"/>
+      <text x="370" y="60" text-anchor="middle" font-size="14" font-weight="650" fill="#3f6212">只有一篇</text>
+      <text x="370" y="80" text-anchor="middle" font-size="12" fill="#6f675e">直接做 · 不必点名</text>
+      <rect x="270" y="130" width="200" height="70" rx="12" fill="#fffcf7" stroke="#e3dcd0"/>
+      <text x="370" y="160" text-anchor="middle" font-size="14" font-weight="650">多于一篇</text>
+      <text x="370" y="180" text-anchor="middle" font-size="12" fill="#6f675e">路径 / title / 文件名</text>
+      <path d="M470 165 H530" stroke="#b8ae9f" stroke-width="2"/>
+      <rect x="530" y="110" width="180" height="50" rx="10" fill="#f1f6e8" stroke="#c9d6a8"/>
+      <text x="620" y="140" text-anchor="middle" font-size="13" font-weight="650" fill="#3f6212">点了名 → 只做它</text>
+      <rect x="530" y="176" width="180" height="50" rx="10" fill="#f8ebe3" stroke="#e8c4b4"/>
+      <text x="620" y="206" text-anchor="middle" font-size="13" font-weight="650" fill="#9a3412">没点名 → 只问</text>
+      <rect x="740" y="70" width="210" height="90" rx="12" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="845" y="106" text-anchor="middle" font-size="13" font-weight="650">任务图 / 回写 / 记分</text>
+      <text x="845" y="130" text-anchor="middle" font-size="12" fill="#6f675e">只落这一篇</text>
+    </svg>
+  </section>
+
+  <section class="band">
+    <h2>纳入 · 排除</h2>
+    <div class="grid">
+      <div class="zone in">
+        <div class="chips">
+          <span class="chip">work / plan.md 只收这一篇</span>
+          <span class="chip">grill · create · fix-up · change-state</span>
+          <span class="chip">ddove-help 选路</span>
+          <span class="chip">开工班组 · 工作流 · 总览 · AGENTS</span>
+          <span class="chip">问答排障不问选篇</span>
+        </div>
+      </div>
+      <div class="zone out">
+        <div class="chips">
+          <span class="chip">多篇合成一张任务图</span>
+          <span class="chip">取 generated.at 最新</span>
+          <span class="chip">沿用本对话正在做的篇</span>
+          <span class="chip">只有一篇仍要求点名</span>
+          <span class="chip">改开工评分版本</span>
+          <span class="chip">自动升 stable</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>开工评分收口与编译验证（需求稿）</title>
+<style>
+  :root { --paper:#f3efe6; --card:#fffcf7; --ink:#1c1915; --muted:#6f675e; --rule:#e3dcd0; --in:#3f6212; --in-soft:#f1f6e8; --out:#9a3412; --out-soft:#f8ebe3; --node:#1e3a5f; --node-soft:#e8eef5; --line:#b8ae9f; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.45 "Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 28px 16px 48px; }
+  h1 { margin: 0 0 6px; font-size: 26px; font-weight: 650; }
+  .sub { margin: 0 0 22px; color: var(--muted); font-size: 13px; }
+  .band { margin: 0 0 20px; }
+  .band h2 { margin: 0 0 10px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .zone { background: var(--card); border: 1px solid var(--rule); border-radius: 12px; padding: 12px; }
+  .zone.in { border-color: #c9d6a8; }
+  .zone.out { border-color: #e8c4b4; }
+  .zone h3 { margin: 0 0 8px; font-size: 13px; }
+  .zone.in h3 { color: var(--in); }
+  .zone.out h3 { color: var(--out); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { background: var(--in-soft); border-radius: 8px; padding: 6px 10px; font-size: 13px; }
+  .zone.out .chip { background: var(--out-soft); text-decoration: line-through; text-decoration-color: #c2410c; }
+  table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; font-size: 13px; }
+  td, th { padding: 8px 10px; border-bottom: 1px solid var(--rule); text-align: left; vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; }
+  code { font-family: Consolas, monospace; font-size: 12px; }
+  svg.diag { width: 100%; height: auto; display: block; background: var(--card); border: 1px solid var(--rule); border-radius: 12px; }
+  @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>开工评分收口与编译验证（需求稿）</h1>
+  <p class="sub">留下的要什么与不要 · 过线要 PASS · 父会话编译 · 离线记「未验证」</p>
+
+  <section class="band">
+    <h2>一批回收之后</h2>
+    <svg class="diag" viewBox="0 0 980 420" role="img" aria-label="工人回收后判断有无客户端改动，父会话编译，结果交审查，评分后三条收口；编辑器离线记未验证，重跑只补验证">
+      <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#b8ae9f"/></marker></defs>
+
+      <rect x="20" y="40" width="140" height="56" rx="10" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="90" y="64" text-anchor="middle" font-size="13" font-weight="650">ddove-worker</text>
+      <text x="90" y="82" text-anchor="middle" font-size="11" fill="#6f675e">STATUS + 改动路径</text>
+
+      <rect x="200" y="40" width="170" height="56" rx="10" fill="#fffcf7" stroke="#b8ae9f"/>
+      <text x="285" y="64" text-anchor="middle" font-size="13" font-weight="650">有 DDoveMiniGameClient/ ?</text>
+      <text x="285" y="82" text-anchor="middle" font-size="11" fill="#6f675e">含导表生成的代码</text>
+
+      <rect x="410" y="40" width="160" height="56" rx="10" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="490" y="64" text-anchor="middle" font-size="13" font-weight="650">父会话 editor_status</text>
+      <text x="490" y="82" text-anchor="middle" font-size="11" fill="#6f675e">串行 · 一个编辑器</text>
+
+      <rect x="610" y="40" width="200" height="56" rx="10" fill="#f1f6e8" stroke="#c9d6a8"/>
+      <text x="710" y="62" text-anchor="middle" font-size="12" font-weight="650" fill="#3f6212">set_autotick → recompile</text>
+      <text x="710" y="80" text-anchor="middle" font-size="12" font-weight="650" fill="#3f6212">→ recompile_status</text>
+
+      <rect x="840" y="40" width="120" height="56" rx="10" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="900" y="64" text-anchor="middle" font-size="13" font-weight="650">ddove-review</text>
+      <text x="900" y="82" text-anchor="middle" font-size="11" fill="#6f675e">收编译结果 · 不跑命令</text>
+
+      <path d="M160 68 H198" stroke="#b8ae9f" stroke-width="2" marker-end="url(#a)"/>
+      <path d="M370 68 H408" stroke="#b8ae9f" stroke-width="2" marker-end="url(#a)"/>
+      <text x="389" y="60" text-anchor="middle" font-size="10" fill="#6f675e">有</text>
+      <path d="M570 68 H608" stroke="#b8ae9f" stroke-width="2" marker-end="url(#a)"/>
+      <text x="589" y="60" text-anchor="middle" font-size="10" fill="#6f675e">在线</text>
+      <path d="M810 68 H838" stroke="#b8ae9f" stroke-width="2" marker-end="url(#a)"/>
+
+      <path d="M285 96 V140 H900 V98" stroke="#b8ae9f" stroke-width="2" fill="none" stroke-dasharray="5 4" marker-end="url(#a)"/>
+      <text x="420" y="134" font-size="11" fill="#6f675e">无 → 跳过 ·「本轮无客户端改动，未编译」</text>
+      <text x="720" y="122" font-size="11" fill="#9a3412">failed=true → errors 交审查 → FAIL</text>
+
+      <rect x="410" y="180" width="160" height="56" rx="10" fill="#f8ebe3" stroke="#e8c4b4"/>
+      <text x="490" y="204" text-anchor="middle" font-size="13" font-weight="650" fill="#9a3412">离线：停</text>
+      <text x="490" y="222" text-anchor="middle" font-size="11" fill="#6f675e">## 评分 记「未验证」+ 路径 · 不弹</text>
+      <path d="M490 96 V178" stroke="#e8c4b4" stroke-width="2" marker-end="url(#a)"/>
+      <text x="498" y="140" font-size="10" fill="#9a3412" dx="0" dy="22">无应答</text>
+
+      <rect x="610" y="180" width="200" height="56" rx="10" fill="#fffcf7" stroke="#b8ae9f"/>
+      <text x="710" y="202" text-anchor="middle" font-size="12" font-weight="650">重跑 /ddove-work</text>
+      <text x="710" y="220" text-anchor="middle" font-size="11" fill="#6f675e">跳过拆图派工 · rework_used=0</text>
+      <path d="M570 208 H608" stroke="#b8ae9f" stroke-width="2" marker-end="url(#a)"/>
+      <path d="M710 180 V100" stroke="#b8ae9f" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#a)"/>
+
+      <rect x="840" y="180" width="120" height="56" rx="10" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="900" y="204" text-anchor="middle" font-size="13" font-weight="650">ddove-score</text>
+      <text x="900" y="222" text-anchor="middle" font-size="11" fill="#6f675e">vN+1 可空</text>
+      <path d="M900 96 V178" stroke="#b8ae9f" stroke-width="2" marker-end="url(#a)"/>
+
+      <rect x="20" y="300" width="290" height="80" rx="10" fill="#fffcf7" stroke="#b8ae9f"/>
+      <text x="165" y="326" text-anchor="middle" font-size="13" font-weight="650">未过线 · rework_used == 0</text>
+      <text x="165" y="348" text-anchor="middle" font-size="12" fill="#6f675e">补丁图（带 errors）+ 新 Task 重做</text>
+      <text x="165" y="366" text-anchor="middle" font-size="11" fill="#6f675e">FAIL 也照常记分</text>
+
+      <rect x="345" y="300" width="290" height="80" rx="10" fill="#f8ebe3" stroke="#e8c4b4"/>
+      <text x="490" y="326" text-anchor="middle" font-size="13" font-weight="650" fill="#9a3412">未过线 · 已重做</text>
+      <text x="490" y="348" text-anchor="middle" font-size="12" fill="#6f675e">停 · 交得分表</text>
+      <text x="490" y="366" text-anchor="middle" font-size="11" fill="#6f675e">二选一：/ddove-fix-up · /ddove-wiki-change-state</text>
+
+      <rect x="670" y="300" width="290" height="80" rx="10" fill="#f1f6e8" stroke="#c9d6a8"/>
+      <text x="815" y="326" text-anchor="middle" font-size="13" font-weight="650" fill="#3f6212">过线 = ≥ 70 且 PASS</text>
+      <text x="815" y="348" text-anchor="middle" font-size="12" fill="#6f675e">交得分表</text>
+      <text x="815" y="366" text-anchor="middle" font-size="11" fill="#6f675e">二选一：/ddove-fix-up · /ddove-wiki-change-state</text>
+
+      <path d="M900 236 V268 H165 V298" stroke="#b8ae9f" stroke-width="2" fill="none" marker-end="url(#a)"/>
+      <path d="M490 268 V298" stroke="#b8ae9f" stroke-width="2" marker-end="url(#a)"/>
+      <path d="M815 268 V298" stroke="#b8ae9f" stroke-width="2" marker-end="url(#a)"/>
+    </svg>
+  </section>
+
+  <section class="band">
+    <h2>尺子</h2>
+    <table>
+      <tr><th>改</th><th>不动</th></tr>
+      <tr><td>过线加上审查 PASS；「规格增量」10 分：没提议改尺也满分，提议了须可执行并点名哪次判错；<code>vN+1</code> 可空；只在人指出判错时改尺</td><td>各维与权重；得分仍写进这一篇 <code>## 评分</code></td></tr>
+    </table>
+  </section>
+
+  <section class="band">
+    <h2>纳入 · 排除</h2>
+    <div class="grid">
+      <div class="zone in">
+        <h3>落点</h3>
+        <div class="chips">
+          <span class="chip">ddove-work SKILL 收口三分支</span>
+          <span class="chip">roles/dispatch 编译步</span>
+          <span class="chip">roles/plan 记「未验证」</span>
+          <span class="chip">roles/review 收编译结果</span>
+          <span class="chip">roles/score 规格增量判法</span>
+          <span class="chip">.cursor/agents review · score</span>
+          <span class="chip">开工班组</span>
+          <span class="chip">开工评分</span>
+          <span class="chip">.agents 与 .cursor 两份一致</span>
+        </div>
+      </div>
+      <div class="zone out">
+        <h3>不要</h3>
+        <div class="chips">
+          <span class="chip">场景 / Prefab / 运行行为验证</span>
+          <span class="chip">工人自己 recompile</span>
+          <span class="chip">审查执行命令</span>
+          <span class="chip">修旧文档与 v12 漂移</span>
+          <span class="chip">脚本化闸门 · 精简写法</span>
+          <span class="chip">新 / 入口 · 第四种 status</span>
+          <span class="chip">改各维与权重</span>
+          <span class="chip">自动升 stable</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+</body>
+</html>

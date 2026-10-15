@@ -2,49 +2,86 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>页内 Tab 子页（需求稿）</title>
 <style>
-  body { margin: 0; font: 16px/1.55 "Segoe UI", sans-serif; color: #1c1c1c; background: #f6f4ef; }
-  main { max-width: 960px; margin: 0 auto; padding: 28px 20px 48px; }
-  h1 { font-size: 28px; margin: 0 0 20px; }
-  .cols { display: flex; gap: 16px; align-items: flex-start; }
-  section { flex: 1; background: #fff; border: 1px solid #e2ddd4; border-radius: 10px; padding: 16px 18px 8px; }
-  h2 { margin: 0 0 12px; font-size: 18px; }
-  p { margin: 0 0 12px; }
-  ul { margin: 0 0 12px; padding-left: 1.2em; }
-  code { font-family: Consolas, monospace; font-size: 0.92em; background: #f3efe6; padding: 0 4px; border-radius: 3px; }
-  @media (max-width: 720px) {
-    .cols { flex-direction: column; }
-  }
+  :root { --paper:#f3efe6; --card:#fffcf7; --ink:#1c1915; --muted:#6f675e; --rule:#e3dcd0; --in:#3f6212; --in-soft:#f1f6e8; --out:#9a3412; --out-soft:#f8ebe3; --node:#1e3a5f; --node-soft:#e8eef5; --line:#b8ae9f; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.45 "Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 28px 16px 48px; }
+  h1 { margin: 0 0 6px; font-size: 26px; font-weight: 650; }
+  .sub { margin: 0 0 22px; color: var(--muted); font-size: 13px; }
+  .band { margin: 0 0 20px; }
+  .band h2 { margin: 0 0 10px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .zone { background: var(--card); border: 1px solid var(--rule); border-radius: 12px; padding: 12px; }
+  .zone.in { border-color: #c9d6a8; }
+  .zone.out { border-color: #e8c4b4; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { background: var(--in-soft); border-radius: 8px; padding: 6px 10px; font-size: 13px; }
+  .zone.out .chip { background: var(--out-soft); text-decoration: line-through; text-decoration-color: #c2410c; }
+  svg.diag { width: 100%; height: auto; display: block; background: var(--card); border: 1px solid var(--rule); border-radius: 12px; }
+  @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
 <main>
   <h1>页内 Tab 子页（需求稿）</h1>
-  <div class="cols">
-    <section>
-      <h2>要什么</h2>
-      <p><code>DDoveUIKit.OpenChildAsync&lt;TChild&gt;(Component parent, IDDoveUIPanelData data = null)</code>：子页仍是独立面板，有自己的类、Prefab、Yoo 地址和 <code>OnOpen</code> / <code>OnClose</code>，登记在 Kit 里。不进导航栈。<code>parent</code> 用面板组件自己。实例挂到该组件根下的直接子节点 <code>Content</code>。这条路径不使用子页的 <code>DefaultLayer</code>。父页为空时打开失败并打日志。</p>
-      <p>没有 <code>Content</code>，或该类型已经作为别的窗打开着：打开失败，打日志，不挂到 <code>DDoveUIRoot</code> 的层上。该类型已是这个父页的子页：改为 <code>Show</code>。显示出一个子页时，这个父页下其余子页 <code>Hide</code>，实例留着，不重新 Load。</p>
-      <p>父页 <code>OnOpen</code> 里打开并显示约定的第一个子页。<code>Navigate</code> 离开父页只 <code>Hide</code> 父页，子页留在 <code>Content</code> 里，回来仍是刚才那一页。父页真正关闭时（返回、<code>Close</code>、<code>CloseAll</code>）先 <code>Close</code> 全部子页并 <code>Release</code>，含已经 <code>Hide</code> 的。登记过子页的父页不进 LRU。下次从 <code>WndHome</code> 进来会重新 <code>OnOpen</code>，再打开第一个子页。</p>
-      <p>样板在 <code>Start</code>。<code>WndHome</code> 在现有三行后再加一行，标题 <code>Tab</code>，<code>NavigateToAsync&lt;WndTabDemo&gt;</code>。<code>WndTabDemo</code> 上有返回、两个 Tab，以及直接子节点 <code>Content</code>。返回走 <code>BackAsync</code>。两个 Tab 分别打开 <code>WndTabPageA</code>、<code>WndTabPageB</code>。<code>OnOpen</code> 打开 <code>WndTabPageA</code>。</p>
-      <p>两个子页各自场景、各自 Prefab。<code>UIRoot</code> 里只放自己的标题，文案分别是 <code>Tab A</code>、<code>Tab B</code>。父级 Tab 的拷贝放在子场景的 <code>Excluded_Top</code>，只用于对齐，不进子页 Prefab。<code>GameLaunch</code> 不改。业务继续直接调 Kit。</p>
-    </section>
-    <section>
-      <h2>不要</h2>
-      <ul>
-        <li>用 <code>NavigateToAsync</code> 切换 Tab</li>
-        <li>子页挂到 <code>DDoveUIRoot</code> 的层上，或写进导航栈</li>
-        <li>把父级可点按钮放进子页 <code>UIRoot</code></li>
-        <li>切 Tab 时 <code>Close</code> 并 <code>Release</code></li>
-        <li><code>Navigate</code> 离开父页时关掉子页</li>
-        <li>父页进入 LRU 后带着空的 <code>Content</code> 再 <code>Show</code></li>
-        <li>只销毁父物体来收子页，不走 Kit 的 <code>Close</code> / <code>Release</code></li>
-        <li>改 <code>GameLaunch</code></li>
-        <li>为开子页加只转发 Kit 的 System</li>
-      </ul>
-    </section>
-  </div>
+  <p class="sub">OpenChildAsync · 挂父页 Content · 不进栈</p>
+
+  <section class="band">
+    <h2>结构</h2>
+    <svg class="diag" viewBox="0 0 980 250" role="img" aria-label="子页挂 Content，切 Tab 只 Hide，关父页才 Release">
+      <rect x="24" y="24" width="240" height="200" rx="12" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="144" y="52" text-anchor="middle" font-size="14" font-weight="650">WndTabDemo</text>
+      <rect x="44" y="70" width="200" height="40" rx="8" fill="#fffcf7" stroke="#e3dcd0"/>
+      <text x="144" y="96" text-anchor="middle" font-size="12">Tab A · Tab B · 返回</text>
+      <rect x="44" y="124" width="200" height="80" rx="8" fill="#f1f6e8" stroke="#c9d6a8"/>
+      <text x="144" y="156" text-anchor="middle" font-size="13" font-weight="650">Content</text>
+      <text x="144" y="178" text-anchor="middle" font-size="12" fill="#6f675e">直接子节点</text>
+      <path d="M264 164 H320" stroke="#b8ae9f" stroke-width="2"/>
+      <rect x="330" y="40" width="180" height="70" rx="10" fill="#f1f6e8" stroke="#c9d6a8"/>
+      <text x="420" y="70" text-anchor="middle" font-size="13" font-weight="650">WndTabPageA</text>
+      <text x="420" y="90" text-anchor="middle" font-size="12" fill="#6f675e">Show · 其余 Hide</text>
+      <rect x="330" y="130" width="180" height="70" rx="10" fill="#fffcf7" stroke="#e3dcd0"/>
+      <text x="420" y="160" text-anchor="middle" font-size="13" font-weight="650">WndTabPageB</text>
+      <text x="420" y="180" text-anchor="middle" font-size="12" fill="#6f675e">实例留着 · 不重 Load</text>
+      <rect x="540" y="30" width="200" height="70" rx="10" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="640" y="60" text-anchor="middle" font-size="13" font-weight="650">Navigate 离开</text>
+      <text x="640" y="80" text-anchor="middle" font-size="12" fill="#6f675e">只 Hide 父页</text>
+      <rect x="540" y="120" width="200" height="70" rx="10" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="640" y="150" text-anchor="middle" font-size="13" font-weight="650">Close / Back / CloseAll</text>
+      <text x="640" y="170" text-anchor="middle" font-size="12" fill="#6f675e">先 Close+Release 子页</text>
+      <rect x="770" y="70" width="186" height="110" rx="10" fill="#f8ebe3" stroke="#e8c4b4"/>
+      <text x="863" y="110" text-anchor="middle" font-size="13" font-weight="650" fill="#9a3412">不进导航栈</text>
+      <text x="863" y="132" text-anchor="middle" font-size="12" fill="#6f675e">不用 DefaultLayer</text>
+      <text x="863" y="154" text-anchor="middle" font-size="12" fill="#6f675e">父页不进 LRU</text>
+    </svg>
+  </section>
+
+  <section class="band">
+    <h2>纳入 · 排除</h2>
+    <div class="grid">
+      <div class="zone in">
+        <div class="chips">
+          <span class="chip">独立类 / Prefab / Yoo / OnOpen</span>
+          <span class="chip">WndHome 第四行 Tab</span>
+          <span class="chip">OnOpen 只开 WndTabPageA</span>
+          <span class="chip">Excluded_Top 只对齐</span>
+        </div>
+      </div>
+      <div class="zone out">
+        <div class="chips">
+          <span class="chip">NavigateToAsync 切 Tab</span>
+          <span class="chip">挂到 DDoveUIRoot 层</span>
+          <span class="chip">父级按钮进子页 UIRoot</span>
+          <span class="chip">切 Tab 就 Close+Release</span>
+          <span class="chip">只销毁父物体收子页</span>
+          <span class="chip">改 GameLaunch / 转发 System</span>
+        </div>
+      </div>
+    </div>
+  </section>
 </main>
 </body>
 </html>

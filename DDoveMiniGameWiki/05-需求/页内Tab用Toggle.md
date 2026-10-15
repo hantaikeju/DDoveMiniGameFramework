@@ -18,7 +18,7 @@ sources:
 
 用法篇：[页内 Tab 用 Toggle](/02-程序-前/页内Tab用Toggle.md)。
 
-[要什么不要](页内Tab用Toggle.html)
+[打开说明](页内Tab用Toggle.html)
 
 ## 要什么
 

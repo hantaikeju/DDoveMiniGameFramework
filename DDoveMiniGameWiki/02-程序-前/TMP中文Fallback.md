@@ -31,7 +31,7 @@ sources:
 
 Concept ID：`/02-程序-前/TMP中文Fallback`。清单：[index_cjh](/02-程序-前/index_cjh.md)。文本仍只留 TMP，见 [DDoveUI 切 Input System](/02-程序-前/DDoveUI切InputSystem.md)。默认字体和已有文本见 [TMP 默认字体用 Noto](/02-程序-前/TMP默认字体用Noto.md)。
 
-[三块](TMP中文Fallback.html)
+[打开说明](TMP中文Fallback.html)
 
 ## 干什么
 

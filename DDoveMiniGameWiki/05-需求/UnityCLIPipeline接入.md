@@ -3,9 +3,12 @@ type: Playbook
 title: Unity CLI Pipeline 接入（需求稿）
 description: 把 2022.3 魔改的 com.unity.pipeline 嵌进客户端，本机装 CLI，Cursor 用硬边界和 ddove-unity-pipeline。
 tags: [程序-前, 索引, agent, 需求]
-status: draft
+status: deprecated
 generated: { by: human:cjh, at: 2026-09-27T17:16:00Z }
 sources:
+  - id: use
+    resource: /02-程序-前/UnityCLIPipeline接入.md
+    title: Unity CLI Pipeline 接入
   - id: upm
     resource: /02-程序-前/UPM落地.md
     title: UPM 落地
@@ -25,11 +28,9 @@ sources:
 
 # Unity CLI Pipeline 接入（需求稿）
 
-Concept ID：`/05-需求/UnityCLIPipeline接入`。
+用法篇：[Unity CLI Pipeline 接入](/02-程序-前/UnityCLIPipeline接入.md)。
 
-把桌面上已按 Unity 2022.3 改过的 `com.unity.pipeline` 嵌进客户端，本机安装魔改 CLI `1.0.0-beta.2`，并给 Cursor 加上硬边界和技能 `ddove-unity-pipeline`。当前编辑器是 `2022.3.22f1c1`。
-
-[要什么不要](UnityCLIPipeline接入.html)
+[打开说明](UnityCLIPipeline接入.html)
 
 ## 要什么
 
@@ -74,10 +75,10 @@ Cursor 侧两处一起加：
 - 把热重载写成日常改代码的必经步骤
 - 依赖解析失败时自行改低 `newtonsoft-json` 或 `mono-cecil` 版本
 
-## 验收
+## 评分
 
-1. `DDoveMiniGameClient/Packages/com.unity.pipeline@0.4.0-exp.1/package.json` 的 `unity` 是 `2022.3`。`DDoveMiniGameClient/Packages/manifest.json` 相对这刀没有改动。
-2. `.cursor/rules` 有一条常驻规则，只写硬边界。`.agents/skills/ddove-unity-pipeline/SKILL.md` 与 `.cursor/skills/ddove-unity-pipeline/SKILL.md` 都在。仓库根 `AGENTS.md` 有一行指向 `ddove-unity-pipeline`。
-3. 本机 `unity` 命令能跑，版本是魔改 CLI `1.0.0-beta.2`。
-4. 编辑器开着 `DDoveMiniGameClient` 时，`unity command --project-path G:\Self_WorkSpace\DDoveMiniGameFramework\DDoveMiniGameClient editor_status` 有应答。
-5. 编辑器没开，或 `com.unity.nuget.newtonsoft-json`、`com.unity.nuget.mono-cecil` 解析失败，这刀不算过。不把这两个依赖改到低于包内 `package.json` 所写版本。
+分数记在本节，不另开文件。尺子：开工评分 v11。
+
+| 轮 | 总分 | 过线 | 记录 |
+|----|------|------|------|
+| 1 | 100 | 是 | 审查 PASS。需求验收 20、Wiki 同步 20、职责边界 20、范围 15、信任表述 15、规格增量 10。与开工后选下一步同刀一张表。v12 未改尺，条文不变。 |
