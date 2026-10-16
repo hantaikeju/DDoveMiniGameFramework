@@ -12,17 +12,19 @@ disable-model-invocation: true
 
 1. 用户已经说卡在哪：只回 **一个** 下一刀（命令 + 一句为什么）。未说：先输出下面整图，再问「你现在卡在哪一步？」
 2. 干活走 `ddove-work`；只查篇走 `ddove-wiki`。
-3. 处理中 = `05-需求` 且 `status: draft` 且 `tags` 含 `需求`。人的下一步是 `/ddove-grill` 时，每一拍只碰一篇。只有一篇直接做，不必点名。多于一篇只做点名的那篇（路径、`title` 或文件名）；没点名就停，只问选哪一篇。问答和排障不问选哪一篇，也不进开工班组。对齐之后的落稿、改文件、写状态由代理做，不报成用户的下一步。完成：下一刀是 `/ddove-grill`，或只问选哪一篇，或说明代理会接着做完。
+3. 处理中 = `05-需求` 且 `status: draft` 且 `tags` 含 `需求`。人的下一步是 `/ddove-grill` 时不数稿：只敲 `/ddove-grill` 时接上前文用户已经说清的最近一条。`/ddove-grill` 问完由代理落稿后停下，下一刀是人发 `/ddove-work`；改文件并写状态在 `ddove-work` 里做。`/ddove-grill-with-demand` 问完仍按已有这篇开工，不等人另发。`ddove-work` 改代码不数稿，只做本条对话刚落的那一篇；`/ddove-grill-with-demand` 刚选中的稿同样只做这一篇；没有则停并指向 `/ddove-grill`。问答和排障不问选哪一篇，也不进开工班组。完成：下一刀是 `/ddove-grill` 或 `/ddove-work`，或已指向 `/ddove-grill`。
 
 完成：用户能说出下一刀的 `/` 命令。
 
 ## 整图
 
 ```text
-人的三步              → /ddove-grill 对齐 → ddove-work 开工 → 展示用法篇和说明页
+人的三步              → /ddove-grill → /ddove-work → 展示用法篇和说明页。已有稿 /ddove-grill-with-demand。细则 DDoveMiniGameWiki/00-索引/Agent/需求稿工作流.md
 不知道用哪个          → /ddove-help          （本 skill）
-问答 / 排障 / 改代码   → ddove-work           （内部先 ddove-wiki；问答和排障不进开工班组，也不问选哪一篇）
-方案没对齐            → /ddove-grill         （一拍只碰一篇；确认后代理落稿、开工、展示）
+问答 / 排障 / 改代码   → ddove-work           （内部先 ddove-wiki。见步骤 3 与 DDoveMiniGameWiki/00-索引/Agent/需求稿工作流.md）
+新目标                → /ddove-grill         （见步骤 3 与 DDoveMiniGameWiki/00-索引/Agent/需求稿工作流.md）
+已有稿                → /ddove-grill-with-demand（见步骤 3 与 DDoveMiniGameWiki/00-索引/Agent/需求稿工作流.md）
+方案没对齐            → 新目标 /ddove-grill；已有稿 /ddove-grill-with-demand。见步骤 3 与 DDoveMiniGameWiki/00-索引/Agent/需求稿工作流.md
 产品不对              → 人用自己的话指出；代理把两篇回到处理中再做完
 废弃稿超过 90 天      → /ddove-archive       （不是每篇需求的一步）
 改表 / 加表 / 导表失败 → ddove-config
@@ -49,14 +51,15 @@ fork 改四件套前缀     → /ddove-rename-workspace（本框架仓不跑）
 
 ## 选路
 
-处理中 = `05-需求` 且 `status: draft` 且 `tags` 含 `需求`。每一拍只碰一篇。只有一篇直接做，不必点名。多于一篇只做点名的那篇（路径、`title` 或文件名）；没点名就停，只问选哪一篇。问答和排障的指路不问选哪一篇，也不进开工班组。
+开工规则在步骤 3。细则：`DDoveMiniGameWiki/00-索引/Agent/需求稿工作流.md`。
 
 - fork / 拷走开新游戏、改 Client/Config/Wiki/Tools 目录名 → `/ddove-rename-workspace`
 - 改 / 加 `DDoveMiniGameConfig` 表、导表失败 → `ddove-config`
-- 已有篇、要答/排障/改代码 → `ddove-work`（问答和排障不进开工班组，也不问选哪一篇；改代码按处理中每一拍只碰一篇）
-- 已有 `draft`+`需求`、按稿实现 → 代理做 `ddove-work`（开工班组；每一拍只碰一篇；做完写上正式 / 废弃，再给人看产品）
+- 已有篇、要答/排障/改代码 → `ddove-work`（见步骤 3 与 `DDoveMiniGameWiki/00-索引/Agent/需求稿工作流.md`）
+- 已有 `draft`+`需求`、按稿实现 → `/ddove-work`（见步骤 3 与 `DDoveMiniGameWiki/00-索引/Agent/需求稿工作流.md`）
 - 只要检索、不要结论 → `ddove-wiki`
-- 新功能还没想清 → `/ddove-grill`（每一拍只碰一篇；对齐后代理落稿、改文件、写状态，再给人看产品）
+- 新功能还没想清 → `/ddove-grill`（见步骤 3 与 `DDoveMiniGameWiki/00-索引/Agent/需求稿工作流.md`）
+- 已有 draft+需求要再拷问 → `/ddove-grill-with-demand`（见步骤 3 与 `DDoveMiniGameWiki/00-索引/Agent/需求稿工作流.md`）
 - 已有篇正文过期 → 代理按 `/ddove-wiki-update` 改正文
 - 产品不对 → 人用自己的话指出；代理把用法篇和需求稿回到处理中，改完再写成正式 / 废弃
 - 上句没听懂 → 让用户把那句标出来重讲（无仓库 skill；用 wiki 词）

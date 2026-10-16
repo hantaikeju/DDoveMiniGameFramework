@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>接上前文</title>
+<style>
+  :root { --paper:#f3efe6; --card:#fffcf7; --ink:#1c1915; --muted:#6f675e; --rule:#e3dcd0; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.45 "Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 28px 16px 48px; }
+  h1 { margin: 0 0 6px; font-size: 26px; font-weight: 650; }
+  .sub { margin: 0 0 22px; color: var(--muted); font-size: 13px; }
+  svg.diag { width: 100%; height: auto; display: block; background: var(--card); border: 1px solid var(--rule); border-radius: 12px; }
+  @media (max-width: 720px) { h1 { font-size: 22px; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>接上前文</h1>
+  <p class="sub">只敲命令时接上最近一条 · work 只做当前 grill 的稿</p>
+  <svg class="diag" viewBox="0 0 980 420" role="img" aria-label="grill 按这句话或前文接上；work 只做当前 grill 的那一篇">
+    <rect x="36" y="24" width="440" height="250" rx="14" fill="#f1f6e8" stroke="#c9d6a8"/>
+    <text x="256" y="58" text-anchor="middle" font-size="16" font-weight="650" fill="#3f6212">/ddove-grill</text>
+    <text x="256" y="86" text-anchor="middle" font-size="13">这句话写了目标 → 拷问这句</text>
+    <text x="256" y="114" text-anchor="middle" font-size="13">只有命令 → 接上前文最近一条</text>
+    <text x="256" y="142" text-anchor="middle" font-size="13" fill="#6f675e">前文也没有 → 问要问什么</text>
+    <text x="256" y="178" text-anchor="middle" font-size="13" fill="#6f675e">不数处理中的稿</text>
+    <rect x="70" y="200" width="372" height="52" rx="10" fill="#fff" stroke="#d6d3d1"/>
+    <text x="256" y="232" text-anchor="middle" font-size="13">不接助手下一步 · 不一次接上全部</text>
+
+    <rect x="504" y="24" width="440" height="250" rx="14" fill="#e8eef5" stroke="#c9d6e6"/>
+    <text x="724" y="58" text-anchor="middle" font-size="16" font-weight="650">ddove-work 改代码</text>
+    <text x="724" y="92" text-anchor="middle" font-size="13">不数处理中的稿</text>
+    <text x="724" y="124" text-anchor="middle" font-size="13">只做当前 grill 的那一篇</text>
+    <text x="724" y="156" text-anchor="middle" font-size="13" fill="#6f675e">grill 刚落的稿，或 with-demand 刚选中的稿</text>
+    <text x="724" y="196" text-anchor="middle" font-size="13" fill="#6f675e">本条对话没有这篇</text>
+    <text x="724" y="224" text-anchor="middle" font-size="13" fill="#6f675e">停，指向 /ddove-grill</text>
+
+    <rect x="36" y="300" width="908" height="88" rx="14" fill="#f7f4ee" stroke="#e3dcd0"/>
+    <text x="490" y="338" text-anchor="middle" font-size="14" font-weight="650">仍按篇数</text>
+    <text x="490" y="364" text-anchor="middle" font-size="13" fill="#6f675e">ddove-wiki-create · ddove-fix-up · ddove-wiki-change-state</text>
+  </svg>
+</main>
+</body>
+</html>

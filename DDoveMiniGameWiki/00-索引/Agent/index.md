@@ -6,9 +6,7 @@
 
 # 概念
 
-* [Agent 总览](Agent总览.md) - 用法在 01–04，需求稿在 05-需求，AI 用法在本目录。聊天里敲 `/ddove-help`。 `Reference`
-* [需求稿工作流](需求稿工作流.md) - 人只走对齐、开工、展示。验收通过后改过的篇写成正式。 `Playbook`
-* [开篇与清单徽章](开篇与清单徽章.md) - 正文不自报 status。05-需求整份做完才生成用法篇。 `Playbook`
+* [Agent 总览](Agent总览.md) - 用法在 01–04，需求稿在 05-需求，AI 用法在本目录。聊天里敲 `/ddove-help`。 `Reference`* [需求稿工作流](需求稿工作流.md) - 人只走对齐、开工、展示。问完落稿后停下，开工等 /ddove-work。 `Playbook`* [开篇与清单徽章](开篇与清单徽章.md) - 正文不自报 status。05-需求整份做完才生成用法篇。 `Playbook`
 * [开工班组](开工班组.md) - ddove-work 按 05-需求 里的需求稿改代码。得分写在需求稿上。 `Playbook`
 * [show-me 安装](show-me安装.md) - 个人 skill 装到 `~\.cursor\skills\`，不进仓库 `ddove-`。 `Playbook`
 * [工作流迁移](工作流迁移.md) - 换引擎只带走 AI 层与空工程壳。 `Playbook`
@@ -21,7 +19,7 @@
 * [需求稿留下要什么不要](需求稿留下要什么不要.md) - 做完后需求稿留下要什么、不要、评分和用法篇链接。 `Playbook`
 * [说明页按show-me画](说明页按show-me画.md) - ddove-show-me 只认一种「说明页」。create / change-state / wiki-update 都传这个种类。开篇写「打开说明」。 `Playbook`
 * [同名HTML说明页](同名HTML说明页.md) - 旧画法。现行见说明页按show-me画。 `Playbook` `deprecated`
-* [对齐开工展示](对齐开工展示.md) - 人只走对齐、开工、展示。废弃需求稿进归档夹，超过 90 天再删。 `Playbook`
-* [对齐后接着做完](对齐后接着做完.md) - grill 对齐后代理落稿、改文件，并写上正式与废弃。人只对接需求、确认产品。 `Playbook`
-* [开工后选下一步](开工后选下一步.md) - grill 对齐后代理接着做完并写上状态。人看产品。 `Playbook`
-* [一拍只处理一篇](一拍只处理一篇.md) - 落稿、改文件、写状态每一拍只碰一篇。多于一篇时只做点名的那篇。 `Playbook`
+* [对齐开工展示](对齐开工展示.md) - 人只走对齐、开工、展示。问完落稿后停下，开工等 /ddove-work。 `Playbook`* [对齐后接着做完](对齐后接着做完.md) - grill 对齐后落稿并停下。人另发 /ddove-work 再改文件并写上状态。 `Playbook`* [问完直接开工](问完直接开工.md) - grill 问完落稿并停下。开工等人另发 /ddove-work。 `Playbook`* [落稿后再开工](落稿后再开工.md) - /ddove-grill 问完就落需求稿并停下。人另发 /ddove-work 再按这篇开工。 `Playbook`
+* [目标明确不数稿](目标明确不数稿.md) - 这句话里写了新目标就用 /ddove-grill，不数处理中的稿。问完落稿后停下。 `Playbook`* [接上前文](接上前文.md) - 只敲 /ddove-grill 时接上前文最近一条。问完落稿后停下，开工等 /ddove-work。 `Playbook`* [开工后选下一步](开工后选下一步.md) - grill 对齐后落稿并停下。人另发 /ddove-work 再写上状态。 `Playbook`* [一拍只处理一篇](一拍只处理一篇.md) - 落稿后停下。开工等 /ddove-work，每一拍只碰一篇。 `Playbook`
+* [收掉skill冗余](收掉skill冗余.md) - 浅层 skill 副本与权威正文对齐。help 只留一处指路。create 落稿后停下。 `Playbook`
+* [人的三步写短](人的三步写短.md) - 仓库根 README 的「人的三步」收成两个链接加三句。细则仍在需求稿工作流。 `Playbook`

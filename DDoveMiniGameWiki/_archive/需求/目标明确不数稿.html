@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>目标明确不数稿（需求稿）</title>
+<style>
+  :root { --paper:#f3efe6; --card:#fffcf7; --ink:#1c1915; --muted:#6f675e; --rule:#e3dcd0; --in:#3f6212; --in-soft:#f1f6e8; --out:#9a3412; --out-soft:#f8ebe3; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.45 "Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 28px 16px 48px; }
+  h1 { margin: 0 0 6px; font-size: 26px; font-weight: 650; }
+  .sub { margin: 0 0 22px; color: var(--muted); font-size: 13px; }
+  .band { margin: 0 0 20px; }
+  .band h2 { margin: 0 0 10px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .zone { background: var(--card); border: 1px solid var(--rule); border-radius: 12px; padding: 12px; }
+  .zone.in { border-color: #c9d6a8; }
+  .zone.out { border-color: #e8c4b4; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { background: var(--in-soft); border-radius: 8px; padding: 6px 10px; font-size: 13px; }
+  .zone.out .chip { background: var(--out-soft); text-decoration: line-through; text-decoration-color: #c2410c; }
+  svg.diag { width: 100%; height: auto; display: block; background: var(--card); border: 1px solid var(--rule); border-radius: 12px; }
+  @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>目标明确不数稿（需求稿）</h1>
+  <p class="sub">新目标不数稿 · 已有稿另走一条命令</p>
+  <section class="band">
+    <h2>两条入口</h2>
+    <svg class="diag" viewBox="0 0 980 220" role="img" aria-label="写了新目标走 grill 不数稿；已有稿走 grill-with-demand">
+      <rect x="30" y="78" width="180" height="64" rx="12" fill="#fffcf7" stroke="#e3dcd0"/>
+      <text x="120" y="104" text-anchor="middle" font-size="14" font-weight="650">这句话</text>
+      <text x="120" y="124" text-anchor="middle" font-size="12" fill="#6f675e">有没有新目标</text>
+      <rect x="280" y="24" width="250" height="70" rx="12" fill="#f1f6e8" stroke="#c9d6a8"/>
+      <text x="405" y="52" text-anchor="middle" font-size="14" font-weight="650" fill="#3f6212">/ddove-grill</text>
+      <text x="405" y="72" text-anchor="middle" font-size="12" fill="#6f675e">不数处理中的稿</text>
+      <rect x="280" y="126" width="250" height="70" rx="12" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="405" y="154" text-anchor="middle" font-size="14" font-weight="650">/ddove-grill-with-demand</text>
+      <text x="405" y="174" text-anchor="middle" font-size="12" fill="#6f675e">一篇直接做 · 多篇点名</text>
+      <rect x="600" y="24" width="340" height="70" rx="12" fill="#f1f6e8" stroke="#c9d6a8"/>
+      <text x="770" y="52" text-anchor="middle" font-size="14" font-weight="650" fill="#3f6212">落稿 + ddove-work</text>
+      <text x="770" y="72" text-anchor="middle" font-size="12" fill="#6f675e">新的一份</text>
+      <rect x="600" y="126" width="340" height="70" rx="12" fill="#e8eef5" stroke="#c9d6e6"/>
+      <text x="770" y="154" text-anchor="middle" font-size="14" font-weight="650">按已有这篇开工</text>
+      <text x="770" y="174" text-anchor="middle" font-size="12" fill="#6f675e">不另建第二份</text>
+    </svg>
+  </section>
+  <section class="band">
+    <h2>纳入 · 排除</h2>
+    <div class="grid">
+      <div class="zone in">
+        <div class="chips">
+          <span class="chip">grill 只拷问新目标</span>
+          <span class="chip">with-demand 选已有稿</span>
+          <span class="chip">work 仍按篇数</span>
+          <span class="chip">AskQuestion 仍等人提交</span>
+        </div>
+      </div>
+      <div class="zone out">
+        <div class="chips">
+          <span class="chip">grill 先数稿</span>
+          <span class="chip">两条合成一次</span>
+          <span class="chip">已有稿再 create 一份</span>
+          <span class="chip">改开工评分</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+</body>
+</html>

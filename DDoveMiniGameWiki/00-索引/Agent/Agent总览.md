@@ -4,7 +4,7 @@ title: Agent 总览
 description: 工程 wiki 与 AI 用法 wiki 分轨。仓库 ddove-* 与个人 Cursor skill 的地图。
 tags: [索引, agent]
 status: stable
-verified: { at: 2026-10-15T06:56:00Z }
+verified: { at: 2026-10-16T01:43:28Z }
 generated: { by: human:cjh, at: 2026-09-09T08:16:00Z }
 sources:
   - id: okf
@@ -33,12 +33,13 @@ Concept ID：`/00-索引/Agent/Agent总览`。约定：[OKF 约定](/00-索引/O
 
 | 调用 | 干什么 | SKILL.md |
 |------|--------|----------|
-| `/ddove-help` | 整套工作流指路，只提示不代跑。每一拍只碰一篇处理中的需求。只有一篇直接做。多于一篇只做点名的那篇；没点名就停，只问选哪一篇。问答和排障不问选哪一篇 | `.agents/skills/ddove-help/SKILL.md` |
+| `/ddove-help` | 整套工作流指路，只提示不代跑。只敲 `/ddove-grill` 时接上前文用户已经说清的最近一条。`ddove-work` 改代码只做当前 grill 的那一篇，不数稿。问答和排障不问选哪一篇 | `.agents/skills/ddove-help/SKILL.md` |
 | `ddove-wiki` | 只检索 wiki，交出命中列表 | `.agents/skills/ddove-wiki/SKILL.md` |
-| `ddove-work` | 问答 / 排障 / 改代码（先跑 wiki 检索）。每一拍只碰一篇处理中的需求。只有一篇直接做。多于一篇只做点名的那篇；没点名就停，只问选哪一篇。问答和排障不问选哪一篇。按一篇 `draft`+`需求` 做完后，代理写上正式 / 废弃，再给人看产品。问答和排障不走这套收口 | `.agents/skills/ddove-work/SKILL.md` |
+| `ddove-work` | 问答 / 排障 / 改代码（先跑 wiki 检索）。改代码不数稿，只做本条对话当前 grill 的那一篇（`/ddove-grill` 刚落的稿，或 `/ddove-grill-with-demand` 刚选中的稿）；没有则停并指向 `/ddove-grill`。问答和排障不问选哪一篇。按这一篇 `draft`+`需求` 做完后，代理写上正式 / 废弃，再给人看产品。问答和排障不走这套收口 | `.agents/skills/ddove-work/SKILL.md` |
 | `ddove-fix-up` | 产品不对时由代理执行。用法篇和需求稿回到处理中，改完再写成正式 / 废弃。人不敲这条命令 | `.agents/skills/ddove-fix-up/SKILL.md` |
 | `ddove-config` | 改 / 加配表、导表失败（对照 luban/ai，本库改编） | `.agents/skills/ddove-config/SKILL.md` |
-| `/ddove-grill` | 拷问对齐。每一拍只碰一篇处理中的需求。只有一篇直接做。多于一篇只做点名的那篇；没点名就停，只问选哪一篇。确认后同一条对话里代理落稿、开工、展示 | `.agents/skills/ddove-grill/SKILL.md` |
+| `/ddove-grill` | 这句话写了目标就拷问这句，不数处理中的稿，不改已有稿。句中已有目标不用前文替换。只有命令时，接上发出这条命令之前用户已经说清的最近一条。前文也没有已经说清的目标，才停下问要问什么。问完同一条对话里落稿并停下。开工等人另发 `/ddove-work`。补充的新目标下次再 grill | `.agents/skills/ddove-grill/SKILL.md` |
+| `/ddove-grill-with-demand` | 拷问已有处理中的稿。只有一篇直接做。多于一篇只做点名的那篇；没点名就停，只问选哪一篇。没有则指向 `/ddove-grill`。问完按这一篇开工，不另建第二份 | `.agents/skills/ddove-grill-with-demand/SKILL.md` |
 | `/ddove-archive` | 人调用时清扫废弃需求稿。超过 90 天从仓库删除。不是每篇需求的一步 | `.agents/skills/ddove-archive/SKILL.md` |
 | `ddove-wiki-create` | 代理用来落稿的手续。落在 `05-需求` 时调用 `ddove-show-me`（种类「说明页」）。对齐后不把这条报成用户的下一步 | `.agents/skills/ddove-wiki-create/SKILL.md` |
 | `/ddove-wiki-update` | 已有篇改正文（回 `draft`）。旁边已有同名 HTML 则调用 `ddove-show-me`（种类「说明页」）重画这一张，开篇链接改成「打开说明」；没有同名 HTML 的不补 | `.agents/skills/ddove-wiki-update/SKILL.md` |
@@ -48,7 +49,7 @@ Concept ID：`/00-索引/Agent/Agent总览`。约定：[OKF 约定](/00-索引/O
 | `ddove-writing-for-agents` | 写或改 `ddove-*` | `.agents/skills/ddove-writing-for-agents/SKILL.md` |
 | `/ddove-rename-workspace` | fork 开新游戏时改四件套前缀；本框架仓不跑 | `.agents/skills/ddove-rename-workspace/SKILL.md` |
 
-每一拍只碰一篇处理中的需求。只有一篇直接做。多于一篇只做点名的那篇；没点名就停，只问选哪一篇。问答和排障不问选哪一篇。需求稿收口：grill 对齐后代理落稿、改文件、写上正式和废弃，再给人看产品。产品不对则两篇回到处理中再做完。步骤见 [需求稿工作流](/00-索引/Agent/需求稿工作流.md)。换引擎见 [工作流迁移](/00-索引/Agent/工作流迁移.md)。fork 改四件套见 [改工作区前缀](/00-索引/Agent/改工作区前缀.md)。上游 Release 见 [上游 skill 更新](/00-索引/Agent/上游skill更新.md)。
+`/ddove-grill` 不数稿：句中有目标就拷问这句；只有命令时接上前文用户已经说清的最近一条。`ddove-work` 改代码不数稿，只做当前 grill 的那一篇。`ddove-wiki-create`、`ddove-fix-up`、`ddove-wiki-change-state` 仍每一拍只碰一篇：只有一篇直接做，多于一篇只做点名的那篇，没点名就停。问答和排障不问选哪一篇。需求稿收口：grill 对齐后代理落稿并停下。人另发 `/ddove-work` 后改文件、写上正式和废弃，再给人看产品。产品不对则两篇回到处理中再做完。步骤见 [需求稿工作流](/00-索引/Agent/需求稿工作流.md)。换引擎见 [工作流迁移](/00-索引/Agent/工作流迁移.md)。fork 改四件套见 [改工作区前缀](/00-索引/Agent/改工作区前缀.md)。上游 Release 见 [上游 skill 更新](/00-索引/Agent/上游skill更新.md)。
 
 ## 个人 skill（不进仓库）
 

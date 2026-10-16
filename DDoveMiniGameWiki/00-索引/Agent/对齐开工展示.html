@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>对齐开工展示</title>
 <style>
-  :root { --paper:#f3efe6; --card:#fffcf7; --ink:#1c1915; --muted:#6f675e; --rule:#e3dcd0; --line:#b8ae9f; }
+  :root { --paper:#f3efe6; --card:#fffcf7; --ink:#1c1915; --muted:#6f675e; --rule:#e3dcd0; }
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.45 "Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; }
   main { max-width: 1040px; margin: 0 auto; padding: 28px 16px 48px; }
@@ -17,27 +17,18 @@
 <body>
 <main>
   <h1>对齐开工展示</h1>
-  <p class="sub">grill 对齐 · work 开工 · 收口展示 · archive 只负责超期删除</p>
-  <svg class="diag" viewBox="0 0 980 180" role="img" aria-label="grill 连到 work，work 连到展示；展示旁路到归档夹，归档夹再连到超过 90 天的删除">
-    <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#b8ae9f"/></marker></defs>
-    <rect x="30" y="40" width="150" height="56" rx="10" fill="#f1f6e8" stroke="#c9d6a8"/>
-    <text x="105" y="64" text-anchor="middle" font-size="14" font-weight="650" fill="#3f6212">/ddove-grill</text>
-    <text x="105" y="82" text-anchor="middle" font-size="11" fill="#6f675e">对齐</text>
-    <rect x="240" y="40" width="160" height="56" rx="10" fill="#e8eef5" stroke="#c9d6e6"/>
-    <text x="320" y="64" text-anchor="middle" font-size="14" font-weight="650">ddove-work</text>
-    <text x="320" y="82" text-anchor="middle" font-size="11" fill="#6f675e">开工</text>
-    <rect x="460" y="40" width="160" height="56" rx="10" fill="#f1f6e8" stroke="#c9d6a8"/>
-    <text x="540" y="64" text-anchor="middle" font-size="14" font-weight="650" fill="#3f6212">展示</text>
-    <text x="540" y="82" text-anchor="middle" font-size="11" fill="#6f675e">用法篇 · 说明页</text>
-    <rect x="700" y="40" width="200" height="56" rx="10" fill="#fffcf7" stroke="#e3dcd0"/>
-    <text x="800" y="64" text-anchor="middle" font-size="13" font-weight="650">_archive/需求</text>
-    <text x="800" y="82" text-anchor="middle" font-size="11" fill="#6f675e">标废弃就搬入</text>
-    <rect x="720" y="120" width="200" height="40" rx="10" fill="#f8ebe3" stroke="#e8c4b4"/>
-    <text x="820" y="145" text-anchor="middle" font-size="12" fill="#9a3412">/ddove-archive · 超过 90 天</text>
-    <path d="M180 68 H238" stroke="#b8ae9f" stroke-width="2" marker-end="url(#a)"/>
-    <path d="M400 68 H458" stroke="#b8ae9f" stroke-width="2" marker-end="url(#a)"/>
-    <path d="M620 68 H698" stroke="#b8ae9f" stroke-width="2" marker-end="url(#a)"/>
-    <path d="M800 96 V118" stroke="#e8c4b4" stroke-width="2" marker-end="url(#a)"/>
+  <p class="sub">对齐落稿后停下 · 人发 work · 再展示</p>
+  <svg class="diag" viewBox="0 0 980 160" role="img" aria-label="三步：grill 落稿停下，人发 work，展示">
+    <rect x="40" y="30" width="260" height="100" rx="14" fill="#f1f6e8" stroke="#c9d6a8"/>
+    <text x="170" y="74" text-anchor="middle" font-size="15" font-weight="650" fill="#3f6212">对齐</text>
+    <text x="170" y="100" text-anchor="middle" font-size="13">落稿后停下</text>
+    <path d="M300 80 H360" stroke="#b8ae9f" stroke-width="2"/>
+    <rect x="360" y="30" width="260" height="100" rx="14" fill="#e8eef5" stroke="#c9d6e6"/>
+    <text x="490" y="74" text-anchor="middle" font-size="15" font-weight="650">开工</text>
+    <text x="490" y="100" text-anchor="middle" font-size="13">人发 /ddove-work</text>
+    <path d="M620 80 H680" stroke="#b8ae9f" stroke-width="2"/>
+    <rect x="680" y="30" width="260" height="100" rx="14" fill="#fffcf7" stroke="#e3dcd0"/>
+    <text x="810" y="88" text-anchor="middle" font-size="15" font-weight="650">展示</text>
   </svg>
 </main>
 </body>

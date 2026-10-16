@@ -5,48 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>开工后选下一步</title>
 <style>
-  :root { --paper:#f3efe6; --card:#fffcf7; --ink:#1c1915; --muted:#6f675e; --rule:#e3dcd0; --in:#3f6212; --in-soft:#f1f6e8; --out:#9a3412; --out-soft:#f8ebe3; --node:#1e3a5f; --node-soft:#e8eef5; --line:#b8ae9f; }
+  :root { --paper:#f3efe6; --card:#fffcf7; --ink:#1c1915; --muted:#6f675e; --rule:#e3dcd0; }
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.45 "Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; }
   main { max-width: 1040px; margin: 0 auto; padding: 28px 16px 48px; }
   h1 { margin: 0 0 6px; font-size: 26px; font-weight: 650; }
   .sub { margin: 0 0 22px; color: var(--muted); font-size: 13px; }
-  .band { margin: 0 0 20px; }
-  .band h2 { margin: 0 0 10px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
-  .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
-  .node { background: var(--card); border: 1px solid var(--rule); border-radius: 10px; padding: 8px 12px; }
-  .node b { display: block; font-size: 13px; }
-  .node span { display: block; color: var(--muted); font-size: 12px; }
-  .node.call { background: var(--node-soft); border-color: #c9d6e6; }
-  .arrow { color: var(--line); font-size: 20px; }
   svg.diag { width: 100%; height: auto; display: block; background: var(--card); border: 1px solid var(--rule); border-radius: 12px; }
 </style>
 </head>
 <body>
 <main>
   <h1>开工后选下一步</h1>
-  <p class="sub">用法 · 对齐后代理做完，人看产品</p>
-
-  <section class="band">
-    <h2>谁调谁</h2>
-    <svg class="diag" viewBox="0 0 980 180" role="img" aria-label="grill 之后代理落稿改文件并写状态，人看产品；不对则回到处理中">
-      <rect x="20" y="50" width="150" height="60" rx="12" fill="#f1f6e8" stroke="#c9d6a8"/>
-      <text x="95" y="76" text-anchor="middle" font-size="14" font-weight="650" fill="#3f6212">人 · grill</text>
-      <text x="95" y="96" text-anchor="middle" font-size="12" fill="#6f675e">对接需求</text>
-      <rect x="230" y="50" width="200" height="60" rx="12" fill="#e8eef5" stroke="#c9d6e6"/>
-      <text x="330" y="76" text-anchor="middle" font-size="14" font-weight="650">代理做完并写状态</text>
-      <text x="330" y="96" text-anchor="middle" font-size="12" fill="#6f675e">正式 / 废弃</text>
-      <rect x="490" y="50" width="180" height="60" rx="12" fill="#f1f6e8" stroke="#c9d6a8"/>
-      <text x="580" y="76" text-anchor="middle" font-size="14" font-weight="650" fill="#3f6212">人看产品</text>
-      <text x="580" y="96" text-anchor="middle" font-size="12" fill="#6f675e">用法篇 · 说明页</text>
-      <rect x="730" y="50" width="220" height="60" rx="12" fill="#f8ebe3" stroke="#e8c4b4"/>
-      <text x="840" y="76" text-anchor="middle" font-size="14" font-weight="650" fill="#9a3412">不对</text>
-      <text x="840" y="96" text-anchor="middle" font-size="12" fill="#6f675e">回到处理中再做完</text>
-      <path d="M170 80 H228" stroke="#b8ae9f" stroke-width="2"/>
-      <path d="M430 80 H488" stroke="#b8ae9f" stroke-width="2"/>
-      <path d="M670 80 H728" stroke="#b8ae9f" stroke-width="2"/>
-    </svg>
-  </section>
+  <p class="sub">落稿后停下 · 人发 work 才改文件 · 然后看产品</p>
+  <svg class="diag" viewBox="0 0 980 160" role="img" aria-label="落稿停下，work 写状态，人看产品">
+    <rect x="40" y="30" width="250" height="100" rx="14" fill="#f1f6e8" stroke="#c9d6a8"/>
+    <text x="165" y="88" text-anchor="middle" font-size="14" font-weight="650" fill="#3f6212">落稿后停下</text>
+    <path d="M290 80 H360" stroke="#b8ae9f" stroke-width="2"/>
+    <rect x="360" y="30" width="260" height="100" rx="14" fill="#e8eef5" stroke="#c9d6e6"/>
+    <text x="490" y="88" text-anchor="middle" font-size="14" font-weight="650">/ddove-work 写状态</text>
+    <path d="M620 80 H690" stroke="#b8ae9f" stroke-width="2"/>
+    <rect x="690" y="30" width="250" height="100" rx="14" fill="#fffcf7" stroke="#e3dcd0"/>
+    <text x="815" y="88" text-anchor="middle" font-size="14" font-weight="650">人看产品</text>
+  </svg>
 </main>
 </body>
 </html>

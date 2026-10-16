@@ -5,59 +5,33 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>一拍只处理一篇</title>
 <style>
-  :root { --paper:#f3efe6; --card:#fffcf7; --ink:#1c1915; --muted:#6f675e; --rule:#e3dcd0; --in:#3f6212; --in-soft:#f1f6e8; --out:#9a3412; --out-soft:#f8ebe3; --node:#1e3a5f; --node-soft:#e8eef5; --line:#b8ae9f; }
+  :root { --paper:#f3efe6; --card:#fffcf7; --ink:#1c1915; --muted:#6f675e; --rule:#e3dcd0; }
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.45 "Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; }
   main { max-width: 1040px; margin: 0 auto; padding: 28px 16px 48px; }
   h1 { margin: 0 0 6px; font-size: 26px; font-weight: 650; }
   .sub { margin: 0 0 22px; color: var(--muted); font-size: 13px; }
-  .band { margin: 0 0 20px; }
-  .band h2 { margin: 0 0 10px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
-  .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
-  .node { background: var(--card); border: 1px solid var(--rule); border-radius: 10px; padding: 8px 12px; }
-  .node b { display: block; font-size: 13px; }
-  .node span { display: block; color: var(--muted); font-size: 12px; }
-  .node.call { background: var(--node-soft); border-color: #c9d6e6; }
   svg.diag { width: 100%; height: auto; display: block; background: var(--card); border: 1px solid var(--rule); border-radius: 12px; }
 </style>
 </head>
 <body>
 <main>
   <h1>一拍只处理一篇</h1>
-  <p class="sub">用法 · 落稿、改文件、写状态每一拍只碰一篇</p>
-
-  <section class="band">
-    <h2>职责</h2>
-    <div class="flow">
-      <div class="node"><b>处理中</b><span>05-需求 draft + 需求</span></div>
-      <div class="node call"><b>人 · /ddove-grill</b><span>只对齐这一篇</span></div>
-      <div class="node call"><b>代理落稿</b><span>只写这一篇</span></div>
-      <div class="node call"><b>代理改文件</b><span>只改这一篇</span></div>
-      <div class="node call"><b>代理写状态</b><span>正式 / 废弃</span></div>
-    </div>
-  </section>
-
-  <section class="band">
-    <h2>谁调谁</h2>
-    <svg class="diag" viewBox="0 0 980 250" role="img" aria-label="work 按篇数分支，其它指令没点名就停">
-      <rect x="30" y="90" width="160" height="60" rx="10" fill="#e8eef5" stroke="#c9d6e6"/>
-      <text x="110" y="126" text-anchor="middle" font-size="14" font-weight="650">/ddove-work</text>
-      <path d="M190 120 H240" stroke="#b8ae9f" stroke-width="2"/>
-      <rect x="240" y="20" width="170" height="50" rx="10" fill="#f8ebe3" stroke="#e8c4b4"/>
-      <text x="325" y="50" text-anchor="middle" font-size="12" fill="#9a3412">0 篇 → grill / create</text>
-      <rect x="240" y="86" width="170" height="50" rx="10" fill="#f1f6e8" stroke="#c9d6a8"/>
-      <text x="325" y="116" text-anchor="middle" font-size="12" fill="#3f6212">1 篇 → 直接开工</text>
-      <rect x="240" y="152" width="170" height="50" rx="10" fill="#f1f6e8" stroke="#c9d6a8"/>
-      <text x="325" y="182" text-anchor="middle" font-size="12" fill="#3f6212">多篇已点名 → 只这篇</text>
-      <rect x="240" y="218" width="220" height="24" rx="8" fill="#f8ebe3" stroke="#e8c4b4"/>
-      <text x="350" y="235" text-anchor="middle" font-size="11" fill="#9a3412">多篇没点名 → 停问 · 不进班组</text>
-      <rect x="500" y="40" width="450" height="160" rx="12" fill="#fffcf7" stroke="#e3dcd0"/>
-      <text x="725" y="78" text-anchor="middle" font-size="13" font-weight="650">grill / create / fix-up / change-state</text>
-      <text x="725" y="108" text-anchor="middle" font-size="13" fill="#3f6212">点了名 → 只碰那一篇</text>
-      <text x="725" y="136" text-anchor="middle" font-size="13" fill="#9a3412">没点名 → 停，只问选哪一篇</text>
-      <text x="725" y="168" text-anchor="middle" font-size="12" fill="#6f675e">问答 / 排障不问选篇 · 不进班组</text>
-    </svg>
-  </section>
+  <p class="sub">grill 落稿后停下 · work 只做刚落的一篇 · with-demand 仍问完开工</p>
+  <svg class="diag" viewBox="0 0 980 200" role="img" aria-label="grill 落稿即停；work 按一篇；with-demand 问完开工">
+    <rect x="24" y="24" width="300" height="152" rx="14" fill="#f1f6e8" stroke="#c9d6a8"/>
+    <text x="174" y="70" text-anchor="middle" font-size="15" font-weight="650" fill="#3f6212">/ddove-grill</text>
+    <text x="174" y="100" text-anchor="middle" font-size="13">落稿后停下</text>
+    <text x="174" y="128" text-anchor="middle" font-size="13" fill="#6f675e">等 /ddove-work</text>
+    <rect x="340" y="24" width="300" height="152" rx="14" fill="#e8eef5" stroke="#c9d6e6"/>
+    <text x="490" y="70" text-anchor="middle" font-size="15" font-weight="650">/ddove-work</text>
+    <text x="490" y="100" text-anchor="middle" font-size="13">只做刚落的那一篇</text>
+    <text x="490" y="128" text-anchor="middle" font-size="13" fill="#6f675e">不数其它稿</text>
+    <rect x="656" y="24" width="300" height="152" rx="14" fill="#fffcf7" stroke="#e3dcd0"/>
+    <text x="806" y="70" text-anchor="middle" font-size="14" font-weight="650">with-demand</text>
+    <text x="806" y="100" text-anchor="middle" font-size="13">问完按已有这篇开工</text>
+    <text x="806" y="128" text-anchor="middle" font-size="13" fill="#6f675e">不另建第二份</text>
+  </svg>
 </main>
 </body>
 </html>

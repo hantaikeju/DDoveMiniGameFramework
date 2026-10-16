@@ -11,7 +11,7 @@ description: >-
 
 ## 步骤
 
-1. **落点**：必须懂 wiki / 短号 / OKF → `.agents/skills/ddove-<x>/`，并同步 `.cursor/skills/ddove-<x>/`（本库 Cursor 入口）。纯对话、全机通用 → 本机 `~\.cursor\skills\`，不进 Git。
+1. **落点**：必须懂 wiki / OKF → `.agents/skills/ddove-<x>/`，并同步 `.cursor/skills/ddove-<x>/`（本库 Cursor 入口）。纯对话、全机通用 → 本机 `~\.cursor\skills\`，不进 Git。不问短号。
 2. **每个 SKILL.md**：
    - `description` 只写触发分支。编排类加 `disable-model-invocation: true`。
    - 正文是步骤，每步有完成条件。
